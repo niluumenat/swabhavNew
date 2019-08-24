@@ -12,6 +12,7 @@ public class CollectionHashSetTest {
 		set.add("Milk");
 		set.add("Fruits");
 		set.add("nilam");
+		set.add("Milk");
 		display(set);
 
 		System.out.println("After removing ");
@@ -19,7 +20,7 @@ public class CollectionHashSetTest {
 		display(set);
 		
 		System.out.println("After updating");
-		set.add("vegetables");
+		set.add("nilam");
 		display(set);
 	}
 
