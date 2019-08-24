@@ -1,0 +1,25 @@
+create swabhavRepository folder anywhere in your LAPTOP
+create hello.txt file , write day1 day2 day3 progress by adding deleting text
+open gitbash and write commands given below.
+
+git commands:
+git init //initialization
+git status // 1.clean 2.edit 3.add    red-> no commits yet  
+git add . Hello.txt   
+git status  // green-> ready to commit
+git commit -m 'day1 initialization'
+git log  // points to head
+{master}git checkout 5055 //points to Day1 file
+{master}git checkout 6066 //points to Day2 file
+{master}git checkout 7077 //points to Day3 or final file
+
+
+save code and snapshot to cloud(github,gitbucket,gitlab)
+
+create swabhavRepo in github
+to push swabhavRepository to swabhavRepo:
+git remote -v //verbose
+git remote add swabhav {url}// here swabhav is the nickname given to url
+git remote -v //can fetch or push 
+git push swabhav master
+
