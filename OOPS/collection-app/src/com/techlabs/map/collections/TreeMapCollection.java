@@ -23,17 +23,14 @@ public class TreeMapCollection {
 		map.put("c", "Nikita");
 		map.put("c", "Nik");
 		
-		Comparator com=map.comparator();
-		System.out.println(com);
+		//Comparator com=map.comparator();
+		//System.out.println(com);
 
-		Set set = map.entrySet();
-		/*Iterator iterator = set.iterator();
-		while (iterator.hasNext()) {
-			Map.Entry<String, String> mentry = (Entry<String, String>) iterator.next();
-			System.out.println("Key is: " + mentry.getKey()+" Value: " +  mentry.getValue());
-		}*/
-		
-		
+		for(Map.Entry<String, String> entry: map.entrySet()){
+			String key=entry.getKey();
+			String value=entry.getValue();
+			System.out.print(key+" - "+value+", ");
+		}
 
 	}
 
