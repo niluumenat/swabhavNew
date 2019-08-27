@@ -74,4 +74,11 @@ public class Account implements Serializable {
 		return name;
 	}
 
+	public void setAccBalance(double accBalance) {
+		this.accBalance = accBalance;
+	}
+	
+	
+	
+
 }
