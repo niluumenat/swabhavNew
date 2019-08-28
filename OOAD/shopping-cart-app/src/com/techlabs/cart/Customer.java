@@ -6,12 +6,13 @@ import java.util.List;
 public class Customer {
 	private int id;
 	private String name;
-	private List<Order> orders=new ArrayList<Order>();
+	private List<Order> orders;
 	
 	public Customer(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
+		orders=new ArrayList<Order>();
 	}
 	
 	public void addOrders(Order order){
@@ -29,6 +30,8 @@ public class Customer {
 	public List<Order> getOrders() {
 		return orders;
 	}
+	
+	
 	
 	
 	

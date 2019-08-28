@@ -19,7 +19,6 @@ public class NodeTest {
 		node3.setNext(null);
 
 		printDetails(node1);
-
 	}
 
 	private static void printDetails(Node<Integer> node) {

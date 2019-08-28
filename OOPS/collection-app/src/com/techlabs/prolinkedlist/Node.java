@@ -1,17 +1,16 @@
 package com.techlabs.prolinkedlist;
 
 public class Node<T> {
-	private Node<T> next;
+	Node<T> next;
 	private T data;
-	public Node( T data) {
+	
+	public Node() {
 		super();
-		next = null;
-		data = data;
 	}
-	public Node(Node<T> next, T data) {
+	public Node(T data) {
 		super();
-		next = next;
-		data = data;
+		this.next = null;
+		this.data = data;
 	}
 	public Node<T> getNext() {
 		return next;
@@ -25,6 +24,7 @@ public class Node<T> {
 	public void setData(T data) {
 		this.data = data;
 	}
+	
 	
 	
 	

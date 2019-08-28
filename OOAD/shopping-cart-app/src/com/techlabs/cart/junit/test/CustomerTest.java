@@ -12,20 +12,22 @@ import com.techlabs.cart.Order;
 public class CustomerTest {
 	Date date = java.util.Calendar.getInstance().getTime();
 	Order order=new Order(101, date);
-	Customer customer=new Customer(500, "Nilam");
+	Customer customer=new Customer(504, "Nilam");
+	Customer customer1=new Customer(505, "Heta");
 
 	@Test
 	public void checkGetter(){
-		int id=500;
-		assertTrue(id==customer.getId());
+		int id=505;
+		assertTrue(id==customer1.getId());
 	}
 	
 	public void checkAddOrderMethod(){
 		int id=101;
-		customer.addOrders(order);
+		customer1.addOrders(order);
 		assertTrue(order.getId()==id);
-
 	}
+	
+	
 	
 	
 

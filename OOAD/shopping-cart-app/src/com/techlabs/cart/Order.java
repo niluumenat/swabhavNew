@@ -7,12 +7,13 @@ import java.util.List;
 public class Order {
 	private int id;
 	private Date date;
-	private List<LineItem> items=new ArrayList<LineItem>();
+	private List<LineItem> items;
 	
 	public Order(int id, Date date) {
 		super();
 		this.id = id;
 		this.date = date;
+		items=new ArrayList<LineItem>();
 	}
 	public void addItem(LineItem lineitem){
 		items.add(lineitem);
