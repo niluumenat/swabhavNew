@@ -2,45 +2,55 @@ package com.techlabs.prolinkedlist;
 
 public class ProLinkedList<T> {
 	private Node<T> head;
-	private Node<T> next;
-
-	public void add(T data) {
-		Node<T> temp = new Node<T>();
-		temp.setData(data);
-		if (head == null) {
-			head = temp;
-			next = temp;
-		} else {
-			next.setNext(temp);
-			next = temp;
-		}
-	}
-
-	public void display() {
-		Node<T> tmp = head;
-		while (tmp != null) {
-			System.out.println("Data: " + tmp.getData());
-			tmp = tmp.getNext();
-		}
-	}
-
-	public void remove(T remove) {
-		Node<T> current = head;
+	private int count;
+	
+	public void insert(T data){
+		Node<T> node=new Node<T>();
+		node.data=data;
 		
-		if(current!=null && current.getData()==remove){
-			head=current.getNext();
+		if(head==null){
+			head=node;
 		}
-		
-		Node<T> temp = head,prev = null;
-		
-		while(temp.getNext()!=null ){
-			if(temp.getNext().getData()==remove){
-				prev=temp.getNext();
-				next=prev.getNext();
-			
+		else{
+			Node<T> n=head;
+			while(n.next!=null){
+				n=n.next;
 			}
-			temp=temp.getNext();	
+			n.next=node;
 		}
+		count++;
+		
 	}
+	
+	public void removeAt(int index){
+		if(index==0){
+			head=head.next;
+		}
+		else{
+			Node<T> n=head;
+			Node<T> prev=null;
+			for(int i=0;i<index-1;i++){
+				n=n.next;
+			}
+			prev=n.next;
+			n.next=prev.next;
+			System.out.println("removing "+ prev.data);
+		}
+		count--;
+	}
+	
+	public void display(){
+		Node<T> node=head;
+		while(node.next!=null){
+			System.out.println(node.data);
+			node=node.next;
+		}
+		System.out.println(node.data);
+	}
+	
+	public void countNoOfNodes(){
+		System.out.println("No of nodes: "+count);
+	}
+
 
 }
