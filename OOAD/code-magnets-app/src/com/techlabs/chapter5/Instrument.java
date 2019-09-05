@@ -1,9 +1,10 @@
 package com.techlabs.chapter5;
 
-public abstract class Instrument {
+public class Instrument {
 	private String serialNo;
 	private double price;
 	private InstrumentSpec spec;
+	
 	public Instrument(String serialNo, double price, InstrumentSpec spec) {
 		super();
 		this.serialNo = serialNo;

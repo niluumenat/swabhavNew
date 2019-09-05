@@ -41,9 +41,6 @@ public class Order {
 		return totalCost;
 	}
 
-	public void addQuantity() {
-
-	}
 
 	public int getId() {
 		return id;

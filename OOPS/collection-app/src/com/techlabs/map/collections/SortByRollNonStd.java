@@ -15,7 +15,7 @@ public class SortByRollNonStd implements Comparator<Student> {
 			result=0;
 		}else if(rollNo1>=rollNo2 && std1>=std2){
 			result=1;
-		}else if(rollNo1<=rollNo2 && std1<+std2){
+		}else if(rollNo1<=rollNo2 && std1<=std2){
 			result=-1;
 		}
 		return result;

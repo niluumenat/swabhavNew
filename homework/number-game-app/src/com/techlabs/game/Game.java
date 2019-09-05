@@ -12,7 +12,7 @@ public class Game {
 		return randomNo;
 	}
 
-	public int checkUserGuess(int userGuess) {
+	public int checkUserGuess(int userGuess) { 
 		int result = -1;
 		if (userGuess == randomNo) {
 			result = 0;
