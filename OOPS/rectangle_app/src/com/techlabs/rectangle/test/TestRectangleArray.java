@@ -24,15 +24,15 @@ public class TestRectangleArray {
 		rect[4] = new Rectangle();
 		rect[4].setWidth(15);
 		rect[4].setHeight(20);
-		
+
 		int totalArea = 0;
-		
-		for(int i=0;i<=4;i++){
+
+		for (int i = 0; i <= 4; i++) {
 			display(rect[i]);
-			totalArea=totalArea+rect[i].calcArea();
-		
+			totalArea = totalArea + rect[i].calcArea();
+
 		}
-		System.out.println("Total Area:"+totalArea);
+		System.out.println("Total Area:" + totalArea);
 
 	}
 

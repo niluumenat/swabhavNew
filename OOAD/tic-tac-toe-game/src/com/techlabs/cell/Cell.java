@@ -1,23 +1,23 @@
 package com.techlabs.cell;
 
-import java.util.Arrays;
 
 public class Cell {
-	private Mark cell;
+	private Mark mark;
 
 	public Cell() {
-		super();
-		this.cell = cell.Empty;
+		this.mark = mark.EMPTY;
 	}
 
-	public Mark markCell(Mark c) {
-		if (cell != cell.Empty) {
-			System.out.println("cell is not empty");
-		}else{
-			cell=c;
+	public void markCell(Mark c) {
+		if (mark != mark.EMPTY) {
+			throw new CellPositionNotEmptyException("Cell position is taken");
+		} else {
+			mark = c;
 		}
-		return cell;
+	}
 
+	public Mark getMark() {
+		return mark;
 	}
 
 }
