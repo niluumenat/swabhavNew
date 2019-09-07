@@ -1,0 +1,33 @@
+package com.techlabs.game;
+
+import com.techlabs.cell.Mark;
+
+public class Player {
+	private Mark mark;
+	private String name;
+	public Player(Mark mark,String name) {
+		this.mark = mark;
+		this.name=name;
+	}
+	public Mark getMark() {
+		return mark;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

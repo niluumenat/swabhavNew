@@ -2,10 +2,10 @@ package com.techlabs.board;
 
 import com.techlabs.cell.Cell;
 import com.techlabs.cell.Mark;
-import com.techlabs.result.Result;
 
 public class Board {
 	private Cell[] cells;
+	private boolean isFull = false;
 
 	public Board() {
 		this.cells = new Cell[9];
@@ -28,15 +28,18 @@ public class Board {
 	}
 
 	public boolean isFull() {
-		boolean isFull = false;
+
 		for (int i = 0; i < 9; i++) {
 			if (cells[i].getMark() != Mark.EMPTY) {
 				isFull = true;
 			} else {
 				isFull = false;
+				break;
 			}
 		}
+
 		return isFull;
+
 	}
 
 	public void display() {
