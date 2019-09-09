@@ -12,7 +12,7 @@ import com.techlabs.result.Result;
 import com.techlabs.result.ResultAnalyzer;
 
 public class GameTest {
-	Player player = new Player(Mark.O, "Heta");
+	/*Player player = new Player(Mark.O, "Heta");
 	Player player2 = new Player(Mark.X, "nilu");
 	Player[] player =new Player[2];
 	player[0]=players;
@@ -60,6 +60,6 @@ public class GameTest {
 
 		assertEquals(Result.DRAW, game.getStatus());
 		System.out.println(game.getStatus());
-	}
+	}*/
 
 }

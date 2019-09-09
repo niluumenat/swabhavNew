@@ -5,11 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.techlabs.board.Board;
+import com.techlabs.board.IBoard;
 import com.techlabs.board.NotValidPositionException;
 import com.techlabs.cell.Mark;
 
 public class BoardTest {
-	Board board = new Board();
+	IBoard board = new Board();
 
 	@Test
 	public void checkCellMarks() {

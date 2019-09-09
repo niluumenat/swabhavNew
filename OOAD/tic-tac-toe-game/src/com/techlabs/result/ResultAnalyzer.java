@@ -4,7 +4,7 @@ import com.techlabs.board.Board;
 import com.techlabs.cell.Cell;
 import com.techlabs.cell.Mark;
 
-public class ResultAnalyzer {
+public class ResultAnalyzer implements IResultAnalyzer {
 	private Board board;
 	private Result result;
 
@@ -13,6 +13,10 @@ public class ResultAnalyzer {
 		this.result = result.PROGRESS;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.techlabs.result.IResultAnalyzer#isWinner()
+	 */
+	@Override
 	public void isWinner() {
 		for (int i = 0; i < 9; i++) {
 			Cell[] cells = board.getCells();
@@ -47,10 +51,18 @@ public class ResultAnalyzer {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.techlabs.result.IResultAnalyzer#getResult()
+	 */
+	@Override
 	public Result getResult() {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.techlabs.result.IResultAnalyzer#getBoard()
+	 */
+	@Override
 	public Board getBoard() {
 		return board;
 	}

@@ -4,15 +4,16 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.techlabs.board.Board;
+import com.techlabs.board.IBoard;
 import com.techlabs.cell.Cell;
 import com.techlabs.cell.Mark;
+import com.techlabs.result.IResultAnalyzer;
 import com.techlabs.result.Result;
 import com.techlabs.result.ResultAnalyzer;
 
 public class ResultAnalyzerTest {
-	ResultAnalyzer resultAnalyzer = new ResultAnalyzer();
-	Board board = resultAnalyzer.getBoard();
+	IResultAnalyzer resultAnalyzer = new ResultAnalyzer();
+	IBoard board = resultAnalyzer.getBoard();
 
 	@Test
 	public void checkResultWhenMarkIsEmpty() {

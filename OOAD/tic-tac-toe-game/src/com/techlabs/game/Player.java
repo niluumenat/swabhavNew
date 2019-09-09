@@ -5,7 +5,7 @@ import com.techlabs.cell.Mark;
 public class Player {
 	private Mark mark;
 	private String name;
-	public Player(Mark mark,String name) {
+	public Player(Mark mark) {
 		this.mark = mark;
 		this.name=name;
 	}
