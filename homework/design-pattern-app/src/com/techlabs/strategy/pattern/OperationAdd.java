@@ -1,6 +1,6 @@
 package com.techlabs.strategy.pattern;
 
-public class OperationAdd implements Strategy {
+public class OperationAdd implements IStrategy {
 
 	@Override
 	public int doOperation(int num1, int num2) {

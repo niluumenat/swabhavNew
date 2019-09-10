@@ -1,9 +1,9 @@
 package com.techlabs.strategy.pattern;
 
 public class Context {
-	public Strategy strategy;
+	public IStrategy strategy;
 
-	public Context(Strategy strategy) {
+	public Context(IStrategy strategy) {
 		super();
 		this.strategy = strategy;
 	}
