@@ -11,7 +11,7 @@ import java.util.HashSet;
 import com.techlabs.analyzer.Loaders;
 import com.techlabs.employee.Employee;
 
-public class URLLoader implements Loaders{
+public class URLLoader implements Loaders {
 	HashSet<Employee> employees;
 
 	public URLLoader() {
@@ -28,11 +28,10 @@ public class URLLoader implements Loaders{
 			URLConnection connection = url.openConnection();
 			BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			String line;
-			 while ((line = br.readLine()) != null)
-		      {
-		        content.append(line + "\n");
-		        String[] attributes = line.split(",");
-		        int id = Integer.parseInt(attributes[0]);
+			while ((line = br.readLine()) != null) {
+				content.append(line + "\n");
+				String[] attributes = line.split(",");
+				int id = Integer.parseInt(attributes[0]);
 				String name = attributes[1];
 				String designation = attributes[2];
 				String managerId = attributes[3];
@@ -40,13 +39,14 @@ public class URLLoader implements Loaders{
 				Double salary = Double.parseDouble(attributes[5]);
 				String commission = attributes[6];
 				int departmentNo = Integer.parseInt(attributes[7]);
-		        
-				Employee emp =  new Employee(id, name, designation, managerId, doj, salary, commission, departmentNo);;
+
+				Employee emp = new Employee(id, name, designation, managerId, doj, salary, commission, departmentNo);
+				;
 
 				employees.add(emp);
 				line = br.readLine();
-		      }
-		      br.close();
+			}
+			br.close();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,5 +55,4 @@ public class URLLoader implements Loaders{
 
 	}
 
-	
 }

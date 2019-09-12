@@ -1,8 +1,6 @@
 package com.techlabs.contactUI;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.techlabs.contact.Contact;
@@ -38,6 +36,7 @@ public class ContactUI {
 			}
 			case EXPORT: {
 				exportContacts();
+				break;
 			}
 			case EXIT: {
 				System.exit(0);
