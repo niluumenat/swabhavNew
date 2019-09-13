@@ -1,20 +1,17 @@
 package com.techlabs.game;
 
 import com.techlabs.board.Board;
-import com.techlabs.board.IBoard;
-import com.techlabs.cell.Mark;
-import com.techlabs.result.IResultAnalyzer;
 import com.techlabs.result.Result;
+import com.techlabs.result.ResultAnalyzer;
 
 public class Game {
-
 	private Player[] players;
-	private IResultAnalyzer resultAnalyzer;
-	private IBoard board;
+	private ResultAnalyzer resultAnalyzer;
+	private Board board;
 	private Result status = Result.PROGRESS;
 	private Player currentPlayer;
 
-	public Game(Player[] players, IResultAnalyzer resultAnalyzer, IBoard board) {
+	public Game(Player[] players, ResultAnalyzer resultAnalyzer, Board board) {
 		this.players = players;
 		this.resultAnalyzer = resultAnalyzer;
 		this.board = board;
@@ -51,11 +48,11 @@ public class Game {
 		return players;
 	}
 
-	public IResultAnalyzer getResultAnalyzer() {
+	public ResultAnalyzer getResultAnalyzer() {
 		return resultAnalyzer;
 	}
 
-	public IBoard getBoard() {
+	public Board getBoard() {
 		return board;
 	}
 

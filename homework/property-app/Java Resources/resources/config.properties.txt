@@ -1,2 +1,0 @@
-UserId=nilammenat14
-Password=niluu14

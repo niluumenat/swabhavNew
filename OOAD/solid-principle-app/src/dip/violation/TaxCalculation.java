@@ -8,9 +8,9 @@ public class TaxCalculation {
 	}
 
 	public int calculate(int rate, int amount) {
-		int r = -1;
+		int result = -1;
 		try {
-			r = rate / amount;
+			result = rate / amount;
 
 		} catch (Exception ex) {
 			String message=ex.getMessage();
@@ -22,7 +22,7 @@ public class TaxCalculation {
 				txtLogger.Log(message);
 			}
 		}
-		return r;
+		return result;
 
 	}
 

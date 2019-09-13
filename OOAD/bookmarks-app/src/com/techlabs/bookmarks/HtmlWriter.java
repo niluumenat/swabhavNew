@@ -1,15 +1,15 @@
 package com.techlabs.bookmarks;
 
 import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.net.URL;
 import java.util.List;
 
-public class Bookmarks {
+public class HtmlWriter {
 
-	public void addBookmark(List<Bookmark> list) throws IOException {
+	public void addBookmarkToHtml(List<Bookmark> list) throws IOException {
 		OutputStream file = new FileOutputStream("Resources/Bookmarks.html");
 		PrintStream printhtml = new PrintStream(file);
 		String htmlheader = "<html><head>";

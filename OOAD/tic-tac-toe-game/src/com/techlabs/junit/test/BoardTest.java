@@ -2,15 +2,15 @@ package com.techlabs.junit.test;
 
 import static org.junit.Assert.*;
 
+
 import org.junit.Test;
 
 import com.techlabs.board.Board;
-import com.techlabs.board.IBoard;
 import com.techlabs.board.NotValidPositionException;
 import com.techlabs.cell.Mark;
 
 public class BoardTest {
-	IBoard board = new Board();
+	Board board = new Board();
 
 	@Test
 	public void checkCellMarks() {

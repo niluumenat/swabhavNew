@@ -1,14 +1,12 @@
 
 package com.techlabs.property.test;
-
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
 public class TestProperties {
 	public static void main(String[] args) throws IOException{
-		FileReader file=new FileReader("Java Resources/resources/config.properties.txt");
+		FileReader file=new FileReader("resources/config.properties.txt");
 		
 		Properties p= new Properties();
 		p.load(file);

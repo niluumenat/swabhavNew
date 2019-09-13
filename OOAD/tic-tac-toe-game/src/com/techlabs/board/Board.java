@@ -3,7 +3,7 @@ package com.techlabs.board;
 import com.techlabs.cell.Cell;
 import com.techlabs.cell.Mark;
 
-public class Board implements IBoard {
+public class Board  {
 	private Cell[] cells;
 	private boolean isFull = false;
 
@@ -12,20 +12,13 @@ public class Board implements IBoard {
 		initCell();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.techlabs.board.IBoard#initCell()
-	 */
-	@Override
 	public void initCell() {
 		for (int i = 0; i < 9; i++) {
 			cells[i] = new Cell();
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.techlabs.board.IBoard#addMark(int, com.techlabs.cell.Mark)
-	 */
-	@Override
+
 	public void addMark(int position, Mark mark) {
 		if (position > 9 || position < 0) {
 			throw new NotValidPositionException("Position is not valid");
@@ -35,10 +28,7 @@ public class Board implements IBoard {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.techlabs.board.IBoard#isFull()
-	 */
-	@Override
+	
 	public boolean isFull() {
 
 		for (int i = 0; i < 9; i++) {
@@ -54,10 +44,23 @@ public class Board implements IBoard {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.techlabs.board.IBoard#getCells()
-	 */
-	@Override
+	public void display() {
+		Cell[] cells = getCells();
+
+		for (int i = 0; i < 9; i++) {
+			if (i % 3 == 0)
+				System.out.println();
+
+			if (cells[i].getMark() == Mark.EMPTY) {
+				System.out.print(i + " | ");
+			} else {
+				System.out.print(cells[i].getMark() + " | ");
+			}
+
+		}
+	}
+
+
 	public Cell[] getCells() {
 		return cells;
 	}
