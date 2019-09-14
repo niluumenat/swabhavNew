@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>Local Storage</title>
+    </head>
+    <body>
+        <div id="showcount"></div>
+        <button onclick="initialize()"> initialize name</button>
+        <button onclick="count()"> click to increment count</button>
+        <button onclick ="display()" > display</button>
+        <button onclick ="remove()" > remove item</button>
+        </body>
+        <script>
+            
+            window.localStorage
+                      
+            function initialize(){
+                localStorage.setItem("name" , "Hetanksha");     
+            }
+            function remove(){
+                localStorage.removeItem("name");
+                var myName = localStorage.getItem("name");
+                console.log(myName);
+            }
+            var count1=0;
+            function count(){
+                localStorage.setItem("count",count1+1);
+               
+               
+            }
+            function display(){
+               
+                count();
+                var firstName=localStorage.getItem("name");
+                console.log(firstName);
+                var count2= localStorage.getItem("count");
+                console.log(count2);
+            }
+           
+            
+        </script>
+    
+</html>

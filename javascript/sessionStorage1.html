@@ -1,0 +1,17 @@
+<html>
+<body>
+<button onclick ="onClick()" > clickMe</button></body>
+<script>
+window.sessionStorage
+sessionStorage.setItem("firstName","Nilam");
+var firstName = sessionStorage.getItem("firstName");
+
+console.log(firstName);
+function onClick(){
+    sessionStorage.removeItem("firstName");
+    var name=sessionStorage.getItem("firstName");
+    console.log(name);
+}
+
+</script>
+</html>

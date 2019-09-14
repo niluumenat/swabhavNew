@@ -15,7 +15,7 @@ public class Developer implements IEmployee {
 	@Override
 	public void showEmployeeDetails() {
 		// TODO Auto-generated method stub
-		System.out.println(name+ " "+ empId);
+		System.out.println(name+ " "+ empId+" "+position);
 	}
 
 	

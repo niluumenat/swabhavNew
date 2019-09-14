@@ -1,0 +1,29 @@
+<html>
+    <body>
+        <button onclick="clickButton()" >click to increment</button>
+
+    </body><script>
+        //var counter;
+        window.localStorage
+        if(localStorage.getItem("count")==0){
+                var counter = 0;
+        }else{
+                var counter = localStorage.getItem("count");
+        }
+        
+        function clickButton(){
+            countButton();
+            var counter2 = localStorage.getItem("count");
+            console.log(counter2);
+
+            
+        }
+
+        function countButton(){
+            counter = counter+1;
+            localStorage.setItem("count",counter);
+
+        }
+
+        </script>
+</html>
