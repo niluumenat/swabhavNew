@@ -1,0 +1,87 @@
+<html>
+    <head><style>
+        div{
+            border: 2px solid black;    
+        }
+    </style>
+
+    </head>
+    <body>
+
+        <div id="quiz" >
+            <p id="data"> </p>
+            <input type="radio" name= "option" id="firstradio" value="firstradio" ><label id="firstradiobutton"></label>
+            <input type="radio" name= "option" id="secondradio" value="secondradio" ><label id="secondradiobutton"></label>
+            <input type="radio" name= "option" id="thirdradio" value="thirdradio" ><label id="thirdradiobutton"></label>
+        </div>
+        <button id="next">Next</button>
+        
+
+    </body>
+    </html>
+    <script>
+        var quizDiv = document.getElementById("quiz");
+        console.log(quizDiv);
+        
+        
+        var questions = [ {id: 101,
+         text: "Who is the strongest?",
+         options:  {0: "Superman",1: "The Terminator",2: "Waluigi, obviously"}, 
+         answer :0} ,
+         {id: 102,
+         text: "What is the best site ever created?",
+         options:  {0: "SitePoint",1:  "Simple Steps Code",2: "Trick question; they're both the best"}, 
+         answer :2} ,
+         {id: 103,
+         text:"69-18?",
+         options:  {0: "51",1:  "41",2: "61"}, 
+         answer :0} ,
+         {id:104,
+         text: "Square root of 64?",
+         options:  {0: "4",1:  "8",2: "16"}, 
+         answer :1} ,
+         {id:105,
+         text: "18-5 ?",
+         options:  {0: "14",1:  "13",2: "11"}, 
+         answer :1} 
+
+        ];
+
+        console.log(questions);
+        var i=0;
+        var nextDiv = document.getElementById("next");
+        if(i<questions.length){
+            changeOnClickNext(i);
+            nextDiv.onclick = function(){
+            i++;
+            changeOnClickNext(i);
+              
+        };
+        
+        }
+        function changeOnClickNext(i){
+
+            var text = "Id: "+questions[i].id+ "<br>" ;
+            text += "Question: "+questions[i].text + "<br>" ;
+
+            var dataDiv =document.getElementById("data");
+            dataDiv.innerHTML = text;
+
+            var option2 = [];
+            option2[0] = questions[i].options[0] +"<br> ";
+            option2[1] = questions[i].options[1]+"<br>" ;
+            option2[2] = questions[i].options[2]+"<br>";
+                        
+            document.getElementById("firstradiobutton").innerHTML = option2[0];
+            document.getElementById("secondradiobutton").innerHTML = option2[1];
+            document.getElementById("thirdradiobutton").innerHTML = option2[2];
+
+        }
+           
+               
+           
+            
+            
+        
+         
+    </script>
