@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <title>Comments</title>
+    <style>
+        #comments {
+            margin-bottom: 100px;
+            border: 1px solid black;
+        }
+    </style>
+
+</head>
+
+<body>
+    Enter Comments: <input type="text" id="input" onchange="foo()">
+    <div id="comments">
+    </div>
+</body>
+<script>
+    window.localStorage
+    var box = document.getElementById("comments");
+    var previouscomments =[];
+
+    window.onload = function () {
+
+        if (JSON.parse(localStorage.getItem("comments") == 0)) {
+            previouscomments = new Array();
+
+        } else {
+            var previouscomment = JSON.parse(localStorage.getItem("comments"));
+            previouscomments.push("previouscomment") ;
+            box.innerHTML += "<ul><li>" + previouscomment + "</li></ui>";
+        }
+    }
+
+    function foo() {
+        var input = document.getElementById("input");
+        var comment = input.value;
+
+        previouscomments.push(comment);
+        box.innerHTML += "<ul><li>" + comment + "</li></ui>";
+
+        JSON.stringify(localStorage.setItem("comments", previouscomments));
+    }
+
+</script>
+
+</html>
