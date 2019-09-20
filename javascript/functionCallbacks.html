@@ -1,0 +1,13 @@
+<html>
+    <body>
+        <script>
+            function add(a,b,foo){
+                document.write(`The sum of ${a} and ${b} is ${a+b}` + "<br>");
+                foo();
+            }
+            add(4,6, function disp(){
+                document.write('This must be printed after addition.'); 
+            });
+        </script>
+    </body>
+</html>
