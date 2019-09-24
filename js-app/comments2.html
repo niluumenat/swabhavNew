@@ -29,7 +29,6 @@
             previouscomment = JSON.parse(localStorage.getItem("comments"));
             console.log(previouscomments);
             console.log(previouscomment);
-            
             for(i=0;i<previouscomment.length;i++){
                 previouscomments.push(previouscomment[i]);
                 box.innerHTML += "<ul><li>" + previouscomment[i] + "</li></ui>";
