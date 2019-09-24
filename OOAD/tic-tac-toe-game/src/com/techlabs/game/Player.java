@@ -7,7 +7,6 @@ public class Player {
 	private String name;
 	public Player(Mark mark) {
 		this.mark = mark;
-		this.name=name;
 	}
 	public Mark getMark() {
 		return mark;

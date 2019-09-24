@@ -1,0 +1,238 @@
+<html>
+
+<head>
+    <style>
+        #quiz {
+            border: 1px solid black;
+        }
+
+        #next {
+            display: inline;
+        }
+
+        #button {
+            display: inline;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="quiz">
+        <p id="data"> </p>
+        <form id=" mainForm" name="mainForm">
+            <input type="radio" name="option" id="firstradio" value="0"><label id="firstradiobutton"></label>
+            <input type="radio" name="option" id="secondradio" value="1"><label id="secondradiobutton"></label>
+            <input type="radio" name="option" id="thirdradio" value="2"><label id="thirdradiobutton"></label>
+        </form>
+
+    </div>
+
+    <div id="next" style=" float: none; width:150px;"></div>
+    <div id="button" style="float: left; width: 150px;"></div>
+    <div id="submitbutton"></div>
+
+    <div id="results">
+        <canvas id="myCanvas"></canvas>
+        <p id="result"> </p>
+    </div>
+
+</body>
+
+</html>
+<script>
+    var quizDiv = document.getElementById("quiz");
+    var nextDiv = document.getElementById("next");
+    var previousbuttonDiv = document.getElementById("button");
+    var submitButtonDiv = document.getElementById("submitbutton");
+    var resultDiv = document.getElementById("results");
+
+
+    var next = document.createElement("button");
+    next.innerHTML = "Next";
+    nextDiv.append(next);
+
+    var previousbutton = document.createElement("button");
+    previousbutton.innerHTML = "Previous ";
+
+    var submitbutton = document.createElement("button");
+    submitbutton.innerHTML = "Submit";
+
+    var resultbutton;
+    var userSelections = [{ id: 101, selectedAns: "" },
+    { id: 102, selectedAns: "" },
+    { id: 103, selectedAns: "" },
+    { id: 104, selectedAns: "" },
+    { id: 105, selectedAns: "" }];
+
+    var questions = [{
+        id: 101,
+        text: "Who is the strongest?",
+        options: { 0: "Superman", 1: "The Terminator", 2: "Waluigi, obviously" },
+        answer: 0
+    },
+    {
+        id: 102,
+        text: "What is the best site ever created?",
+        options: { 0: "SitePoint", 1: "Simple Steps Code", 2: "Trick question; they're both the best" },
+        answer: 2
+    },
+    {
+        id: 103,
+        text: "69-18?",
+        options: { 0: "51", 1: "41", 2: "61" },
+        answer: 0
+    },
+    {
+        id: 104,
+        text: "Square root of 64?",
+        options: { 0: "4", 1: "8", 2: "16" },
+        answer: 1
+    },
+    {
+        id: 105,
+        text: "18-5 ?",
+        options: { 0: "14", 1: "13", 2: "11" },
+        answer: 1
+    }
+
+    ];
+
+    var questionIterator = 0;
+    changeQuestionOnClick(questionIterator);
+
+    next.onclick = function () {
+        questionIterator++;
+        changeQuestionOnClick(questionIterator);
+        renderRadioButton(questionIterator);
+    };
+
+    previousbutton.onclick = function () {
+        questionIterator = questionIterator - 1;
+        changeQuestionOnClick(questionIterator);
+        renderRadioButton(questionIterator);
+
+        if (questionIterator == 0) {
+            previousbuttonDiv.innerHTML = " ";
+
+        }
+        if (questionIterator <= questions.length-1) {
+            submitButtonDiv.innerHTML = " ";
+            nextDiv.appendChild(next);
+
+        }
+
+    }
+    var selectedButton;
+    document.mainForm.onclick = function () {
+        selectedButton = document.mainForm.option.value;
+        updateUserSelections(questionIterator);
+
+    }
+
+    function updateUserSelections(questionIterator) {
+        userSelections[questionIterator].selectedAns = selectedButton;
+        console.log(userSelections);
+    }
+
+
+
+    function changeQuestionOnClick(questionIterator) {
+
+        if (questionIterator > 0) {
+            previousbuttonDiv.appendChild(previousbutton);
+        }
+        if (questionIterator <= questions.length-1) {
+            var text = questionIterator + 1 + "/"+questions.length + "<br>";
+            text += "Id: " + questions[questionIterator].id + "<br>";
+            text += "Question: " + questions[questionIterator].text + "<br>";
+
+            var dataDiv = document.getElementById("data");
+            dataDiv.innerHTML = text;
+
+            var option2 = [];
+
+            option2[0] = questions[questionIterator].options[0] + "<br> ";
+            option2[1] = questions[questionIterator].options[1] + "<br>";
+            option2[2] = questions[questionIterator].options[2] + "<br>";
+
+            document.getElementById("firstradiobutton").innerHTML = option2[0];
+            document.getElementById("secondradiobutton").innerHTML = option2[1];
+            document.getElementById("thirdradiobutton").innerHTML = option2[2];
+
+        }
+        if (questionIterator >= questions.length-1) {
+            submitButtonDiv.appendChild(submitbutton);
+            nextDiv.innerHTML = " ";
+
+        }
+    }
+
+    function renderRadioButton(questionIterator) {
+        var position = userSelections[questionIterator].selectedAns;
+        setUserSelectedAns(position);
+    }
+
+    function setUserSelectedAns(answer) {
+        if (answer == "") {
+            document.getElementById("firstradio").checked = false;
+            document.getElementById("secondradio").checked = false;
+            document.getElementById("thirdradio").checked = false;
+        }else if (answer == 0)
+            document.getElementById("firstradio").checked = true;
+        else if (answer == 1)
+            document.getElementById("secondradio").checked = true;
+        else if (answer == 2)
+            document.getElementById("thirdradio").checked = true;
+    }
+
+    var counter;
+    function calculateResult() {
+        counter = 0;
+        for (var questionIterator = 0; questionIterator < questions.length; questionIterator++) {
+            var currentId = userSelections[questionIterator].id;
+            var radiono = userSelections[questionIterator].selectedAns;
+
+            if (radiono.length!=0  && questions[questionIterator].answer == radiono) {
+                counter = counter + 1;
+            }
+        }
+    }
+
+
+    submitbutton.onclick = function () {
+
+        calculateResult();
+        quizDiv.innerHTML = " ";
+        previousbuttonDiv.innerHTML = " ";
+        submitButtonDiv.innerHTML = " ";
+
+        var result2 = 0;
+        result2= (counter/questions.length)*100;
+        console.log(result2);
+
+        var canvas= document.getElementById("myCanvas");
+        var rect1 =  canvas.getContext("2d");
+        rect1.beginPath();
+        rect1.rect(0,125,result2,20);
+        rect1.fillStyle = "green";
+        rect1.fill();
+        var rect2 = canvas.getContext("2d");
+        rect2.beginPath();
+        rect2.rect(result2,125,100-result2,20);
+        rect2.fillStyle = "red";
+        rect2.fill();
+        rect2.stroke();
+        rect1.stroke();
+
+        var result3= 100-result2;
+        var resultDiv2 = document.getElementById("result");
+        resultDiv2.innerText =  result2 + "%" + " " + result3 + "%";
+    }
+
+
+
+
+
+</script>

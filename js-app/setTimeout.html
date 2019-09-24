@@ -1,0 +1,47 @@
+<html>
+    <style>
+        #setTimeOut,#clearTimeout {
+            border: 1px solid black;
+            margin-bottom: 10px;
+        }
+    </style>
+    <body > 
+        <button onclick="setTimeOut1()">set Timeout</button>
+        <button onclick="clearTimeOut1()">clear Timeout</button><br>
+        <button onclick="setInterval1()">set Interval</button>
+        <button onclick="clearInterval1()">clear Interval</button>
+
+    </body>   
+        <script>
+            /*var foo = function(){
+                console.log("Greetings from setTimeout");
+            }
+            setTimeout(foo,5000);
+
+            clearTimeout(2000);*/
+
+            var tId;
+            var setTimeOut1=function(){
+                tId =setTimeout(function(){
+                        console.log('from settimeout function');
+                    },5000);
+            };
+
+            var clearTimeOut1 =function (){
+                clearTimeout(tId);
+            }
+            
+            var interval;
+            var setInterval1 = function(){
+                interval = setInterval(() => {
+                    console.log('from setinterval function');
+                }, 3000);
+            };
+
+            var clearInterval1 =function (){
+                clearInterval(interval);
+            }
+            
+           
+        </script>
+</html>

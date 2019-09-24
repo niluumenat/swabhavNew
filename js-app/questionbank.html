@@ -1,0 +1,219 @@
+<html>
+
+<head>
+    <style>
+        #quiz {
+            border: 1px solid black;
+        }
+
+        #next {
+            display: inline;
+        }
+
+        #button {
+            display: inline;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="quiz">
+        <p id="data"> </p>
+        <input type="radio" name="option" id="firstradio" value="0"><label id="firstradiobutton"></label>
+        <input type="radio" name="option" id="secondradio" value="1"><label id="secondradiobutton"></label>
+        <input type="radio" name="option" id="thirdradio" value="2"><label id="thirdradiobutton"></label>
+    </div>
+
+    <div id="next" style=" float: none; width:150px;"></div>
+    <div id="button" style="float: left; width: 150px"></div>
+    <div id="submitbutton"></div>
+
+    <div id="results">
+        <p id="result"> </p>
+    </div>
+
+
+</body>
+
+</html>
+<script>
+    var quizDiv = document.getElementById("quiz");
+    var nextDiv = document.getElementById("next");
+    var previousbuttonDiv = document.getElementById("button");
+    var submitButtonDiv = document.getElementById("submitbutton");
+
+    var next = document.createElement("button");
+    next.innerHTML = "Next";
+    nextDiv.append(next);
+
+    var previousbutton = document.createElement("button");
+    previousbutton.innerHTML = "Previous ";
+
+    var submitbutton = document.createElement("button");
+    submitbutton.innerHTML = "Submit";
+    console.log(quizDiv);
+
+    var resultbutton;
+    var userSelections = [{ id: 101, selctedAns: "" },
+    { id: 102, selctedAns: "" },
+    { id: 103, selctedAns: "" },
+    { id: 104, selctedAns: "" },
+    { id: 105, selctedAns: "" }];
+
+    var questions = [{
+        id: 101,
+        text: "Who is the strongest?",
+        options: { 0: "Superman", 1: "The Terminator", 2: "Waluigi, obviously" },
+        answer: 0
+    },
+    {
+        id: 102,
+        text: "What is the best site ever created?",
+        options: { 0: "SitePoint", 1: "Simple Steps Code", 2: "Trick question; they're both the best" },
+        answer: 2
+    },
+    {
+        id: 103,
+        text: "69-18?",
+        options: { 0: "51", 1: "41", 2: "61" },
+        answer: 0
+    },
+    {
+        id: 104,
+        text: "Square root of 64?",
+        options: { 0: "4", 1: "8", 2: "16" },
+        answer: 1
+    },
+    {
+        id: 105,
+        text: "18-5 ?",
+        options: { 0: "14", 1: "13", 2: "11" },
+        answer: 1
+    }
+
+    ];
+
+    var i = 0;
+    changeQueOnClick(i);
+
+    next.onclick = function () {
+        if (i < 4) {
+            updateUserSelections(i);
+        }
+        i++;
+        changeQueOnClick(i);
+        renderRadioButton(i);
+    };
+
+    previousbutton.onclick = function () {
+        i = i - 1;
+        changeQueOnClick(i);
+        renderRadioButton(i);
+        updateUserSelections(i);
+        if (i == 0) {
+            previousbuttonDiv.innerHTML = " ";
+
+        }
+        if (i <= 3) {
+            submitButtonDiv.innerHTML = " ";
+            nextDiv.appendChild(next);
+
+        }
+
+    }
+
+    function changeQueOnClick(i) {
+        if (i > 0) {
+            previousbuttonDiv.appendChild(previousbutton);
+            nextDiv.append(next);
+        }
+
+        if (i <= 4) {
+            var text = i + 1 + "/5" + "<br>";
+            text += "Id: " + questions[i].id + "<br>";
+            text += "Question: " + questions[i].text + "<br>";
+
+            var dataDiv = document.getElementById("data");
+            dataDiv.innerHTML = text;
+
+            var option2 = [];
+
+            option2[0] = questions[i].options[0] + "<br> ";
+            option2[1] = questions[i].options[1] + "<br>";
+            option2[2] = questions[i].options[2] + "<br>";
+
+            document.getElementById("firstradiobutton").innerHTML = option2[0];
+            document.getElementById("secondradiobutton").innerHTML = option2[1];
+            document.getElementById("thirdradiobutton").innerHTML = option2[2];
+
+
+        }
+        if (i >= 4) {
+            submitButtonDiv.appendChild(submitbutton);
+            nextDiv.innerHTML = " ";
+
+        }
+    }
+
+    function renderRadioButton(i) {
+
+        var answer = userSelections[i].selctedAns;
+
+        if (answer == 0)
+            document.getElementById("firstradio").checked = true;
+        else if (answer == 1)
+            document.getElementById("secondradio").checked = true;
+        else if (answer == 2)
+            document.getElementById("thirdradio").checked = true;
+    }
+
+
+    var counter = 0;
+    function updateUserSelections(i) {
+        if (i <= 4) {
+            var radiobuttons = document.getElementsByName('option');
+            for (var btnindex = 0; btnindex < radiobuttons.length; btnindex++) {
+                if (radiobuttons[btnindex].checked) {
+                    console.log(userSelections);
+                    userSelections[i].selctedAns = radiobuttons[btnindex].value;
+
+
+                }
+            }
+
+        }
+    }
+
+    function calculateResult() {
+        counter;
+        for (k = 0; k < userSelections.length; k++) {
+
+            var id3 = userSelections[k].id;
+            var radiono = userSelections[k].selctedAns;
+
+            for (i = 0; i < questions.length; i++) {
+                if (questions[i].answer == radiono && questions[i].id == id3) {
+                    counter = counter + 1;
+                }
+            }
+        }
+    }
+
+    submitbutton.onclick = function () {
+        updateUserSelections(4);
+        calculateResult();
+        quizDiv.innerHTML = " ";
+        previousbuttonDiv.innerHTML = " ";
+        submitButtonDiv.innerHTML = " ";
+
+        document.getElementById("result").innerHTML = "You gave " + counter + " out of 5 correct...<br>";
+        document.getElementById("result").innerHTML += "<h2>Your Score : " + counter + "</h2>";
+    }
+
+
+
+
+
+</script>

@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <style>
+            #banner{
+                border:2px solid black;
+                margin-bottom: 50px;
+                
+            }
+
+            .w3-container{
+                background-color: aqua;
+                margin-top: 10px;
+
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="banner">
+            
+        </div>
+        <div class="w3-container">
+            <p></p>
+        </div>
+        <button onclick="myFunction()">click me</button>
+        <script>
+            function myFunction(){
+                var banner=document.getElementById("banner");
+                
+                banner.innerHTML = "<center><h1>Welcome to JavaScript</h1></center>";
+            }
+
+            var container = document.getElementsByClassName("w3-container");
+            container[0].innerHTML = "<h1>With a Container</h1>";
+            
+
+        </script>
+
+    </body>
+</html>

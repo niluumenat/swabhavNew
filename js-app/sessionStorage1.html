@@ -1,0 +1,27 @@
+<html>
+    <body>
+        <button onclick ="clickButton()" > clickMe</button>
+        <script>
+        window.sessionStorage
+        var counter =0;
+        
+        if(sessionStorage.getItem("count")==0){
+                counter = 0;
+        }else{
+                counter = sessionStorage.setItem("count",counter);
+                
+        }
+        
+        function clickButton(){
+            counter = sessionStorage.getItem("count");
+            console.log(counter); 
+            countButton();   
+        }
+
+        function countButton(){
+            var counter2 = parseInt(counter);
+            sessionStorage.setItem("count",counter2+1);
+        }
+        </script>
+        </body>
+       </html>

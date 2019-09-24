@@ -1,0 +1,21 @@
+<html>
+    <head><title>Color Picker</title>
+    </head>
+    <body>
+        <select id='select' onchange="changeColor()" >
+            <option value ="#FFFFFF">---select--- </option>
+            <option value= "#FF0000"> Red </option>
+            <option value = "#0000FF"> Blue </option>
+            <option value= "#00FF00"> Green </option>
+        </select>
+       
+        <script>
+        function changeColor(){
+            var selectcolor = document.getElementById('select');
+            var color = selectcolor.value;
+            document.body.style.backgroundColor = color;
+        }
+        </script>
+
+    </body>
+</html>

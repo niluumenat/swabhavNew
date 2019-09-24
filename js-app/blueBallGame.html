@@ -1,0 +1,109 @@
+<html>
+<style>
+    .button {
+        border-radius: 50%;
+        font-size: 50px;
+        margin-right: 10px;
+    }
+</style>
+
+<body>
+    <div id="rules">
+
+    </div>
+    <div id="remainingguessnumber">
+        <p> <span id="demo"></span></p>
+    </div>
+
+</body>
+<script>
+    var ruleDiv = document.getElementById("rules");
+    var remainingguessDiv = document.getElementById("remainingguessnumber");
+    var guess1 = document.getElementById("demo");
+    remainingguessDiv.appendChild(guess1);
+
+    ruleDiv.innerHTML = "<h2>Rules for Blueball Game</h2><br> <h4> 1.there are 50 balls and you have to guess blue ball<br> 2.you have only 3 attempts to guess the blue ball<br> 3.red means guess is too low and green means too high</h4 > ";
+    var button = document.createElement("button");
+    button.innerHTML = "Ok";
+    ruleDiv.appendChild(button);
+
+    button.onclick = function () {
+        var remainingguess = 5;
+        ruleDiv.innerHTML = " ";
+        guess1.innerHTML = "<h3>Remaining Guess: </h3>" + remainingguess;
+        createButtons();
+
+
+    }
+
+    function createButtons() {
+        var count = 0;
+        var random = Math.floor((Math.random() * 50) + 1);
+        for (i = 1; i <= 50; i++) {
+            var button = document.createElement("button");
+            button.className = "button";
+            button.value = i;
+            button.innerHTML = i;
+            console.log(random);
+
+            button.addEventListener('click', function () {
+                count = count + 1;
+
+                remainingguess = 5 - count;
+                guess1.innerHTML = "<h3>Remaining Guess: </h3>" + remainingguess;
+                setColorForButton(this, random);
+
+                if (count >= 5) {
+                    restartGame();
+                }
+
+            });
+            ruleDiv.appendChild(button);
+
+        }
+
+    }
+
+    function setColorForButton(val, random) {
+
+        if (val.value == random) {
+            val.style.backgroundColor = "blue";
+        } else if (val.value > random) {
+            val.style.backgroundColor = "green";
+        } else if (val.value < random) {
+            val.style.backgroundColor = "red";
+        }
+        if (val.value == random) {
+            setTimeout(function () {
+                guess1.innerHTML = " ";
+                ruleDiv.innerHTML = "<h1><center>You won</center></h1>";
+            }, 1000);
+
+        }
+
+    }
+
+    function restartGame() {
+        guess1.innerHTML = " ";
+        ruleDiv.innerHTML = " ";
+        var button2 = document.createElement("button");
+        button2.innerHTML = "Restart Game";
+
+        button2.onclick = function () {
+            var remainingguess = 5;
+            ruleDiv.innerHTML = " ";
+            guess1.innerHTML = "<h3>Remaining Guess: </h3>" + remainingguess;
+            createButtons();
+        }
+        setTimeout(function () {
+
+            ruleDiv.innerHTML = " ";
+            ruleDiv.appendChild(button2);
+        }, 2000);
+
+    }
+
+
+</script>
+
+</html>
