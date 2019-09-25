@@ -27,23 +27,24 @@
         if (localStorage.getItem("comments") != 0) {
             previouscomment=[];
             previouscomment = JSON.parse(localStorage.getItem("comments"));
-            console.log(previouscomments);
-            console.log(previouscomment);
+            
             for(i=0;i<previouscomment.length;i++){
                 previouscomments.push(previouscomment[i]);
                 box.innerHTML += "<ul><li>" + previouscomment[i] + "</li></ui>";
             }
 
         } else {
-
             var previouscomment = [];
 
         }
     }
 
     function foo() {
+        
         var input = document.getElementById("input");
+        console.log(input);
         var comment = input.value;
+        console.log(comment);
 
         previouscomments.push(comment);
         console.log(previouscomments);
