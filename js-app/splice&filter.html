@@ -1,0 +1,27 @@
+<html>
+
+<body>
+    <p> Hello </p>
+</body>
+<script>
+    var array = [{ id: 101, name: "Nil" },
+    { id: 102, name: "Niki" },
+    { id: 103, name: "Nilesh" }
+    ];
+    console.log(array);
+    //array.splice(0, 1);
+    console.log(array);
+
+    var idToRemove = 102;
+
+
+    array = array.filter( function(arr) {
+
+        return arr.id !== idToRemove;
+       
+    });
+    console.log(array);
+
+</script>
+
+</html>

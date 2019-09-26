@@ -6,12 +6,13 @@
             border: 1px solid black;
             text-align: center;
             align-self: auto;
-            margin-left: 40%;
-            margin-top: 5%;
-            padding-bottom: 10px;
-            width: 200px;
+            margin-left: 43%;
+            margin-top: 3%;
+            padding-bottom: 5px;
+            width: 230px;
             height: 50px;
         }
+
         #form {
             border: 1px solid black;
             text-align: center;
@@ -22,11 +23,16 @@
             margin: 3%;
             text-align: center;
         }
-        #addbutton , #clearbutton{
+
+        #addbutton,
+        #clearbutton {
             border-radius: 50%;
             font-size: 20px;
         }
-        table,th,td{
+
+        table,
+        th,
+        td {
             border: 1px solid black;
             border-collapse: collapse;
         }
@@ -40,9 +46,9 @@
                 <h2>Employee Form</h2>
             </div><br>
 
-            Name: <input type="text" id="name" onchange="addData()"><br>
+            Name: <input type="text" id="name"><br>
             <br>
-            Job: <select id="job" onchange="addData()">
+            Job: <select id="job">
                 <option value=" ">---select---</option>
                 <option value="Developer">Developer</option>
                 <option value="Tester">Tester</option>
@@ -51,15 +57,17 @@
                 <option value="Analytics">Analytics</option>
             </select><br>
             <br>
-            Salary: <input type="text"  id="salary" onchange="addData()"><br>
+            Salary: <input type="text" id="salary"><br>
             <br>
 
         </div>
         <br>
-        <button id="addbutton"> Add</button>
-        <button id="clearbutton">Clear</button><br>
+        <button id="addbutton" onclick="appendUserDataInTable();" style="background-color: pink"> Add</button>
+        <button id="clearbutton" onclick="clearOnClick()" style="background-color: cadetblue">Clear</button><br>
+
         <br>
-        <table style="width: 100%">
+        <table style="width: 100% " id="table">
+            <div id="button"></div>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
@@ -76,18 +84,74 @@
     var inputname = document.getElementById("name");
     var inputjob = document.getElementById("job");
     var inputsalary = document.getElementById("salary");
+    var button = document.getElementById("button");
     var userData = [];
 
-    function addData(){
+    function updateUserData() {
+        var id1 = Date.now();
         var name1 = inputname.value;
         var jobSelected = inputjob.value;
         var salary1 = inputsalary.value;
-        var data = {id:Date.now() , name: name1, job: jobSelected, salary: salary1 };
+        var data = { id: id1, name: name1, job: jobSelected, salary: salary1 };
         userData.push(data);
         console.log(userData);
+    }
 
+
+    function appendUserDataInTable() {
+        updateUserData();
+        var table = document.getElementById("table");
+        for (userDataIterator = 0; userDataIterator < userData.length; userDataIterator++) {
+            button = document.createElement("button");
+            button.innerHTML = "X";
+
+            button.addEventListener('click', function () {
+                console.log(this);
+                deleteRowFromUserData(this);
+            });
+        }
+        var row = table.insertRow(userData.length);
+
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+
+        cell1.innerHTML = userData[userData.length - 1].id;
+        button.value = userData[userData.length - 1].id;
+        cell2.innerHTML = userData[userData.length - 1].name;
+        cell3.innerHTML = userData[userData.length - 1].job;
+        cell4.innerHTML = userData[userData.length - 1].salary;
+        cell5.append(button);
+    }
+
+    var idToRemove;
+    function deleteRowFromUserData(val) {
+        
+        idToRemove = val.value;
+
+        userData = userData.filter(function (array) {
+            //return array.id !== idToRemove;
+
+            console.log(idToRemove);
+            console.log(array);
+            if (array[id] == idToRemove) {
+                
+                console.log(array);
+            }
+
+        });
+        console.log(userData);
 
     }
 
+    function clearOnClick() {
+        inputname.value = " ";
+        inputjob.value = " ";
+        inputsalary.value = " ";
+    }
+
 </script>
+
 </html>
