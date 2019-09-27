@@ -1,0 +1,33 @@
+<html>
+    <body>
+        <p>This is p element</p>
+        <p>This is also a p element</p>
+        <p>Click button to change color of first p tag using querySelector</p>
+
+        <p class="center">queryselector using class</p>
+        <p class="center">querySelector using class</p>
+
+        <h2 id="demo">This is h2 with id</h2>
+        <div id="demo">This is div with id</div>
+        <p id="demo">this is p element with id</p>
+
+        <div id="example">this is div</div>
+        <div id="example">this is also div with same id</div>
+
+        <button onclick="foo()">Click me</button>
+
+    </body>
+</html>
+<script>
+    function foo(){
+        document.querySelector("p").style.backgroundColor = "red";
+
+        document.querySelector("p.center").style.backgroundColor = "green";
+
+        document.querySelector("#demo").style.backgroundColor = "blue";
+
+        document.querySelector("#example").style.background = "yellow";
+        
+    }
+
+</script>

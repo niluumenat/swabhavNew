@@ -1,0 +1,37 @@
+<html>
+<script src="jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#division").css("border", "1px solid black");
+        $("#boxx").keyup(function(event){
+            var text = $(this).val();
+            $("#div1").text(text);
+        })
+        
+    })
+
+</script>
+
+<body>
+    <div id="division">
+        Text: <input id="boxx" type="text"><br>
+        FontSize: <input id="font" type="text"> px <br>
+        bgColor: <select id="bgcolor">
+            <option>---select---</option>
+            <option>red</option>
+            <option>blue</option>
+            <option>green</option>
+        </select><br>
+        fontColor: <select id="fontcolor">
+            <option>---select---</option>
+            <option>red</option>
+            <option>blue</option>
+            <option>green</option>
+        </select><br>
+    </div>
+
+    <div id="div1">Hello</div>
+
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<html>
+<script src="jquery.js"></script>
+
+<script>
+    var colors = [{ text: "red", code: "#FF0000" },
+    { text: "blue", code: "#00FF00" },
+    { text: "green", code: "#0000FF" }];
+
+    $(document).ready(function () {
+        $("select.colors").change(function () {
+            var selectedColorText = $("select.colors").children("option:selected").text();
+            var selectedColorValue;
+            $.each(colors ,function(){
+                text = colors.text;
+                console.log(text);
+                if (selectedColorText == text) {
+                    console.log(selectedColorText);
+                    selectedColorValue = colors.code;
+                }
+            });
+            $('body').css("background-color", selectedColorText);
+            $("#details").append("Value: " + selectedColorValue + "<br>" + "text: " + selectedColorText);
+        });
+    });
+
+</script>
+
+<body>
+    <form>
+        <label>Pick a Color: </label>
+        <select class="colors">
+            <option>---select---</option>
+            <option>red </option>
+            <option>blue </option>
+            <option>green</option>
+        </select>
+    </form>
+    <p id="details"></p>
+</body>
+
+
+
+</html>

@@ -1,0 +1,22 @@
+<html>
+
+<script src="jquery.js"></script>
+
+<body>
+    <h1 id="banner"></h1>
+</body>
+<script>
+    console.log(jQuery);
+    console.log($);
+    console.log(jQuery == $);
+    $(document).ready(function(){
+        $("#banner")
+        .css({ "border": "3px solid black", "text-align": "center", "background": "red" })
+        .append("Welcome to jQuery");
+
+    })
+
+    
+</script>
+
+</html>
