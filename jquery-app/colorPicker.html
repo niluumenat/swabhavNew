@@ -2,24 +2,30 @@
 <script src="jquery.js"></script>
 
 <script>
-    var colors = [{ text: "red", code: "#FF0000" },
-    { text: "blue", code: "#00FF00" },
-    { text: "green", code: "#0000FF" }];
+    var colors = [{text: "---select---",code: "#FFFFFF"},
+    { text: "red", code: "#FF0000" },
+    { text: "blue", code: "#0000FF" },
+    { text: "green", code: "#00FF00" }];
 
     $(document).ready(function () {
+
+        for (i = 0; i < colors.length; i++) {
+            $('.colors').append($('<option>',
+                {
+                    value: colors[i].code,
+                    text: colors[i].text
+                }));
+        }
         $("select.colors").change(function () {
-            var selectedColorText = $("select.colors").children("option:selected").text();
-            var selectedColorValue;
-            $.each(colors ,function(){
-                text = colors.text;
-                console.log(text);
-                if (selectedColorText == text) {
-                    console.log(selectedColorText);
-                    selectedColorValue = colors.code;
-                }
-            });
-            $('body').css("background-color", selectedColorText);
-            $("#details").append("Value: " + selectedColorValue + "<br>" + "text: " + selectedColorText);
+            var selectedColorValue = $(this).val();
+            console.log(selectedColorValue);
+
+            var selectedColorText = $(".colors option:selected").html();
+            console.log(selectedColorText);
+
+            $('body').css("background-color", selectedColorValue);
+            $("#details").append("Value: " + selectedColorValue + "<br>" + "text: " + selectedColorText + "<br>");
+
         });
     });
 
@@ -29,10 +35,7 @@
     <form>
         <label>Pick a Color: </label>
         <select class="colors">
-            <option>---select---</option>
-            <option>red </option>
-            <option>blue </option>
-            <option>green</option>
+
         </select>
     </form>
     <p id="details"></p>

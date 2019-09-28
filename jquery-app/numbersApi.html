@@ -1,0 +1,56 @@
+<html>
+<script src="jquery.js"></script>
+<script src="moment.js"></script>
+<script>
+    var facts = [];
+    $(document).ready(function () {
+        var factsFromLocalStorage = localStorage.getItem("facts");
+        var factsArray = factsFromLocalStorage ? JSON.parse(factsFromLocalStorage) : [];
+        for (var iterator = 0; iterator < factsArray.length; iterator++) {
+            facts.push(factsArray[iterator]);
+            var date = factsArray[iterator].date;
+
+            $("#div2").append("*Fact: " + factsArray[iterator].results + " Date: " + moment(date).fromNow() + "<br>");
+        }
+
+        $("#div2").css({ "width": "50%" }, { "height": "100px" });
+        $("#facts").click(function () {
+            var number = $("#box").val();
+            $.ajax({
+                type: "GET",
+                url: "http://numbersapi.com/" + number,
+                success: function (result) {
+                    var now = moment().format();
+
+                    var fact = { results: result, date: now };
+                    facts.push(fact);
+
+                    $("#div2").append("*Fact: " + facts[facts.length - 1].results +" Date: " + facts[facts.length - 1].date + "<br>");
+                    localStorage.setItem("facts", JSON.stringify(facts));
+
+                }
+            })
+        })
+    })
+
+
+
+</script>
+
+<body>
+    <div id="number">
+        No: <input id="box" type="text">
+        <button id="facts">Find facts</button>
+    </div>
+    <br>
+    <div id="div2">
+
+    </div>
+    <br>
+
+
+
+
+</body>
+
+</html>

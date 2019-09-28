@@ -1,14 +1,45 @@
 <html>
 <script src="jquery.js"></script>
 <script>
+    var colors = [{ text: "---select---", code: "#FFFFFF" },
+        { text: "red", code: "#FF0000" },
+        { text: "blue", code: "#0000FF" },
+        { text: "green", code: "#00FF00" }];
+
     $(document).ready(function () {
-        $("#division").css("border", "1px solid black");
-        $("#boxx").keyup(function(event){
+
+        $("#division").css({ "border": "1px solid black" });
+        $("#division").css("text-align", "center");
+        $(".div2").css("text-align","center");
+
+        for (i = 0; i < colors.length; i++) {
+            $('select').append($('<option>',
+                {
+                    value: colors[i].code,
+                    text: colors[i].text
+                }));
+        }
+
+        $("#boxx").keyup(function (event) {
             var text = $(this).val();
-            $("#div1").text(text);
+            $(".changeme").text(text).css("text-align","center");
+
         })
-        
-    })
+        $("#font").change(function () {
+            var fontSize = $(this).val();
+            $(".changeme").css("font-size", fontSize);
+        })
+
+        $("select.bgcolors").change(function () {
+            var selectedColorValue = $(this).val();
+            $('.changeme').css("background-color", selectedColorValue);
+        })
+
+        $("select.fontcolors").change(function () {
+            var selectedFontColorValue = $(this).val();
+            $('.changeme').css("color", selectedFontColorValue);
+        })
+    });
 
 </script>
 
@@ -16,21 +47,17 @@
     <div id="division">
         Text: <input id="boxx" type="text"><br>
         FontSize: <input id="font" type="text"> px <br>
-        bgColor: <select id="bgcolor">
-            <option>---select---</option>
-            <option>red</option>
-            <option>blue</option>
-            <option>green</option>
+        bgColor: <select class="bgcolors">
+            
         </select><br>
-        fontColor: <select id="fontcolor">
-            <option>---select---</option>
-            <option>red</option>
-            <option>blue</option>
-            <option>green</option>
+        fontColor: <select class="fontcolors">
+            
         </select><br>
     </div>
-
-    <div id="div1">Hello</div>
+    <div class="div2">
+        <br>
+    <textarea class="changeme"></textarea>
+    </div>
 
 </body>
 
