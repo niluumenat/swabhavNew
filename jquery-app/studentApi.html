@@ -1,0 +1,80 @@
+<html>
+<script src="jquery.js"></script>
+
+<script>
+
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students",
+            cache: false,
+            complete: function () {
+                $('#loading').hide();
+            },
+            success: function (result) {
+                //console.log(result);
+                var counter = 0;
+
+                var studentData = { data: result };
+
+                for (var iterator = 0; iterator < result.length; iterator++) {
+                    counter = counter + 1;
+                }
+                $("#studentsFound").css("color", "green")
+                    .append("No. of students found: " + counter);
+
+                var key1 = Object.keys(result[0]);
+                for (var iterator = 0; iterator < key1.length; iterator++) {
+                    //console.log(Object.keys(key1)[iterator]);
+                    $("#studentTable >thead tr").append("<th>" + key1[iterator].toUpperCase() + "</th>");
+                }
+
+                Object.keys(result).forEach(function (iterator) {
+                    console.log(iterator);
+                    var value = Object.values(result[iterator]);
+                    console.log(value);
+                    $("#studentTable ").css("border", "1px solid black").append("<tr>");
+                    for (var i = 0; i < value.length; i++) {
+                        if (Object.values(value)[i] == false) {
+                            value.splice(i, 1, "Female");
+                        } else if (Object.values(value)[i] == true) {
+                            value.splice(i, 1, "Male");
+                        }
+
+                        $("#studentTable ").append("<td>" + Object.values(value)[i] + "</td>");
+                    }
+                    $("#studentTable ").append("</tr>");
+
+                })
+
+
+            }
+
+
+        })
+    })
+
+
+</script>
+
+<body>
+    <style>
+        #studentTable {
+            border: 1px solid black;
+        }
+    </style>
+    <div id="loading" style="text-align: center">
+        <img src="spinner.gif"> </div>
+    <div id="studentsFound"> </div>
+    <table id="studentTable" style="width: 100%;">
+        <thead>
+            <tr>
+
+            </tr>
+        </thead>
+    </table>
+
+</body>
+
+</html>
