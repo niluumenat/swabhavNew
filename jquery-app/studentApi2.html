@@ -2,9 +2,52 @@
 <script src="jquery.js"></script>
 
 <script>
-
-
     $(document).ready(function () {
+        $("#boxx").css("text-align", "center");
+        displayIntable();
+        $(".deletebtn").click(function () {
+            $(document).alert("clicked");
+            console.log($("#studentTable .deletebtn").attr("value"));
+        });
+
+        $("#add").click(function () {
+            $("#studentsFound").html("");
+            $("#studentTable").html("");
+            var data2;
+            var rollno1 = parseInt($("#rollno").val());
+            var name1 = $("#name").val();
+            var gender1 = $("input[name='gender']:checked").val();
+            if (gender1 == "true") {
+                gender1 = true;
+            } else {
+                gender1 = false;
+            }
+            var age1 = parseInt($("#age").val());
+            var emailid1 = $("#emailId").val();
+            var date1 = $("#date").val();
+            data2 = { "rollNo": rollno1, "name": name1, "isMale": gender1, "age": age1, "email": emailid1, "date": date1 };
+            console.log(data2);
+
+            $.ajax({
+                type: "POST",
+                url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students",
+                data: data2,
+                success: function (result) {
+                    var id1 = result;
+                    data2 = { id: id1, rollNo: rollno1, name: name1, isMale: gender1, age: age1, email: emailid1, date: date1 };
+                    console.log(data2);
+                    displayIntable();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            });
+        });
+
+    });
+
+    function displayIntable() {
+
         $.ajax({
             type: "GET",
             url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students",
@@ -13,10 +56,8 @@
                 $('#loading').hide();
             },
             success: function (result) {
-                //console.log(result);
-                var counter = 0;
 
-                var studentData = { data: result };
+                var counter = 0;
 
                 for (var iterator = 0; iterator < result.length; iterator++) {
                     counter = counter + 1;
@@ -26,29 +67,52 @@
 
                 var key1 = Object.keys(result[0]);
                 for (var iterator = 0; iterator < key1.length; iterator++) {
-                    //console.log(Object.keys(key1)[iterator]);
+
+                    if (key1[iterator] == "isMale") {
+                        key1.splice(iterator, 1, "Gender");
+                    }
                     $("#studentTable >thead tr").append("<th>" + key1[iterator].toUpperCase() + "</th>");
                 }
 
                 Object.keys(result).forEach(function (iterator) {
-                    console.log(iterator);
                     var value = Object.values(result[iterator]);
-                    console.log(value);
                     $("#studentTable ").css("border", "1px solid black").append("<tr>");
                     for (var i = 0; i < value.length; i++) {
-                        if (Object.values(value)[i] == false) {
-                            value.splice(i, 1, "Female");
-                        } else if (Object.values(value)[i] == true) {
-                            value.splice(i, 1, "Male");
-                        }
-                        $("#studentTable ").append("<td>" + Object.values(value)[i] + "</td>");
+                        updateGender(value, i);
+                        $("#studentTable").append("<td>" + Object.values(value)[i] + "</td>");
+
                     }
+                    $("#studentTable").append('<td><button class="deletebtn" name ="btn" value="' + value[0] + '" >Delete</button></td>' +
+                        $("#studentTable .deletebtn").bind("click", Delete));
                     $("#studentTable ").append("</tr>");
                 })
             }
         })
-    })
+    }
+    function Delete() {
+        $("#studentsFound").html("");
+        $("#studentTable").html("");
+        var rowId = $(this).attr("value");
+        console.log(rowId);
 
+        /*$.ajax({
+            type: "DELETE",
+            url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/" + rowId,
+            success: function (output) {
+
+                console.log(output);
+                displayIntable();
+            }
+        });*/
+    }
+
+    function updateGender(value, iterator) {
+        if (Object.values(value)[iterator] == false) {
+            value.splice(iterator, 1, "Female");
+        } else if (Object.values(value)[iterator] == true) {
+            value.splice(iterator, 1, "Male");
+        }
+    }
 
 </script>
 
@@ -59,17 +123,20 @@
         }
     </style>
     <div id="boxx">
-        RollNo: <input type="text" id="rollno"><br>
+        RollNo: <input type="number" id="rollno"><br>
         Name: <input type="text" id="name"><br>
-        Gender:  <input type="radio" >M 
-        <input type="radio">F <br>
-        EmailId: <input type="text">
-        
+        Gender:<input type="radio" name="gender" value=true>M
+        <input type="radio" name="gender" value=false>F <br>
+        Age: <input type="number" id="age"><br>
+        EmailId: <input type="text" id="emailId"><br>
+        Date: <input type="text" id="date"><br>
 
+        <button id="add" style=" background-color: cadetblue "> Add </button>
     </div>
+
     <div id="loading" style="text-align: center">
         <img src="spinner.gif"> </div>
-    <div id="studentsFound"> </div>
+    <h1 id="studentsFound"> </h1>
     <table id="studentTable" style="width: 100%;">
         <thead>
             <tr>
