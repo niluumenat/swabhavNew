@@ -4,50 +4,48 @@
 <script>
     $(document).ready(function () {
         $("#boxx").css("text-align", "center");
-        displayIntable();
-        $(".deletebtn").click(function () {
-            $(document).alert("clicked");
-            console.log($("#studentTable .deletebtn").attr("value"));
-        });
+        displayUserDataInTable();
 
-        $("#add").click(function () {
-            $("#studentsFound").html("");
-            $("#studentTable").html("");
-            var data2;
-            var rollno1 = parseInt($("#rollno").val());
-            var name1 = $("#name").val();
-            var gender1 = $("input[name='gender']:checked").val();
-            if (gender1 == "true") {
-                gender1 = true;
-            } else {
-                gender1 = false;
-            }
-            var age1 = parseInt($("#age").val());
-            var emailid1 = $("#emailId").val();
-            var date1 = $("#date").val();
-            data2 = { "rollNo": rollno1, "name": name1, "isMale": gender1, "age": age1, "email": emailid1, "date": date1 };
-            console.log(data2);
-
-            $.ajax({
-                type: "POST",
-                url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students",
-                data: data2,
-                success: function (result) {
-                    var id1 = result;
-                    data2 = { id: id1, rollNo: rollno1, name: name1, isMale: gender1, age: age1, email: emailid1, date: date1 };
-                    console.log(data2);
-                    displayIntable();
-                },
-                error: function (error) {
-                    alert(error.responseText);
-                }
-            });
-        });
-
+        $("#add").on('click', addUserDataOnClick);
     });
 
-    function displayIntable() {
+    function addUserDataOnClick() {
+        $("#studentsFound").html("");
+        $("#studentTable").html("");
 
+        var data2;
+        var rollno1 = parseInt($("#rollno").val());
+        var name1 = $("#name").val();
+        var gender1 = $("input[name='gender']:checked").val();
+        if (gender1 == "true") {
+            gender1 = true;
+        } else {
+            gender1 = false;
+        }
+        var age1 = parseInt($("#age").val());
+        var emailid1 = $("#emailId").val();
+        var date1 = $("#date").val();
+        data2 = { "rollNo": rollno1, "name": name1, "isMale": gender1, "age": age1, "email": emailid1, "date": date1 };
+        console.log(data2);
+
+        $.ajax({
+            type: "POST",
+            url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students",
+            data: data2,
+            success: function (result) {
+                var id1 = result;
+                data2 = { id: id1, rollNo: rollno1, name: name1, isMale: gender1, age: age1, email: emailid1, date: date1 };
+                console.log(data2);
+                displayUserDataInTable();
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        });
+    }
+
+
+    function displayUserDataInTable() {
         $.ajax({
             type: "GET",
             url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students",
@@ -66,42 +64,129 @@
                     .append("No. of students found: " + counter);
 
                 var key1 = Object.keys(result[0]);
+                $("#studentTable ").append("<tr>");
                 for (var iterator = 0; iterator < key1.length; iterator++) {
 
                     if (key1[iterator] == "isMale") {
                         key1.splice(iterator, 1, "Gender");
                     }
-                    $("#studentTable >thead tr").append("<th>" + key1[iterator].toUpperCase() + "</th>");
+                    $("#studentTable ").append("<th>" + key1[iterator].toUpperCase() + "</th>");
+                    $("#studentTable th").css("background-color", "skyblue");
                 }
+                $("#studentTable ").append("</tr>");
 
                 Object.keys(result).forEach(function (iterator) {
                     var value = Object.values(result[iterator]);
-                    $("#studentTable ").css("border", "1px solid black").append("<tr>");
+                    $("#studentTable ").append('<tr  id="row' + iterator + ' ">');
+
                     for (var i = 0; i < value.length; i++) {
                         updateGender(value, i);
                         $("#studentTable").append("<td>" + Object.values(value)[i] + "</td>");
-
                     }
-                    $("#studentTable").append('<td><button class="deletebtn" name ="btn" value="' + value[0] + '" >Delete</button></td>' +
-                        $("#studentTable .deletebtn").bind("click", Delete));
+
+                    $("#studentTable").append('<td><button class="deletebtn" name ="dbtn" value="' + value[0] + '" >Delete</button></td>');
+                    $("#studentTable").append('<td><button class="editbtn" id="row' + iterator + '" value="' + value + '" >Edit</button></td>');
                     $("#studentTable ").append("</tr>");
                 })
+
+                $("#studentTable .deletebtn").on("click", Delete);
+                $("#studentTable .editbtn").on("click", edit);
+
+                var $inputbtns = $("#studentTable .editbtn");
+                $inputbtns.click(function () {
+                    var getValueButton = this.id;
+                    $inputbtns.not('#' + getValueButton).prop("disabled", "true");
+                });
             }
         })
     }
-    function Delete() {
+
+    function edit() {
+        $(this).toggleClass("highlight");
+        var rowData = $(this).val();
+        var rowDataArray = rowData.split(",");
+
+        $(this).html("Cancel");
+        $(this).on('click', cancel);
+
+        $("#add").hide();
+        $("#boxx").append('<button class="update">Update</button>');
+        $(".update").on('click', function () {
+            alert("Are you sure you want to update this id?");
+            $("#studentsFound").html("");
+            $("#studentTable").html("");
+
+            var data2;
+            var id1 = rowDataArray[0];
+            console.log(id1);
+            var rollno1 = parseInt($("#rollno").val());
+            var name1 = $("#name").val();
+            var gender1 = $("input[name='gender']:checked").val();
+            if (gender1 == "true") {
+                gender1 = true;
+            } else {
+                gender1 = false;
+            }
+            var age1 = parseInt($("#age").val());
+            var emailid1 = $("#emailId").val();
+            var date1 = $("#date").val();
+            data2 = { "id": id1, "rollNo": rollno1, "name": name1, "isMale": gender1, "age": age1, "email": emailid1, "date": date1 };
+            console.log(data2);
+
+            /*$.ajax({
+                type: "PUT",
+                url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/ " + id1,
+                data: data2,
+                success: function (result) {
+                    console.log(result);
+                    displayUserDataInTable();
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            });*/
+        });
+
+        var rollno1 = parseInt($("#rollno").val(rowDataArray[1]));
+        var name1 = $("#name").val(rowDataArray[2]);
+        var age1 = parseInt($("#age").val(rowDataArray[3]));
+        var emailid1 = $("#emailId").val(rowDataArray[4]);
+        var date1 = $("#date").val(rowDataArray[5]);
+
+        var gender1 = $("input[name='gender']").prop("checked", rowDataArray[6]);
+    }
+
+    function cancel() {
         $("#studentsFound").html("");
         $("#studentTable").html("");
+        $(".update").hide();
+        $("#add").show();
+
+        parseInt($("#rollno").val(''));
+        $("#name").val('');
+        parseInt($("#age").val(''));
+        $("#emailId").val('');
+        $("#date").val('');
+
+        $("input[name='gender']").prop("checked", false);
+        displayUserDataInTable();
+        alert("are you sure you want to cancel this update?");
+    }
+
+    function Delete() {
         var rowId = $(this).attr("value");
         console.log(rowId);
+        alert("Are you sure you want to delete " + rowId + "id ?");
+        $("#studentsFound").html("");
+        $("#studentTable").html("");
+
 
         /*$.ajax({
             type: "DELETE",
             url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/" + rowId,
             success: function (output) {
-
                 console.log(output);
-                displayIntable();
+                displayUserDataInTable();
             }
         });*/
     }
@@ -118,6 +203,18 @@
 
 <body>
     <style>
+        th,
+        td {
+            width: 150px;
+            text-align: center;
+            border: 1px solid black;
+            padding: 2px;
+        }
+
+        .highlight {
+            background-color: red;
+        }
+
         #studentTable {
             border: 1px solid black;
         }
@@ -125,8 +222,8 @@
     <div id="boxx">
         RollNo: <input type="number" id="rollno"><br>
         Name: <input type="text" id="name"><br>
-        Gender:<input type="radio" name="gender" value=true>M
-        <input type="radio" name="gender" value=false>F <br>
+        Gender:<input type="radio" name="gender" value="Male">M
+        <input type="radio" name="gender" value="Female">F <br>
         Age: <input type="number" id="age"><br>
         EmailId: <input type="text" id="emailId"><br>
         Date: <input type="text" id="date"><br>
@@ -137,12 +234,8 @@
     <div id="loading" style="text-align: center">
         <img src="spinner.gif"> </div>
     <h1 id="studentsFound"> </h1>
-    <table id="studentTable" style="width: 100%;">
-        <thead>
-            <tr>
+    <table id="studentTable" class="row" style="width: 100%;">
 
-            </tr>
-        </thead>
     </table>
 
 </body>

@@ -1,0 +1,203 @@
+<html>
+<script src="jquery.js"></script>
+<script>
+    getProducts = [
+        { name: "---select---", cost: "" },
+        { id: 101, name: "iPhone6", cost: 50000 },
+        { id: 102, name: "iPhoneX", cost: 100000 },
+        { id: 103, name: "Mi Note 5pro", cost: 15000 },
+        { id: 104, name: "Mi Note 7pro", cost: 20000 },
+        { id: 105, name: "Mi K20", cost: 30000 }
+    ]
+
+    $(document).ready(function () {
+        for (var productIterator = 0; productIterator < getProducts.length; productIterator++) {
+            $('.products').append($('<option>',
+                {
+                    text: getProducts[productIterator].name + "-" + getProducts[productIterator].cost,
+                    value: getProducts[productIterator].id + " ," + getProducts[productIterator].name + "," + getProducts[productIterator].cost
+                }));
+        }
+        $("select.products").change(function () {
+            $("#cost").html("");
+            $("#check").html("");
+            $("#quantity").val("1");
+
+            var selectedProduct = $(this).val();
+            var selectedProductDetails = selectedProduct.split(",");
+            $("#cost").append(selectedProductDetails[2]);
+            calculateCheckOutPrice();
+        });
+        $("#lineItems").css("border", "1px solid black");
+        $("#add").on('click', getSingleProduct);
+
+    });
+
+    var productToAdd = [];
+    function getSingleProduct() {
+
+        var getProduct = $("select.products").val();
+        var getProductValue = getProduct.split(",");
+        var quantity1 = $("#quantity").val();
+
+        var lineItemCost = findLineItemCost(getProductValue[2], quantity1);
+        var lineItem = { "id": getProductValue[0], "product": getProductValue[1], "cost": getProductValue[2], "quantity": quantity1, "lineItemCost": lineItemCost };
+
+        if (productToAdd != "") {
+            for (var iterator = 0; iterator < productToAdd.length; iterator++) {
+                if (getProductValue[0] == productToAdd[iterator].id) {
+                } else {
+                    productToAdd.push(lineItem);
+                    console.log(productToAdd);
+                }
+            }
+        } else {
+            productToAdd.push(lineItem);
+            console.log(productToAdd);
+        }
+
+        $("select.products").val("");
+        $("#quantity").val("");
+
+        displayLineItems();
+    }
+
+    function displayLineItems() {
+        $("#check").html("");
+        var table = document.getElementById("lineItems");
+        var lengthOfTable = table.rows.length;
+
+        for (var tableIterator = lengthOfTable - 1; tableIterator >= 1; tableIterator--) {
+            table.deleteRow(tableIterator);
+        }
+
+        for (var lineItemIterator = 0; lineItemIterator < productToAdd.length; lineItemIterator++) {
+
+            var deletebtn = document.createElement("button");
+            deletebtn.innerHTML = "X";
+
+            var addQuantityBtn = document.createElement("button");
+            addQuantityBtn.innerHTML = "++";
+
+            addQuantityBtn.addEventListener('click', function () {
+                addQuantity(this);
+            });
+
+            deletebtn.addEventListener('click', function () {
+                deleteRow(this);
+            });
+
+            var row = table.insertRow(lineItemIterator + 1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+            var cell7 = row.insertCell(6);
+
+            cell1.innerHTML = productToAdd[lineItemIterator].id;
+            deletebtn.value = productToAdd[lineItemIterator].id;
+
+            cell2.innerHTML = productToAdd[lineItemIterator].product;
+            cell3.innerHTML = productToAdd[lineItemIterator].cost;
+            cell4.innerHTML = productToAdd[lineItemIterator].quantity;
+            addQuantityBtn.value = productToAdd[lineItemIterator].id;
+            cell5.innerHTML = productToAdd[lineItemIterator].lineItemCost;
+            cell6.append(deletebtn);
+            cell7.append(addQuantityBtn);
+        }
+        calculateCheckOutPrice();
+
+    }
+
+    function addQuantity(idToIncreaseQuantity) {
+        var idToFind = idToIncreaseQuantity.value;
+
+        productToAdd = productToAdd.filter(function (array) {
+            var id1 = array.id == idToFind;
+
+            if (id1 == true) {
+                var quantity = parseInt(array.quantity);
+                quantity = quantity + 1;
+                array.quantity = quantity;
+
+                var cost = parseInt(array.cost);
+                var cost1 = findLineItemCost(cost, quantity);
+                array.lineItemCost = cost1;
+            }
+            return array;
+        });
+        displayLineItems();
+    }
+
+    function deleteRow(rowId) {
+        var idToRemove = rowId.value;
+        if (window.confirm("Are you sure you want to remove this lineItem ?")) {
+
+            productToAdd = productToAdd.filter(function (array) {
+                var id1 = array.id != idToRemove;
+                return id1;
+            });
+            displayLineItems();
+        }
+    }
+    function calculateCheckOutPrice() {
+        var totalBill = 0;
+        for (var iterator = 0; iterator < productToAdd.length; iterator++) {
+            totalBill += parseInt(productToAdd[iterator].lineItemCost);
+        }
+
+        $("#check").append("<h2>Checkout Price:  " + totalBill + "</h2>");
+    }
+
+    function findLineItemCost(productVal, quantity) {
+        var cost = productVal;
+        var totalCost = cost * quantity;
+        return totalCost;
+    };
+
+</script>
+
+<body>
+    <style>
+        #product {
+            padding: 5%;
+            border: 1px solid black;
+        }
+
+        #details {
+            padding: 5%;
+        }
+
+        th,
+        td {
+            text-align: center;
+            border: 1px solid black;
+            padding: 4px;
+        }
+    </style>
+    <div id="product">
+        Products: <select class="products"> </select>&nbsp; &nbsp; &nbsp; &nbsp;
+        Cost :<span id="cost"> &nbsp; &nbsp; &nbsp; &nbsp; </span>
+        Quantity: <input type="number" id="quantity">
+        <button id="add"> Add to Cart </button>
+
+        <div id="details">
+            <h2 style="color: darkcyan">Cart Details: </h2>
+            <table id="lineItems" style="width: 100%;">
+                <tr style="background-color: skyblue;">
+                    <th>Id</th>
+                    <th>Product</th>
+                    <th>Cost</th>
+                    <th>Quantity</th>
+                    <th>LineItem</th>
+                </tr>
+            </table>
+        </div>
+
+        <span id="check"> </span>
+    </div>
+</body>
+
+</html>
