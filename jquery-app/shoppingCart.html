@@ -9,8 +9,38 @@
         { id: 104, name: "Mi Note 7pro", cost: 20000 },
         { id: 105, name: "Mi K20", cost: 30000 }
     ]
+    var productToAdd = [];
+    var cartDetailsFromLocalStorage;
+
+    window.onload = function () {
+
+        sessionStorage.setItem("status","loggedOut");
+
+        /*if (localStorage.getItem("cartDetails") != null) {
+            cartDetailsFromLocalStorage = [];
+            cartDetailsFromLocalStorage = JSON.parse(localStorage.getItem("cartDetails"));
+            for (var iterator = 0; iterator < cartDetailsFromLocalStorage.length; iterator++) {
+                productToAdd.push(cartDetailsFromLocalStorage[iterator]);
+                displayLineItems();
+            }
+        } else {
+            var cartDetailsFromLocalStorage = [];
+        }*/
+    }
 
     $(document).ready(function () {
+        $("#login").hide();
+        $("#register").hide();
+
+        $("#add").on('click', function () {
+            if (sessionStorage.getItem("status") == "loggedIn") {
+                console.log(sessionStorage.getItem("status"));
+                addDataOnClickButton();
+            } else {
+                logInPage();
+                console.log(sessionStorage.getItem("status"));
+            }
+        });
         for (var productIterator = 0; productIterator < getProducts.length; productIterator++) {
             $('.products').append($('<option>',
                 {
@@ -19,74 +49,139 @@
                 }));
         }
         $("select.products").change(function () {
+            $("#add").prop("disabled", false);
             $("#cost").html("");
             $("#check").html("");
             $("#quantity").val("1");
 
             var selectedProduct = $(this).val();
             var selectedProductDetails = selectedProduct.split(",");
+            for (var iterator = 0; iterator < productToAdd.length; iterator++) {
+                if (selectedProductDetails[0] == productToAdd[iterator].id) {
+                    $("#add").prop("disabled", true);
+                }
+            }
             $("#cost").append(selectedProductDetails[2]);
             calculateCheckOutPrice();
         });
         $("#lineItems").css("border", "1px solid black");
-        $("#add").on('click', getSingleProduct);
+        $("#registerPage").on('click', registerPage);
 
     });
 
+    function logInPage() {
+        $("#loginData").show();
+        $("#login").show();
+        $("#product").hide();
+        $("#register").hide();
+
+        var cartDetails = [];
+        var cartDetails2 = [];
+
+        $("#loginbtn").on("click", function () {
+            var name = $("#logInName").val();
+            var password = $("#logInPass").val();
+
+            if (localStorage.getItem("cartDetails") != null) {
+                cartDetails = JSON.parse(localStorage.getItem("cartDetails"));
+                console.log(cartDetails);
+                cartDetails2 = cartDetails.filter(function (array) {
+                    var x = array.password == password && array.name == name;
+                    return x;
+                });
+                console.log(cartDetails2);
+            }
+
+            if (cartDetails2.length != "") {
+                sessionStorage.setItem('status', 'loggedIn');
+                $("#login").hide();
+                $("#register").hide();
+                $("#product").show(); 
+                var status = sessionStorage.getItem('status');
+                $("#heading").append(status);
+                displayLineItems(cartDetails2);
+            }
+        });
+    }
+
+    function addDataOnClickButton() {
+
+    }
+
+    function registerPage() {
+        $("#login").hide();
+        $("#register").show();
+
+        $("#regbtn").on('click', function () {
+            $("#regbtn").prop("disabled", false);
+
+            var name = $("#regName").val();
+            var password = $("#regPass").val();
+            if ($("#regPass").val() != $("#regPass2").val()) {
+                $("#regbtn").prop("disabled", true);
+            }
+            var id1 = Date.now();
+            var loginDetails = { "id": id1, "name": name, "password": password };
+            var details = [];
+            details.push(loginDetails);
+            console.log(details);
+            $("#alogin").on('click', logInPage);
+            getSingleProduct(details);
+        });
+    }
+
     var productToAdd = [];
-    function getSingleProduct() {
+    function getSingleProduct(cartDetails) {
+
+        $("#login").hide();
+        $("#register").show();
+        $("#product").hide();
+        var id = cartDetails[0].id;
+        var name = cartDetails[0].name;
+        var password = cartDetails[0].password;
 
         var getProduct = $("select.products").val();
         var getProductValue = getProduct.split(",");
         var quantity1 = $("#quantity").val();
-
-        var lineItemCost = findLineItemCost(getProductValue[2], quantity1);
-        var lineItem = { "id": getProductValue[0], "product": getProductValue[1], "cost": getProductValue[2], "quantity": quantity1, "lineItemCost": lineItemCost };
-
-        if (productToAdd != "") {
-            for (var iterator = 0; iterator < productToAdd.length; iterator++) {
-                if (getProductValue[0] == productToAdd[iterator].id) {
-                } else {
-                    productToAdd.push(lineItem);
-                    console.log(productToAdd);
-                }
-            }
+        if (localStorage.getItem("cartDetails") != null) {
+            productToAdd = JSON.parse(localStorage.getItem("cartDetails"));
         } else {
-            productToAdd.push(lineItem);
+            var productToAdd = [];
             console.log(productToAdd);
         }
 
+        var lineItemCost = findLineItemCost(getProductValue[2], quantity1);
+        var lineItem = [{ "id": getProductValue[0], "product": getProductValue[1], "cost": getProductValue[2], "quantity": quantity1, "lineItemCost": lineItemCost }];
+        var customerDetails = { "id": id, "name": name, "password": password, "orders": lineItem };
+        productToAdd.push(customerDetails);
+
+        localStorage.setItem("cartDetails", JSON.stringify(productToAdd));
         $("select.products").val("");
         $("#quantity").val("");
-
-        displayLineItems();
     }
 
-    function displayLineItems() {
+    function displayLineItems(cartDetails) {
+
         $("#check").html("");
         var table = document.getElementById("lineItems");
         var lengthOfTable = table.rows.length;
+        var productToAdd = cartDetails[0].orders;
+        console.log(productToAdd);
 
         for (var tableIterator = lengthOfTable - 1; tableIterator >= 1; tableIterator--) {
             table.deleteRow(tableIterator);
         }
-
         for (var lineItemIterator = 0; lineItemIterator < productToAdd.length; lineItemIterator++) {
-
             var deletebtn = document.createElement("button");
             deletebtn.innerHTML = "X";
-
             var addQuantityBtn = document.createElement("button");
             addQuantityBtn.innerHTML = "++";
-
             addQuantityBtn.addEventListener('click', function () {
                 addQuantity(this);
             });
-
             deletebtn.addEventListener('click', function () {
                 deleteRow(this);
             });
-
             var row = table.insertRow(lineItemIterator + 1);
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
@@ -95,10 +190,8 @@
             var cell5 = row.insertCell(4);
             var cell6 = row.insertCell(5);
             var cell7 = row.insertCell(6);
-
             cell1.innerHTML = productToAdd[lineItemIterator].id;
             deletebtn.value = productToAdd[lineItemIterator].id;
-
             cell2.innerHTML = productToAdd[lineItemIterator].product;
             cell3.innerHTML = productToAdd[lineItemIterator].cost;
             cell4.innerHTML = productToAdd[lineItemIterator].quantity;
@@ -108,11 +201,11 @@
             cell7.append(addQuantityBtn);
         }
         calculateCheckOutPrice();
-
     }
 
     function addQuantity(idToIncreaseQuantity) {
         var idToFind = idToIncreaseQuantity.value;
+        productToAdd = JSON.parse(localStorage.getItem("cartDetails"));
 
         productToAdd = productToAdd.filter(function (array) {
             var id1 = array.id == idToFind;
@@ -128,17 +221,19 @@
             }
             return array;
         });
+        localStorage.setItem("cartDetails", JSON.stringify(productToAdd));
         displayLineItems();
     }
 
     function deleteRow(rowId) {
         var idToRemove = rowId.value;
         if (window.confirm("Are you sure you want to remove this lineItem ?")) {
-
+            productToAdd = JSON.parse(localStorage.getItem("cartDetails"));
             productToAdd = productToAdd.filter(function (array) {
                 var id1 = array.id != idToRemove;
                 return id1;
             });
+            localStorage.setItem("cartDetails", JSON.stringify(productToAdd));
             displayLineItems();
         }
     }
@@ -147,7 +242,6 @@
         for (var iterator = 0; iterator < productToAdd.length; iterator++) {
             totalBill += parseInt(productToAdd[iterator].lineItemCost);
         }
-
         $("#check").append("<h2>Checkout Price:  " + totalBill + "</h2>");
     }
 
@@ -161,6 +255,14 @@
 
 <body>
     <style>
+        #login,
+        #register {
+            align-self: auto;
+            border: 1px solid black;
+            text-align: center;
+            padding: 5%;
+        }
+
         #product {
             padding: 5%;
             border: 1px solid black;
@@ -178,6 +280,7 @@
         }
     </style>
     <div id="product">
+        <div id="heading"></div>
         Products: <select class="products"> </select>&nbsp; &nbsp; &nbsp; &nbsp;
         Cost :<span id="cost"> &nbsp; &nbsp; &nbsp; &nbsp; </span>
         Quantity: <input type="number" id="quantity">
@@ -198,6 +301,29 @@
 
         <span id="check"> </span>
     </div>
+
+    <div id="login">
+
+        <h1>Login to your account</h1>
+        Name: <input type="text" id="logInName"><br>
+        Password: <input type="password" id="logInPass"><br>
+        <button id="loginbtn" style="background-color: skyblue;">Sign In</button><br>
+
+        <p id="one">create new account?<a href="#" style="display: block" id="registerPage">register</a></p>
+    </div>
+
+    <div id="register">
+        <h1>Create new account</h1>
+        Name: <input type="text" id="regName"><br>
+        Password: <input type="password" id="regPass"><br>
+        Retype password: <input type="password" id="regPass2"><br>
+        <button id="regbtn">Register</button>
+
+        <p> <a href="#" style="display: block" id="alogin">login</a></p>
+        <br>
+    </div>
+
+    <div id="heading3"></div>
 </body>
 
 </html>

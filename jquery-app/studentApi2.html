@@ -133,7 +133,7 @@
             data2 = { "id": id1, "rollNo": rollno1, "name": name1, "isMale": gender1, "age": age1, "email": emailid1, "date": date1 };
             console.log(data2);
 
-            /*$.ajax({
+            $.ajax({
                 type: "PUT",
                 url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/ " + id1,
                 data: data2,
@@ -144,7 +144,7 @@
                 error: function (error) {
                     alert(error.responseText);
                 }
-            });*/
+            });
         });
 
         var rollno1 = parseInt($("#rollno").val(rowDataArray[1]));
@@ -181,14 +181,14 @@
         $("#studentTable").html("");
 
 
-        /*$.ajax({
+        $.ajax({
             type: "DELETE",
             url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/" + rowId,
             success: function (output) {
                 console.log(output);
                 displayUserDataInTable();
             }
-        });*/
+        });
     }
 
     function updateGender(value, iterator) {
