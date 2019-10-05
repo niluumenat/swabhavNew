@@ -13,29 +13,18 @@
     var cartDetailsFromLocalStorage;
 
     window.onload = function () {
-
-        sessionStorage.setItem("status","loggedOut");
-
-        /*if (localStorage.getItem("cartDetails") != null) {
-            cartDetailsFromLocalStorage = [];
-            cartDetailsFromLocalStorage = JSON.parse(localStorage.getItem("cartDetails"));
-            for (var iterator = 0; iterator < cartDetailsFromLocalStorage.length; iterator++) {
-                productToAdd.push(cartDetailsFromLocalStorage[iterator]);
-                displayLineItems();
-            }
-        } else {
-            var cartDetailsFromLocalStorage = [];
-        }*/
+        sessionStorage.setItem("status", "loggedOut");
     }
+    var cartDetails2 = [];
 
     $(document).ready(function () {
         $("#login").hide();
         $("#register").hide();
-
         $("#add").on('click', function () {
             if (sessionStorage.getItem("status") == "loggedIn") {
                 console.log(sessionStorage.getItem("status"));
-                addDataOnClickButton();
+                $("select.products").change(disableAddBtn);
+                addDataOnClickButton(cartDetails2);
             } else {
                 logInPage();
                 console.log(sessionStorage.getItem("status"));
@@ -48,26 +37,26 @@
                     value: getProducts[productIterator].id + " ," + getProducts[productIterator].name + "," + getProducts[productIterator].cost
                 }));
         }
-        $("select.products").change(function () {
-            $("#add").prop("disabled", false);
-            $("#cost").html("");
-            $("#check").html("");
-            $("#quantity").val("1");
-
-            var selectedProduct = $(this).val();
-            var selectedProductDetails = selectedProduct.split(",");
-            for (var iterator = 0; iterator < productToAdd.length; iterator++) {
-                if (selectedProductDetails[0] == productToAdd[iterator].id) {
-                    $("#add").prop("disabled", true);
-                }
-            }
-            $("#cost").append(selectedProductDetails[2]);
-            calculateCheckOutPrice();
-        });
         $("#lineItems").css("border", "1px solid black");
         $("#registerPage").on('click', registerPage);
-
     });
+
+    function disableAddBtn() {
+        $("#add").prop("disabled", false);
+        $("#cost").html("");
+        $("#check").html("");
+        $("#quantity").val("1");
+
+        var selectedProduct = $(this).val();
+        var selectedProductDetails = selectedProduct.split(",");
+        for (var iterator = 0; iterator < productToAdd.length; iterator++) {
+            if (selectedProductDetails[0] == productToAdd[iterator].id) {
+                $("#add").prop("disabled", true);
+            }
+        }
+        $("#cost").append(selectedProductDetails[2]);
+        calculateCheckOutPrice();
+    };
 
     function logInPage() {
         $("#loginData").show();
@@ -76,7 +65,6 @@
         $("#register").hide();
 
         var cartDetails = [];
-        var cartDetails2 = [];
 
         $("#loginbtn").on("click", function () {
             var name = $("#logInName").val();
@@ -91,12 +79,11 @@
                 });
                 console.log(cartDetails2);
             }
-
             if (cartDetails2.length != "") {
                 sessionStorage.setItem('status', 'loggedIn');
                 $("#login").hide();
                 $("#register").hide();
-                $("#product").show(); 
+                $("#product").show();
                 var status = sessionStorage.getItem('status');
                 $("#heading").append(status);
                 displayLineItems(cartDetails2);
@@ -104,14 +91,35 @@
         });
     }
 
-    function addDataOnClickButton() {
+    function addDataOnClickButton(cartDetails2) {
 
+        var getProduct = $("select.products").val();
+        var getProductValue = getProduct.split(",");
+        var quantity1 = $("#quantity").val();
+        var lineItemCost = findLineItemCost(getProductValue[2], quantity1);
+        var lineItem = { "id": getProductValue[0], "product": getProductValue[1], "cost": getProductValue[2], "quantity": quantity1, "lineItemCost": lineItemCost };
+        var orders = cartDetails2[0].orders;
+        orders.push(lineItem);
+        displayLineItems(cartDetails2);
+
+        var productToAdd = JSON.parse(localStorage.getItem("cartDetails"));
+        var idToFind = cartDetails2[0].id;
+
+        productToAdd = productToAdd.filter(function (array) {
+            var id1 = array.id == idToFind;
+            if (id1 == true) {
+                var o1 = array.orders;
+                o1.push(lineItem);
+            }
+            return array;
+        });
+        console.log(productToAdd);
+        localStorage.setItem("cartDetails", JSON.stringify(productToAdd));
     }
 
     function registerPage() {
         $("#login").hide();
         $("#register").show();
-
         $("#regbtn").on('click', function () {
             $("#regbtn").prop("disabled", false);
 
@@ -126,6 +134,7 @@
             details.push(loginDetails);
             console.log(details);
             $("#alogin").on('click', logInPage);
+
             getSingleProduct(details);
         });
     }
@@ -147,9 +156,7 @@
             productToAdd = JSON.parse(localStorage.getItem("cartDetails"));
         } else {
             var productToAdd = [];
-            console.log(productToAdd);
         }
-
         var lineItemCost = findLineItemCost(getProductValue[2], quantity1);
         var lineItem = [{ "id": getProductValue[0], "product": getProductValue[1], "cost": getProductValue[2], "quantity": quantity1, "lineItemCost": lineItemCost }];
         var customerDetails = { "id": id, "name": name, "password": password, "orders": lineItem };
@@ -165,22 +172,22 @@
         $("#check").html("");
         var table = document.getElementById("lineItems");
         var lengthOfTable = table.rows.length;
-        var productToAdd = cartDetails[0].orders;
-        console.log(productToAdd);
+        var productss = cartDetails[0].orders;
 
         for (var tableIterator = lengthOfTable - 1; tableIterator >= 1; tableIterator--) {
             table.deleteRow(tableIterator);
         }
-        for (var lineItemIterator = 0; lineItemIterator < productToAdd.length; lineItemIterator++) {
+
+        for (var lineItemIterator = 0; lineItemIterator < productss.length; lineItemIterator++) {
             var deletebtn = document.createElement("button");
             deletebtn.innerHTML = "X";
             var addQuantityBtn = document.createElement("button");
             addQuantityBtn.innerHTML = "++";
             addQuantityBtn.addEventListener('click', function () {
-                addQuantity(this);
+                addQuantity(this, cartDetails);
             });
             deletebtn.addEventListener('click', function () {
-                deleteRow(this);
+                deleteRow(this, cartDetails);
             });
             var row = table.insertRow(lineItemIterator + 1);
             var cell1 = row.insertCell(0);
@@ -190,26 +197,24 @@
             var cell5 = row.insertCell(4);
             var cell6 = row.insertCell(5);
             var cell7 = row.insertCell(6);
-            cell1.innerHTML = productToAdd[lineItemIterator].id;
-            deletebtn.value = productToAdd[lineItemIterator].id;
-            cell2.innerHTML = productToAdd[lineItemIterator].product;
-            cell3.innerHTML = productToAdd[lineItemIterator].cost;
-            cell4.innerHTML = productToAdd[lineItemIterator].quantity;
-            addQuantityBtn.value = productToAdd[lineItemIterator].id;
-            cell5.innerHTML = productToAdd[lineItemIterator].lineItemCost;
+            cell1.innerHTML = productss[lineItemIterator].id;
+            deletebtn.value = productss[lineItemIterator].id;
+            cell2.innerHTML = productss[lineItemIterator].product;
+            cell3.innerHTML = productss[lineItemIterator].cost;
+            cell4.innerHTML = productss[lineItemIterator].quantity;
+            addQuantityBtn.value = productss[lineItemIterator].id;
+            cell5.innerHTML = productss[lineItemIterator].lineItemCost;
             cell6.append(deletebtn);
             cell7.append(addQuantityBtn);
         }
         calculateCheckOutPrice();
     }
 
-    function addQuantity(idToIncreaseQuantity) {
+    function addQuantity(idToIncreaseQuantity, cartDetails) {
         var idToFind = idToIncreaseQuantity.value;
-        productToAdd = JSON.parse(localStorage.getItem("cartDetails"));
 
-        productToAdd = productToAdd.filter(function (array) {
+        cartDetails[0].orders = cartDetails[0].orders.filter(function (array) {
             var id1 = array.id == idToFind;
-
             if (id1 == true) {
                 var quantity = parseInt(array.quantity);
                 quantity = quantity + 1;
@@ -221,22 +226,39 @@
             }
             return array;
         });
-        localStorage.setItem("cartDetails", JSON.stringify(productToAdd));
-        displayLineItems();
+        console.log(cartDetails);
+        localStorage.setItem("cartDetails", JSON.stringify(cartDetails));
+        displayLineItems(cartDetails);
     }
 
-    function deleteRow(rowId) {
+    function deleteRow(rowId, cartDetails) {
         var idToRemove = rowId.value;
+        console.log(idToRemove);
+        var idToFind = cartDetails[0].id;
         if (window.confirm("Are you sure you want to remove this lineItem ?")) {
-            productToAdd = JSON.parse(localStorage.getItem("cartDetails"));
+             var productToAdd = JSON.parse(localStorage.getItem("cartDetails"));
             productToAdd = productToAdd.filter(function (array) {
-                var id1 = array.id != idToRemove;
-                return id1;
-            });
-            localStorage.setItem("cartDetails", JSON.stringify(productToAdd));
-            displayLineItems();
-        }
+                var id1 = array.id == idToFind;
+                if (id1 == true) {
+                    var o = array.orders;
+                    o = o.filter(function (a) {
+                        var id3 = a.id != idToRemove;
+                        console.log(id3);
+                        return id3;
+                    })
+                    return o;
+                }
+                //displayLineItems(array);
+                //return array;
+                console.log(array);
+            })
+        };
+        console.log(productToAdd);
+        //localStorage.setItem("cartDetails", JSON.stringify(cartDetails));
+
     }
+
+
     function calculateCheckOutPrice() {
         var totalBill = 0;
         for (var iterator = 0; iterator < productToAdd.length; iterator++) {

@@ -1,0 +1,31 @@
+<html>
+<script src="angular.js"></script>
+<script>
+    angular.module('modA', [])
+        .controller('ControllerA', function ($scope) {
+            $scope.studentData = function () {
+                $scope.data = {
+                    id: 101,
+                    name: 'Nilam',
+                    cgpa: 6.7,
+                    location: 'Mumbai',
+                    picture: 'assets.jpeg'
+                }
+            }
+
+        });
+
+</script>
+
+<body ng-app="modA">
+    <div ng-controller="ControllerA">
+        <button ng-click="studentData()" id="load">Load</button><br>
+        <p >Id: {{data.id}}</p>
+        <p>Name: {{data.name}}</p>
+        <p>CGPA: {{data.cgpa}}</p>
+        <p >Location: {{data.location}}</p>
+        <img ng-src="{{data.picture}}">
+        </div>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<html>
+<script src="angular.js"></script>
+<script>
+    angular.module('modA', ['modB'])
+        .controller('ControllerA', function ($rootScope, $scope) {
+            console.log("ControllerA created");
+            console.log($rootScope);
+            console.log($scope);
+            $rootScope.company = "Aurionpro"
+            $scope.data = {
+                message: "Hello from ControllerA"
+            }
+
+        });
+    angular.module('modB', [])
+        .controller('ControllerB', function ($rootScope, $scope) {
+            console.log("ControllerB created");
+           
+            console.log($rootScope.company);
+            console.log($scope);
+
+            $scope.data = {
+                message: "Hello from Controller B"
+            }
+
+        });
+</script>
+
+<body ng-app='modA'>
+    <div ng-controller="ControllerA">
+        <h1>{{data.message}}</h1>
+
+    </div>
+    <div>
+        <h2>{{data.message}}</h2>
+        <h1>{{company}}</h1>
+    </div>
+    <div ng-controller="ControllerB">
+        <h1> {{company}}</h1>
+        <h1>{{data.message}}</h1>
+
+    </div>
+</body>
+
+</html>
