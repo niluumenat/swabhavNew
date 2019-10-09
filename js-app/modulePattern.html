@@ -1,0 +1,27 @@
+<html>
+    <body>
+        <h2>JavaScript Modules</h2>
+        <div id="demo"> </div>
+    </body>
+    <script>
+        var myModule = (function (){
+            var sum = 0;
+            
+            return {
+                add: function(){
+                    sum = sum +1;
+                    return sum;
+                },
+                reset: function(){
+                    sum = 0;
+                    return sum;
+                }
+            }
+        }());
+
+        console.log(myModule.add());
+        console.log(myModule.add());
+        console.log(myModule.reset());
+
+    </script>
+</html>

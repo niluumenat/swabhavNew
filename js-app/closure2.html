@@ -1,0 +1,28 @@
+<html>
+<script>
+    function makeEmployee() {
+        var emp = {};
+        var _id, _name;
+        emp.setId = function (id) {
+            if (id > 0)
+                _id = id; 
+        }
+        emp.setName = function(name){
+            if(name.length>0)
+                _name = name;
+        }
+        
+        emp.getDescription = function(){
+            return "Id is: "+ _id +"  Name is: "+ _name ;
+        }
+        return emp;
+    }
+
+    var e1 = makeEmployee();
+    debugger
+    e1.setId(101);
+    e1.setName("Nilam");
+    console.log(e1.getDescription());
+</script>
+
+</html>

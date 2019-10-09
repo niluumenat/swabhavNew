@@ -2,20 +2,20 @@
 
 <body>
 
-    <h2>JavaScript Closures</h2>
-    <p>Counting with a local variable.</p>
-    <button type="button" onclick="myFunction()">Count!</button>
-    <p id="demo">0</p>
-
     <script>
+        var counter = 0;
         var add = (function () {
             var counter = 0;
-            return function () { counter += 1; return counter; }
+            function sum() {
+                counter += 1;
+                return counter;
+            }
+            return sum;
         })();
 
-        function myFunction() {
-            document.getElementById("demo").innerHTML = add();
-        }
+        console.log(add());
+        console.log(add());
+
     </script>
 
 </body>

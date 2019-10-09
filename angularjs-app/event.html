@@ -1,7 +1,20 @@
 <html>
 <script src="angular.js"></script>
+<style>
+    .red {
+        background-color: red;
+    }
+
+    .yellow {
+        background-color: yellow;
+    }
+
+    .green {
+        background-color: green;
+    }
+</style>
 <script>
-    angular.module('modA', [])
+    angular.module('modA', ['modB'])
         .controller('ControllerA', function ($scope) {
             $scope.studentData = function () {
                 $scope.data = {
@@ -12,20 +25,37 @@
                     picture: 'assets.jpeg'
                 }
             }
-
         });
+    angular.module('modB', [])
+        .controller('controllerB', function ($scope) {
+            $scope.studentsRecord = function () {
+                $scope.record1 = [
+                    { id: 102, name: 'Komu', cgpa: 5.5, location: 'Mira Road' },
+                    { id: 103, name: 'Hetu', cgpa: 7.5, location: 'Andheri' },
+                    { id: 104, name: 'Madhu', cgpa: 9.5, location: 'Parel' }]
+            }
+        })
 
 </script>
 
 <body ng-app="modA">
     <div ng-controller="ControllerA">
         <button ng-click="studentData()" id="load">Load</button><br>
-        <p >Id: {{data.id}}</p>
+        <p>Id: {{data.id}}</p>
         <p>Name: {{data.name}}</p>
         <p>CGPA: {{data.cgpa}}</p>
-        <p >Location: {{data.location}}</p>
+        <p>Location: {{data.location}}</p>
         <img ng-src="{{data.picture}}">
+    </div>
+    <div ng-controller="controllerB">
+        <button ng-click="studentsRecord()">Load All</button><br>
+        <div ng-repeat="records in record1"
+            ng-class="{red:records.cgpa<=6, yellow: records.cgpa>=6, green: records.cgpa>=8 }">
+            Id: {{records.id}}<br>
+            Name: {{records.name}}<br>
+            CGPA: {{records.cgpa }}<br>
+            Location: {{records.location}}<br>
         </div>
+    </div>
 </body>
-
 </html>

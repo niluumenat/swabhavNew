@@ -1,0 +1,26 @@
+<html>
+<script src="angular.js"></script>
+<script src="binding.min.js"></script>
+
+<body>
+    <div ng-app="modA" ng-controller="ControllerA">
+        <hr>
+        <h1>One-way (Model to view)</h1>
+        <p>Id: {{student.id}}</p>
+        <p>Name: {{student.name}}</p>
+        <p>CGPA: {{student.cgpa}}</p>
+        <hr>
+        <h1>Two-way (Model to view and view to model)</h1>
+        <input type="number" ng-model="student.id">
+        <input type="text" ng-model="student.name">
+        <input type="number" ng-model="student.cgpa">
+        <hr>
+        <h1>One-time binding</h1>
+        <p>Id: {{::student.id}}</p>
+        <p>Name: {{::student.name}}</p>
+        <p>CGPA: {{::student.cgpa}}</p>
+        <hr>
+    </div>
+</body>
+
+</html>

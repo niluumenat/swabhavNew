@@ -1,0 +1,17 @@
+<html>
+    <script>
+        function DataService(){
+            this.getData = function(){
+                return Math.random()*100;
+            }
+
+            this.isEven = function(number){
+                return number%2 ==0;
+            }
+        }
+
+        var s1 = new DataService();
+        console.log(s1.getData());
+        console.log(s1.isEven(34));
+    </script>
+</html>

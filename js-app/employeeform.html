@@ -57,7 +57,7 @@
                 <option value="Analytics">Analytics</option>
             </select><br>
             <br>
-            Salary: <input type="text" id="salary"><br>
+            Salary: <input type="text" id="salary" onchange="updateUserData()"><br>
             <br>
 
         </div>
@@ -85,7 +85,23 @@
     var inputjob = document.getElementById("job");
     var inputsalary = document.getElementById("salary");
     var button = document.getElementById("button");
-    var userData = [];
+    var table = document.getElementById("table");
+    var idToRemove;
+    var userData =[];
+    var userDataFromLocalStorage;
+
+    window.onload = function () {
+        if (localStorage.getItem("userData") != 0) {
+            userDataFromLocalStorage = [];
+            userDataFromLocalStorage = JSON.parse(localStorage.getItem("userData"));
+            for(var iterator=0;iterator<userDataFromLocalStorage.length; iterator++){
+                userData.push(userDataFromLocalStorage[iterator]);
+                appendUserDataInTable();
+            }    
+        } else {
+            var userDataFromLocalStorage = [];
+        }
+    }
 
     function updateUserData() {
         var id1 = Date.now();
@@ -94,54 +110,56 @@
         var salary1 = inputsalary.value;
         var data = { id: id1, name: name1, job: jobSelected, salary: salary1 };
         userData.push(data);
-        console.log(userData);
+        localStorage.setItem("userData", JSON.stringify(userData));
     }
 
     function appendUserDataInTable() {
-        updateUserData();
-        var table = document.getElementById("table");
-        for (userDataIterator = 0; userDataIterator < userData.length; userDataIterator++) {
+        var lengthOfTable = table.rows.length;
+
+        for (var tableIterator = lengthOfTable - 1; tableIterator >= 1; tableIterator--) {
+            table.deleteRow(tableIterator);
+        }
+
+        userData = JSON.parse(localStorage.getItem("userData"));
+        for (var userDataIterator = 0; userDataIterator < userData.length; userDataIterator++) {
             button = document.createElement("button");
             button.innerHTML = "X";
-
             button.addEventListener('click', function () {
                 console.log(this);
                 deleteRowFromUserData(this);
             });
+
+            var row = table.insertRow(userDataIterator + 1);
+
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+
+            cell1.innerHTML = userData[userDataIterator].id;
+            button.value = userData[userDataIterator].id;
+            cell2.innerHTML = userData[userDataIterator].name;
+            cell3.innerHTML = userData[userDataIterator].job;
+            cell4.innerHTML = userData[userDataIterator].salary;
+            cell5.append(button);
         }
-        var row = table.insertRow(userData.length);
-
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
-
-        cell1.innerHTML = userData[userData.length - 1].id;
-        button.value = userData[userData.length - 1].id;
-        cell2.innerHTML = userData[userData.length - 1].name;
-        cell3.innerHTML = userData[userData.length - 1].job;
-        cell4.innerHTML = userData[userData.length - 1].salary;
-        cell5.append(button);
     }
 
-    var idToRemove;
     function deleteRowFromUserData(val) {
-        
-        idToRemove = val.value;
+        var idToRemove = val.value;
 
-        userData = userData.filter(function (array) {
-
-            console.log(idToRemove);
-            console.log(array);
-            if (array[id] == idToRemove) {
+        if (window.confirm("Are you sure you want to delete data with id: " + idToRemove + "?")) {
+            
+            userData = JSON.parse(localStorage.getItem("userData"));
+            userData = userData.filter(function (array) {
+                var a1 = array.id != idToRemove;
+                return a1;
                 
-                console.log(array);
-            }
-
-        });
-        console.log(userData);
-
+            });
+            localStorage.setItem("userData", JSON.stringify(userData));
+            appendUserDataInTable();
+        }
     }
 
     function clearOnClick() {

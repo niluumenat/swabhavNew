@@ -1,0 +1,59 @@
+<html>
+<script src="angular.js"></script>
+<style>
+    .red {
+        background-color: red;
+    }
+
+    .green {
+        background-color: green;
+    }
+
+    .yellow {
+        background-color: yellow;
+    }
+</style>
+
+<script>
+    angular.module('modA', [])
+        .controller('ControllerA', ['$scope', '$window', function ($scope, $window) {
+            $scope.arrayOfTasks;
+            if (JSON.parse($window.localStorage.getItem('tasks')) != null) {
+                $scope.arrayOfTasks = angular.fromJson($window.localStorage.getItem('tasks'));
+                console.log($scope.arrayOfTasks);
+            } else {
+                $scope.arrayOfTasks = [];
+            }
+
+            $scope.add = function () {
+                var currentTime = Date.now();
+                var tasks = {
+                    task3: $scope.task,
+                    priorities: $scope.priority,
+                    time: currentTime
+                };
+                $scope.arrayOfTasks.push(tasks);
+                $window.localStorage.setItem('tasks', angular.toJson($scope.arrayOfTasks));
+            };
+        }])
+
+</script>
+
+<body>
+    <div ng-app="modA" ng-controller="ControllerA">
+
+        Task: <input type="text" ng-model="task">
+        Priority: <select ng-model="priority">
+            <option value="high">High</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+        </select>
+        <button value="add" ng-click="add()">+</button>
+        <h3 style="border: 1px solid black; " ng-repeat="t in arrayOfTasks | orderBy: '-time'"
+            ng-class="{red: t.priorities=='high', green: t.priorities=='low', yellow:t.priorities=='medium'}">
+            {{t.task3}}
+        </h3>
+    </div>
+</body>
+
+</html>
