@@ -1,0 +1,24 @@
+<html>
+<script>
+    function getData() {
+        return new Promise(function (resolve, reject) {
+            var d = Math.random() * 10;
+            if (d > 5) {
+                resolve({ data: d })
+            } else {
+                reject({ error: "Number is less than 5" })
+            }
+        })
+    }
+
+    getData().then(function (d) {
+        console.log("Success..   " + d.data);
+    })
+        .catch(function (e) {
+            console.log("Error" + e.error);
+        });
+
+    console.log("End of script");
+</script>
+
+</html>

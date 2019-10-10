@@ -1,0 +1,41 @@
+<html>
+<script src="angular.js"></script>
+<script>
+    var mainAngular = angular.module('modA', []);
+    mainAngular.factory('MathService', function () {
+        var factory = {};
+        factory.isPrime = function (a) {
+            if (a === 1) {
+                return false;
+            }
+            else if (a === 2) {
+                return true;
+            } else {
+                for (var x = 2; x < a; x++) {
+                    if (a % x === 0) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return factory;
+    });
+
+    mainAngular.controller('CalcController', ['$scope', 'MathService', function ($scope, MathService) {
+        $scope.prime = function () {
+            $scope.result = MathService.isPrime($scope.number);
+        }
+    }]);
+
+</script>
+
+<body>
+    <div ng-app="modA" ng-controller="CalcController">
+        <p>Enter a number: <input type="number" ng-model="number"></p>
+        <button ng-click=prime()> check prime</button>
+        <p>Result: {{result}}</p>
+    </div>
+</body>
+
+</html>

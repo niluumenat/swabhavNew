@@ -1,0 +1,28 @@
+<html>
+    <script>
+        function Employee(id,name){
+            this.id= id;
+            this.name= name;
+            this.getDescription = function(){
+                return "Id is: "+this.id +" Name is: "+this.name;
+            }
+            this.printDetails = function(){
+                var that = this;
+                setTimeout(function(){
+                    console.log("Id is: "+that.id+ " Name is: "+ that.name);
+                },3*1000)
+            }
+        }
+
+        var e1 = new Employee(101,"Nilam");
+        console.log(e1.getDescription());
+        e1.printDetails();
+        console.log(e1);
+
+        var e2 = new Employee(102,"ABC");
+        console.log(e2);
+
+        console.log(Employee.prototype == e1.__proto__);
+        console.log(e1.__proto__ == e2.__proto__);
+    </script>
+</html>

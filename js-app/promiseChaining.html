@@ -1,0 +1,23 @@
+<html>
+    <script>
+        var cubeEven = function(number){
+            return new Promise(function(resolve,reject){
+                var r = number*number*number;
+                resolve({result:r})
+            })
+        }
+
+        cubeEven(2)
+        .then(function(r){
+            return cubeEven(r.result);
+        })
+        .then(function(r){
+            return cubeEven(r.result);
+        })
+        .then(function(r){
+            console.log(r.result);
+        });
+
+
+    </script>
+</html>

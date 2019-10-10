@@ -1,0 +1,62 @@
+<html>
+<script src="angular.js"></script>
+
+<script>
+    angular.module('modA', [])
+        .controller('ControllerA', ['$scope', '$http', function ($scope, $http) {
+            $http.get("http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students")
+                .then(function success(response) {
+                    $scope.students = angular.fromJson(response.data);
+                    $scope.count = $scope.students.length;
+                    console.log($scope.students);
+                })
+        }])
+</script>
+
+<body ng-app='modA' ng-controller='ControllerA'>
+    <div id="addDiv">
+        Roll No: <input type="number" ng-model="rollno"><br>
+        Name: <input type="text" ng-model="name"><br>
+        Gender:
+        <label><input type="radio" ng-model='result' ng-value='"Male"' name="rdoResult">Male</label>
+        <label><input type="radio" ng-model='result' ng-value='"Female"' name="rdoResult">Female</label><br>
+        Age: <input type="number"><br>
+        EmailId: <input type="text"><br>
+        Date: <input type="text"><br>
+        <button>Add</button>
+        <hr>
+    </div>
+    <h1>No. of Students: {{count}}</h1>
+    <div>
+        <table class="table1" style="width: 100%;">
+            <tr>
+                <th>ID</th>
+                <th>ROLL NO</th>
+                <th>NAME</th>
+                <th>AGE</th>
+                <th>EMAIL ID</th>
+                <th>DATE</th>
+                <th>GENDER</th>
+            </tr>
+
+            <tr ng-repeat="student in students">
+                <td>{{student.id}}</td>
+                <td>{{student.rollNo}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.age}}</td>
+                <td>{{student.email}}</td>
+                <td>{{student.date}}</td>
+                <td>{{student.isMale}}</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <style>
+        #addDiv {
+            text-align: center;
+        }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<html>
+    <script>
+        function Employee(id,name){
+            this.id= id;
+            this.name = name;
+        }
+        
+        Employee.prototype.getDetails = function(){
+            return "Id is: "+this.id +" Name is: "+this.name;
+        }
+
+        var e1= new Employee(101,"Nilam");
+        var e2 = new Employee(102,"ABC");
+        console.log(e1.getDetails());
+
+        console.log(e1);
+        console.log(e2);
+
+        console.log(e1.__proto__== Employee.prototype);
+
+
+    </script>
+</html>

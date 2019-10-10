@@ -1,0 +1,61 @@
+<html>
+<script src="angular.js"></script>
+<style>
+    .white {
+        background-color: white;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .green {
+        background-color: green;
+    }
+</style>
+<script>
+    var mainApp = angular.module('modA', []);
+    mainApp.factory('MathService', function () {
+        var factory = {};
+
+        factory.isPrime = function (a) {
+            if (a === 1)
+                return 'red';
+            else if (a === 2) {
+                return 'green';
+            } else {
+                for (var x = 2; x < a; x++) {
+                    if (a % x === 0)
+                        return 'red';
+                }
+                return 'green';
+            }
+        }
+        return factory;
+    });
+
+    mainApp.controller('CalcController', function ($scope, MathService) {
+        $scope.prime = function () {
+            if ($scope.numbers > 0) {
+                $scope.result = MathService.isPrime($scope.numbers);
+            } else {
+                $scope.result = '';
+            }
+
+        }
+
+    });
+</script>
+
+<body>
+    <div ng-app="modA" ng-controller="CalcController">
+        <p>Enter a number: <input type="number" ng-model="numbers" ng-change="prime()"
+                ng-class="{red: result=='red', green: result=='green' , white: result==''}"></p>
+        <p> Input Number: <span ng-bind="numbers"></span><br>
+
+    </div>
+</body>
+
+</script>
+
+</html>

@@ -1,0 +1,32 @@
+<html>
+<script src="angular.js"></script>
+
+<script>
+    angular.module('modA', [])
+        .controller('ControllerA', ['$scope', '$http', function ($scope, $http) {
+            $scope.add = function () {
+                $http({
+                    method: "GET",
+                    url: "http://numbersapi.com/" + $scope.number1
+
+                }).then(function success(response) {
+                    $scope.fact = response.data;
+                }, function error(response) {
+                    $scope.fact = response.statusText;
+                });
+            }
+
+        }])
+
+</script>
+
+<body>
+    <div ng-app="modA" ng-controller="ControllerA">
+        <p><input type="number" ng-model="number1"></p>
+        <button ng-click="add()">Get fact</button>
+        <p>{{fact}}</p>
+    </div>
+
+</body>
+
+</html>

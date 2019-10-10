@@ -1,0 +1,50 @@
+<html>
+<script src="angular.js"></script>
+<script>
+    var mainModule = angular.module('modA', []);
+    mainModule.factory('NumberService', ['$rootScope', '$log', '$q', '$http', function ($rootScope, $log, $q, $http) {
+        $log.log("Inside NumberApi Service");
+        var service = {};
+        service.getFacts = function (no) {
+            return $q(function (resolve, reject) {
+                $http.get("http://numbersapi.com/" + no)
+                    .then(function success(r) {
+                        resolve({ result: r.data })
+                    })
+                    .catch(function error(r) {
+                        reject({ errors: r.statusText })
+                    })
+            })
+        }
+
+        return service;
+    }])
+
+    mainModule.controller('ControllerA', ['$scope', 'NumberService', function ($scope, NumberService) {
+        $scope.displayFacts = function () {
+            NumberService.getFacts($scope.number1)
+                .then(function (x) {
+                    $scope.fact = x.result;
+                })
+                .catch(function (y) {
+                    $scope.fact = y.errors;
+                })
+        }
+
+    }])
+
+</script>
+
+<body ng-app="modA" ng-controller="ControllerA">
+    <form name="myForm">
+        <p><input type="text" ng-model="number1" required></p>
+        <button ng-click="displayFacts()" ng-disabled="myForm.$invalid">Get fact</button>
+    </form>
+
+    <div>
+        <p>{{fact}}</p>
+    </div>
+
+</body>
+
+</html>

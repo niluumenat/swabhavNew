@@ -1,0 +1,25 @@
+<html>
+<script>
+    function getData(f) {
+        setTimeout(function () {
+            var d = Math.random() * 100;
+            if (d > 50) {
+                f({ data: d })
+            } else {
+                f({ error: "Number is less than 50 "  })
+            }
+        },0)
+    }
+
+    getData(function (d) {
+        if (d.data) {
+            console.log("Success..   " + d.data);
+        } else {
+            console.log("Error..  " + d.error);
+        }
+    })
+
+    console.log("End of Script");
+</script>
+
+</html>
