@@ -1,0 +1,123 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="bootstrap-3.3.7\dist\css\bootstrap.css">
+
+</head>
+<script src="../angularjs-app/angular.js"></script>
+
+<script>
+    var mainModule = angular.module('modA', [])
+    mainModule.factory('StudentService', ['$http', '$q', function ($http, $q) {
+        var service = {};
+        service.getStudents = function () {
+            return $http.get("http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students")
+        }
+        service.addStudent = function (student) {
+            return $http.post("http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students", angular.fromJson(student))
+        }
+        return service;
+    }])
+
+    mainModule.controller('ControllerA', ['$scope', 'StudentService', function ($scope, StudentService) {
+        $scope.init = function () {
+            StudentService.getStudents()
+                .then(function (x) {
+                    $scope.students = x.data;
+
+                    $scope.students.forEach(function (v) {
+                        if (v.isMale == false) {
+                            v.isMale = 'Female';
+                        } else if (v.isMale == true) {
+                            v.isMale = 'Male';
+                        }
+                    })
+                    $scope.count = $scope.students.length;
+
+                })
+                .catch(function (e) {
+                    $scope.fact = e.errors;
+                })
+        }
+
+        $scope.addRow = function () {
+            var student = { 'rollNo': $scope.rollno, 'name': $scope.name, 'isMale': $scope.gender, 'age': $scope.age, 'email': $scope.emailId, 'date': $scope.date };
+
+            StudentService.addStudent(student)
+                .then(function (response) {
+                    student = { 'id': response, 'rollNo': $scope.rollno, 'name': $scope.name, 'isMale': $scope.gender, 'age': $scope.age, 'email': $scope.emailId, 'date': $scope.date }
+                    $scope.init()
+                })
+                .catch(function (e) {
+                    $scope.fact = e.errors;
+                })
+            $scope.name = '';
+            $scope.rollno = '';
+            $scope.gender = '';
+            $scope.age = '';
+            $scope.emailId = '';
+            $scope.date = '';
+        };
+    }])
+</script>
+
+<body ng-app='modA' ng-controller='ControllerA' ng-init="init()">
+    <form class="form-inline" style="text-align: center;">
+        <div class="form-group">
+            <h1 style="text-align: center;">StudentAPI</h1>
+            <div class="form-group">
+                Roll No: <input type="number" class="form-control" ng-model="rollno">
+            </div><br>
+            <div class="form-group">
+                Name: <input type="text" class="form-control" ng-model="name">
+            </div><br>
+            <div class="form-group">
+                Gender:
+                <label><input type="checkbox" ng-checked="selected=='Male'" ng-model='selected' ng-true-value='"Male"'>Male</label>
+                <label><input type="checkbox" ng-checked="selected=='Female'" ng-model='selected' ng-true-value='"Female"'>Female</label>
+            </div><br>
+            <div class="form-group">
+                Age: <input type="number" class="form-control"  ng-model='age'>
+            </div><br>
+
+            EmailId: <input type="text" class="form-control" ng-model='emailId'><br>
+            Date: <input type="text" class="form-control" ng-model='date'><br>
+            <button ng-click="addRow()" class="btn" style="background-color: darkseagreen;">Add</button>
+            <hr>
+        </div>
+    </form>
+    <h1 style="text-align: center;">No. of Students: {{count}}</h1>
+    <div>
+        <table class="table table-bordered table-hover table-striped " style="text-align: center;width:100%">
+            <thead style="text-align: center;" >
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">ROLL NO</th>
+                    <th class="text-center">NAME</th>
+                    <th class="text-center">AGE</th>
+                    <th class="text-center">EMAIL ID</th>
+                    <th class="text-center">DATE</th>
+                    <th class="text-center">GENDER</th>
+                </tr>
+            </thead>
+
+            <tr ng-repeat="student in students">
+                <td>{{student.id}}</td>
+                <td>{{student.rollNo}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.age}}</td>
+                <td>{{student.email}}</td>
+                <td>{{student.date}}</td>
+                <td>{{student.isMale}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <style>
+        #addDiv {
+            text-align: center;
+        }
+    </style>
+</body>
+
+</html>

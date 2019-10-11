@@ -1,0 +1,83 @@
+<html>
+<script src="angular.js"></script>
+<script>
+    angular.module('modA', [])
+        .controller('ControllerA', ['$scope', function ($scope) {
+            $scope.getProducts = [
+                { id: 101, name: "iPhone6", cost: 50000 },
+                { id: 102, name: "iPhoneX", cost: 100000 },
+                { id: 103, name: "Mi Note 5pro", cost: 15000 },
+                { id: 104, name: "Mi Note 7pro", cost: 20000 },
+                { id: 105, name: "Mi K20", cost: 30000 }
+            ]
+
+            $scope.products = [];
+            var check = 0;
+            $scope.addLineItem = function () {
+                $scope.selected = $scope.selectedProduct;
+                $scope.quantity = $scope.quant;
+                $scope.lineItem = $scope.quantity * $scope.selected.cost;
+
+                var product = {
+                    'Id': $scope.selected.id, 'Product': $scope.selected.name,
+                    'Cost': $scope.selected.cost, 'Quantity': $scope.quantity, 'LineItem': $scope.lineItem
+                }
+                $scope.products.push(product);
+                console.log($scope.products)
+                $scope.selectedProduct = '';
+                $scope.quant = '';
+                $scope.selectedProduct.cost = '';
+
+                
+                $scope.products.forEach(function (v) {
+                    check += v.lineItem;
+                    console.log(check);
+                    $scope.checkout = check;
+                })
+            };
+
+        }])
+
+</script>
+
+<body ng-app='modA' ng-controller='ControllerA'>
+    <form>
+        <div id="addDiv">
+            <label> Products: &nbsp;&nbsp;</label>
+            <select class="form-control" ng-model="selectedProduct"
+                ng-options="product.name for product in getProducts">
+
+            </select><br>
+            <span> Cost: {{selectedProduct.cost}}</span><br>
+            <label>Quantity: </label>
+            <input type="number" ng-model="quant"><br>
+            <button ng-click="addLineItem()">Add to cart</button>
+            
+        </div>
+    </form>
+    <h2>Cart Details: </h2>
+    <table class="table1 table" style="width: 100%; text-align: center;">
+        <tr>
+            <th>Id</th>
+            <th>Product</th>
+            <th>Cost</th>
+            <th>Quantity</th>
+            <th>LineItem</th>
+        </tr>
+        <tr ng-repeat="product1 in products">
+            <td>{{product1.Id}}</td>
+            <td>{{product1.Product}}</td>
+            <td>{{product1.Cost}}</td>
+            <td>{{product1.Quantity}}</td>
+            <td>{{product1.LineItem}}</td>
+        </tr>
+    </table>
+    <h2 ng-model="check">CheckOut: {{checkout}}</h2>
+    <style>
+        #addDiv {
+            text-align: center;
+        }
+    </style>
+</body>
+
+</html>

@@ -1,34 +1,83 @@
 <html>
-<script src="angular.js"></script>
+
+<head>
+    <link rel="stylesheet" href="../bootstrap-app/bootstrap-3.3.7/dist/css/bootstrap.css">
+
+</head>
+<script src="../angularjs-app/angular.js"></script>
 
 <script>
-    angular.module('modA', [])
-        .controller('ControllerA', ['$scope', '$http', function ($scope, $http) {
-            $http.get("http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students")
-                .then(function success(response) {
-                    $scope.students = angular.fromJson(response.data);
+
+    var mainModule = angular.module('modA', [])
+    mainModule.factory('StudentService', ['$http', '$q', function ($http, $q) {
+        var service = {};
+        service.getStudents = function () {
+            return $http.get("http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students")
+        }
+        service.addStudent = function (student) {
+            return $http.post("http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students", angular.fromJson(student))
+        }
+        return service;
+    }])
+
+    mainModule.controller('ControllerA', ['$scope', 'StudentService', function ($scope, StudentService) {
+        $scope.init = function () {
+            StudentService.getStudents()
+                .then(function (x) {
+                    $scope.students = x.data;
+
+                    $scope.students.forEach(function (v) {
+                        if (v.isMale == false) {
+                            v.isMale = 'Female';
+                        } else if (v.isMale == true) {
+                            v.isMale = 'Male';
+                        }
+                    })
                     $scope.count = $scope.students.length;
-                    console.log($scope.students);
+
                 })
-        }])
+                .catch(function (y) {
+                    $scope.fact = y.errors;
+                })
+        }
+
+        $scope.addRow = function () {
+            var student = { 'rollNo': $scope.rollno, 'name': $scope.name, 'isMale': $scope.gender, 'age': $scope.age, 'email': $scope.emailId, 'date': $scope.date };
+
+            StudentService.addStudent(student)
+                .then(function (response) {
+                    student = { 'id': response, 'rollNo': $scope.rollno, 'name': $scope.name, 'isMale': $scope.gender, 'age': $scope.age, 'email': $scope.emailId, 'date': $scope.date }
+                    $scope.init()
+                })
+                .catch(function (e) {
+                    $scope.fact = e.errors;
+                })
+            $scope.name = '';
+            $scope.rollno = '';
+            $scope.gender = '';
+            $scope.age = '';
+            $scope.emailId = '';
+            $scope.date = '';
+        };
+    }])
 </script>
 
-<body ng-app='modA' ng-controller='ControllerA'>
+<body ng-app='modA' ng-controller='ControllerA' ng-init="init()">
     <div id="addDiv">
         Roll No: <input type="number" ng-model="rollno"><br>
         Name: <input type="text" ng-model="name"><br>
         Gender:
-        <label><input type="radio" ng-model='result' ng-value='"Male"' name="rdoResult">Male</label>
-        <label><input type="radio" ng-model='result' ng-value='"Female"' name="rdoResult">Female</label><br>
-        Age: <input type="number"><br>
-        EmailId: <input type="text"><br>
-        Date: <input type="text"><br>
-        <button>Add</button>
+        <label><input type="radio" ng-model='gender' ng-value='"Male"' name="rdoResult">Male</label>
+        <label><input type="radio" ng-model='gender' ng-value='"Female"' name="rdoResult">Female</label><br>
+        Age: <input type="number" ng-model='age'><br>
+        EmailId: <input type="text" ng-model='emailId'><br>
+        Date: <input type="text" ng-model='date'><br>
+        <button ng-click="addRow()">Add</button>
         <hr>
     </div>
     <h1>No. of Students: {{count}}</h1>
     <div>
-        <table class="table1" style="width: 100%;">
+        <table class="table1 table" style="width: 100%;">
             <tr>
                 <th>ID</th>
                 <th>ROLL NO</th>
