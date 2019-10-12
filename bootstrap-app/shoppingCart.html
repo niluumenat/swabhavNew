@@ -1,5 +1,9 @@
 <html>
-<script src="angular.js"></script>
+
+<head>
+    <link rel="stylesheet" href="bootstrap-3.3.7/dist/css/bootstrap.css">
+</head>
+<script src="../angularjs-app/angular.js"></script>
 <script>
     angular.module('modA', [])
         .controller('ControllerA', ['$scope', '$window', function ($scope, $window) {
@@ -25,6 +29,23 @@
             } else {
                 $scope.products = [];
             }
+
+            $scope.changedValue = function (product2) {
+
+                for (var i = 0; i < $scope.products.length; i++) {
+                    console.log($scope.products[i].Product)
+                    $scope.disableClick = function (isDisabled) {
+                        if (product2.name == $scope.products[i].Product) {
+                            $scope.isDisabled = (isDisabled);
+                        } else {
+                            $scope.isDisabled = !(isDisabled);
+                        }
+                    }
+
+                }
+
+            }
+
 
             $scope.addLineItem = function () {
                 $scope.selected = $scope.selectedProduct;
@@ -54,28 +75,30 @@
 </script>
 
 <body ng-app='modA' ng-controller='ControllerA'>
-    <form>
+    <form class="form-inline">
+        <h1 style="text-align: center;">Shopping Cart</h1>
         <div id="addDiv">
-            <label> Products: &nbsp;&nbsp;</label>
-            <select class="form-control" ng-model="selectedProduct"
+            <label class="form-control"> Products: &nbsp;&nbsp;</label>
+            <select class="form-control" ng-model="selectedProduct" ng-change="changedValue(selectedProduct)"
                 ng-options="product.name for product in getProducts">
 
             </select><br>
-            <span> Cost: {{selectedProduct.cost}}</span><br>
-            <label>Quantity: </label>
-            <input type="number" ng-model="quant"><br>
-            <button ng-click="addLineItem()">Add to cart</button>
-
+            <span class="form-control">&nbsp;&nbsp; Cost: {{selectedProduct.cost}} &nbsp;&nbsp;</span><br>
+            <label class="form-control">Quantity: </label>
+            <input type="number" ng-model="quant" class="form-control"><br>
+            <button ng-disabled="!(selectedProduct)" ng-model='btn1' ng-click="addLineItem()" class="btn"
+                style="background-color: darkseagreen;">Add to cart</button>
         </div>
     </form>
+
     <h2>Cart Details: </h2>
-    <table class="table1 table" style="width: 100%; text-align: center;">
+    <table class="table1 table table-striped table-hover" style="width: 100%; text-align: center;">
         <tr>
-            <th>Id</th>
-            <th>Product</th>
-            <th>Cost</th>
-            <th>Quantity</th>
-            <th>LineItem</th>
+            <th class="text-center">ID</th>
+            <th class="text-center">PRODUCT</th>
+            <th class="text-center">COST</th>
+            <th class="text-center">QUANTITY</th>
+            <th class="text-center">LINEITEM</th>
         </tr>
         <tr ng-repeat="product1 in products">
             <td>{{product1.Id}}</td>
@@ -85,7 +108,8 @@
             <td>{{product1.LineItem}}</td>
         </tr>
     </table>
-    <h2 ng-model="check">CheckOut: {{checkout}}</h2>
+    <h2 ng-model="check" style="text-align: right;">CheckOut: {{checkout}} &nbsp;&nbsp;&nbsp;&nbsp;</h2>
+    <h1>{{itemList}}</h1>
     <style>
         #addDiv {
             text-align: center;

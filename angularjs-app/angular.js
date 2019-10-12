@@ -11,6 +11,7 @@
   isValidObjectMaxDepth
 */
 
+
 var minErrConfig = {
   objectMaxDepth: 5,
   urlErrorParamsEnabled: true
