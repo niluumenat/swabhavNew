@@ -1,0 +1,18 @@
+<section>
+    <div [style.background-color]="updateBackground(student.cgpa)">
+        <h1>Id:{{student.id}}</h1>
+        <h1> <span>Name: </span><span [innerHtml]="student.name"></span></h1>
+        <!-- <h1 [innerHtml]="'Swabhav'"></h1> -->
+        <h1><span>Cgpa: </span> <span [innerHtml]="student.cgpa"></span></h1>
+        <h1>ProfilePic: <img [style.width.px]="widthMax" [style.height.px]="heightMax" [src]="student.profilePic"></h1>
+        <div *ngFor="let std of students ; let i = index" [style.background-color]="updateBackground(std.cgpa)">
+            <h1>Id:{{std.id}}</h1>
+            <h1>Name: <span [innerHtml]="std.name"></span></h1>
+            <h1>CGPA: <span>Cgpa: </span> <span [innerHtml]="std.cgpa"></span></h1>
+            <h1>ProfilePic: <img [style.width.px]="widthMax" [style.height.px]="heightMax" [src]="student.profilePic">
+            </h1>
+
+
+        </div>
+    </div>
+</section>
