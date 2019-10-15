@@ -27,13 +27,11 @@
             }
 
             $scope.addLineItem = function () {
-                $scope.selected = $scope.selectedProduct;
-                $scope.quantity = $scope.quant;
-                $scope.lineItem = $scope.quantity * $scope.selected.cost;
+                $scope.lineItem = $scope.quantity * $scope.selectedProduct.cost;
 
                 var product = {
-                    'Id': $scope.selected.id, 'Product': $scope.selected.name,
-                    'Cost': $scope.selected.cost, 'Quantity': $scope.quantity, 'LineItem': $scope.lineItem
+                    'Id': $scope.selectedProduct.id, 'Product': $scope.selectedProduct.name,
+                    'Cost': $scope.selectedProduct.cost, 'Quantity': $scope.quant, 'LineItem': $scope.lineItem
                 }
 
                 $scope.products.push(product);

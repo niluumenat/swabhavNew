@@ -9,7 +9,7 @@
 <script>
 
     var mainModule = angular.module('modA', [])
-    mainModule.factory('StudentService', ['$http', '$q', function ($http, $q) {
+    mainModule.factory('StudentService', ['$http', function ($http) {
         var service = {};
         service.getStudents = function () {
             return $http.get("http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students")

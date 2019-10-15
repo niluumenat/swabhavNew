@@ -1,0 +1,21 @@
+<h1 style="text-align: center;">Employee Form</h1>
+
+<table class="table1 table table-striped table-hover" style="width: 100%; text-align: center;">
+    <tr>
+        <th class="text-center">Id</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">Job</th>
+        <th class="text-center">Salary</th>
+
+    </tr>
+    <tr ng-repeat="emp in employees">
+        <td>{{emp.Id}}</td>
+        <td>{{emp.Name}}</td>
+        <td>{{emp.Job}}</td>
+        <td>{{emp.Salary}}</td>
+        <td><a href="#!Edit/{{emp.Id}}">Edit</a></td>
+    </tr>
+
+    
+</table>
+

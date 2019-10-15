@@ -1,0 +1,24 @@
+<form name="myForm">
+    <div style="text-align: center;">
+        <label>Name:</label>
+        <input type="text" name="name" ng-model='name' required>
+        <span style="color:red" ng-show="myForm.name.$touched && myForm.name.$invalid">The name is required.</span>
+        <br>
+
+        <label>Job: </label>
+        <select ng-model='selectedJob' required>
+            <option> Developer</option>
+            <option>Tester</option>
+            <option>SAP</option>
+            <option>Project Manager</option>
+
+        </select><br>
+
+        <label>Salary: </label><input name='salary' type="number" ng-model='salary' required>
+        <span style="color:red" ng-show="myForm.salary.$touched && myForm.salary.$invalid"> Salary is
+            required.</span><br>
+
+        <button ng-disabled="myForm.$invalid" ng-click="addEmployee()">Add</button>
+
+    </div>
+</form>
