@@ -8,10 +8,9 @@
         <div *ngFor="let std of students ; let i = index" [style.background-color]="updateBackground(std.cgpa)">
             <h1>Id:{{std.id}}</h1>
             <h1>Name: <span [innerHtml]="std.name"></span></h1>
-            <h1>CGPA: <span>Cgpa: </span> <span [innerHtml]="std.cgpa"></span></h1>
+            <h1>CGPA: <span>Cgpa: </span> <span [innerHtml]="std.cgpa | CustomStudent:std.cgpa" ></span></h1>
             <h1>ProfilePic: <img [style.width.px]="widthMax" [style.height.px]="heightMax" [src]="student.profilePic">
             </h1>
-
 
         </div>
     </div>

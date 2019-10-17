@@ -53,17 +53,16 @@
                 guess1.innerHTML = "<h3>Remaining Guess: </h3>" + remainingguess;
                 setColorForButton(this, random);
 
-                if (count >= 5) {
+                if (count == 5 && this.value==random) {
+
                     restartGame();
                 }
-
             });
             ruleDiv.appendChild(button);
 
         }
 
     }
-
     function setColorForButton(val, random) {
 
         if (val.value == random) {
@@ -72,15 +71,12 @@
             val.style.backgroundColor = "green";
         } else if (val.value < random) {
             val.style.backgroundColor = "red";
-        }
-        if (val.value == random) {
+        } else if (val.value == random ) {
             setTimeout(function () {
                 guess1.innerHTML = " ";
                 ruleDiv.innerHTML = "<h1><center>You won</center></h1>";
             }, 1000);
-
         }
-
     }
 
     function restartGame() {

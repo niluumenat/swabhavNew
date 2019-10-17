@@ -1,0 +1,22 @@
+<div [hidden]="isShow">
+    <h1>Rules for Blueball Game</h1>
+    <p>
+        1.there are 50 balls and you have to guess blue ball<br>
+        2.you have only 3 attempts to guess the blue ball<br>
+        3.red means guess is too low and green means too high
+    </p>
+    <button (click)="toggle()"> OK</button>
+</div>
+<div [hidden]="!show">
+    <input type="button" *ngFor='let button of [].constructor(50); let i = index' [style.border-radius]="'50%'"
+        [style.font-size]="'50px'" [style.margin-right]="'10px'" (click)="changeColor($event,i+1)" value="{{i+1}}">
+    <h2>Remaining Guess: {{count}} </h2>
+</div>
+
+<div [hidden]="!isShow2">
+    <h1 [style.text-align]="'center'" [style.color]="'red'">You Won!!!!</h1>
+</div>
+
+<div [hidden]="!hide">
+    <button (click)="restart()">Restart</button>
+</div>

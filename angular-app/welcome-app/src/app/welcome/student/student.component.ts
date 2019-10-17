@@ -19,24 +19,23 @@ export class StudentComponent {
             profilePic: 'assets/profile.jpg'
         }
     }
-
     students: IStudent[] = [
         {
             id: 101,
             name: 'Nilam',
-            cgpa: 6,
+            cgpa: 8.888,
             profilePic: 'assets/profile.jpg'
         },
         {
             id: 102,
             name: 'Komal',
-            cgpa: 7.5,
+            cgpa: 7.57888,
             profilePic: 'assets/profile.jpg'
         },
         {
             id: 103,
             name: 'Madhavi',
-            cgpa: 8,
+            cgpa: 8.78999,
             profilePic: 'assets/profile.jpg'
         }
     ]
@@ -49,7 +48,6 @@ export class StudentComponent {
         } else if (cgpa >= 8) {
             this.color = 'Green';
         }
-        console.log(this.color)
         return this.color;
     }
 

@@ -1,0 +1,4 @@
+<h1>FirstName: {{firstname}}</h1>
+<input type="text" [ngModel]="firstname" (ngModelChange)="firstNameChange($event)">
+<h2>LastName: {{lastname}}</h2>
+<input type="text" [(ngModel)]='lastname'>
