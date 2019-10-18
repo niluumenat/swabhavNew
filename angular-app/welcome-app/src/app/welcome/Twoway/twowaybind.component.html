@@ -2,3 +2,7 @@
 <input type="text" [ngModel]="firstname" (ngModelChange)="firstNameChange($event)">
 <h2>LastName: {{lastname}}</h2>
 <input type="text" [(ngModel)]='lastname'>
+
+<h3>Result: {{i}}</h3>
+<span>Prime No: </span> <input type="text" [style.background-color]="result" [(ngModel)]="i"
+    (ngModelChange)="getResultFromService($event)">

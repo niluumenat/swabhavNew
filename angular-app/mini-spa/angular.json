@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "welcome-app": {
+    "mini-spa": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/welcome-app",
+            "outputPath": "dist/mini-spa",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -24,8 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/bootstrap3/dist/css/bootstrap.css"
+              "src/styles.css"
             ],
             "scripts": []
           },
@@ -64,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "welcome-app:build"
+            "browserTarget": "mini-spa:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "welcome-app:build:production"
+              "browserTarget": "mini-spa:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "welcome-app:build"
+            "browserTarget": "mini-spa:build"
           }
         },
         "test": {
@@ -112,15 +111,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "welcome-app:serve"
+            "devServerTarget": "mini-spa:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "welcome-app:serve:production"
+              "devServerTarget": "mini-spa:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "welcome-app"
+  "defaultProject": "mini-spa"
 }

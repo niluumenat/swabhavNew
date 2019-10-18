@@ -25,6 +25,14 @@ export class WelcomeComponent {
         console.log(this.greet);
         return this.greet;
     }
+
+    f1(e){
+        alert(this.message=e);
+    }
+
+    f2(e1){
+        console.log(e1);
+    }
 }
 
 

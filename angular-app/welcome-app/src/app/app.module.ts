@@ -10,6 +10,8 @@ import { CustomStudentPipe } from './welcome/student/customStudentPipe';
 import { TwowayBindComponent } from './welcome/Twoway/twowaybind.component';
 import { BlueballGameComponent } from './welcome/Blueball Game/blueball.component';
 import { NumbersApiComponent } from './welcome/numbersApi/numbersApi.component';
+import { ToggleBtnComponent } from './welcome/Parent Child/ToggleComponent/toggle.component';
+import { RatingComponent } from './welcome/Rating Component/rating.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { NumbersApiComponent } from './welcome/numbersApi/numbersApi.component';
     CustomStudentPipe,
     TwowayBindComponent,
     BlueballGameComponent,
-    NumbersApiComponent
+    NumbersApiComponent,
+    ToggleBtnComponent,
+    RatingComponent
     
   ],
   imports: [

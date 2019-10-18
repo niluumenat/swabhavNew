@@ -1,8 +1,4 @@
-<h1>
-    Hello
-</h1>
-<div (click)=showFacts()>
-    Click Me
-</div>
-<h1>{{facts}}</h1>
-<h1>{{error}}</h1>
+<input type="number" [(ngModel)]="no" >
+<button (click)=showFacts(no)>Get Facts</button>
+
+<h2 *ngFor="let fact of facts;let i=index" >{{fact}}</h2>

@@ -9,14 +9,23 @@
 
 <aurionpro-student> </aurionpro-student>
 
-<aurionpro-twowaybind> </aurionpro-twowaybind>
-
 <aurionpro-blueballgame>
     class="button"
 </aurionpro-blueballgame>
--->
+
+<aurionpro-twowaybind> </aurionpro-twowaybind>
+
+
 <aurionpro-numbersApi>
-    
 </aurionpro-numbersApi>
 
 
+
+<aurionpro-togglebtn [title]="'MyToggle'" [onColor]="'blue'" [offColor]="'yellow'" (stateChanged)="f1($event)"> 
+</aurionpro-togglebtn>
+
+-->
+
+<aurionpro-rating [rating]="2"  (hoverover)="f2($event)">
+    
+</aurionpro-rating>

@@ -8,7 +8,7 @@
     <button (click)="toggle()"> OK</button>
 </div>
 <div [hidden]="!show">
-    <input type="button" *ngFor='let button of [].constructor(50); let i = index' [style.border-radius]="'50%'"
+    <input type="button" class="btn btn-default" *ngFor='let button of [].constructor(50); let i = index' [style.border-radius]="'50%'"
         [style.font-size]="'50px'" [style.margin-right]="'10px'" (click)="changeColor($event,i+1)" value="{{i+1}}">
     <h2>Remaining Guess: {{count}} </h2>
 </div>

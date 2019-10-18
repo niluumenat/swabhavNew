@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NumbersApiService } from './numbers-api.service';
+import { NumbersApiService } from '../services/numbers-api.service';
 
 describe('NumbersApiService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

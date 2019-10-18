@@ -1,0 +1,19 @@
+<style>
+    .glyphicon:hover {
+        color: chartreuse;
+        
+    }
+
+    .glyphicon {
+        font-size: 50px;
+    }
+</style>
+<div [style.width.px]="rating*50" style="overflow: hidden;">
+    <div [style.width.px]="5*50">
+        <span class="glyphicon glyphicon-star-empty" aria-hidden="true" data-toggle="tooltip" title="1"></span>
+        <span class="glyphicon glyphicon-star-empty" aria-hidden="true" data-toggle="tooltip" title="2"></span>
+        <span class="glyphicon glyphicon-star-empty" aria-hidden="true" data-toggle="tooltip" title="3"></span>
+        <span class="glyphicon glyphicon-star-empty" aria-hidden="true" data-toggle="tooltip" title="4"></span>
+        <span class="glyphicon glyphicon-star-empty" aria-hidden="true" data-toggle="tooltip" title="5"></span>
+    </div>
+</div>
