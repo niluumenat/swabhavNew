@@ -7,12 +7,11 @@ import { ProductDataService } from './productDataService';
 })
 
 export class ProductListComponent {
+    flag: boolean = false;
     state: string = "Show Image";
-    productNames: String;
     arrProducts: string[];
     error: string;
     imgUrl: string;
-    productName;
 
     constructor(private productdataService: ProductDataService) { }
 
@@ -21,6 +20,7 @@ export class ProductListComponent {
             .subscribe(
                 data => {
                     this.arrProducts = data as string[];
+                    console.log(this.arrProducts);
                 },
                 error => {
                     return this.error = error;
@@ -28,14 +28,18 @@ export class ProductListComponent {
     }
     showImg() {
         if (this.state == "Show Image") {
+            this.flag = true;
             this.state = "Hide Image";
-            //this.imgUrl = this.arrProducts[0];
-            //console.log(this.imgUrl);
 
         } else if (this.state == "Hide Image") {
+            this.flag = false;
             this.state = "Show Image";
         }
     }
+    getProductName(productName1) {
+        console.log(productName1);
+    }
+
 
 
 }

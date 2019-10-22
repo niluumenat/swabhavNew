@@ -16,6 +16,9 @@ export const routeArr: Routes = [
   {
     path: 'productlist', component: ProductListComponent
   },
+  {
+    path: 'productdetails/:id', component: ProductDetailsComponent
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

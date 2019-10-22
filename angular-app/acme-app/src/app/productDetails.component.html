@@ -1,8 +1,44 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title">Product Detail: </h3>
+        <h3 class="panel-title">Product Detail: {{productDetails1.productName}}</h3>
     </div>
-    <div class="panel-body" style="text-align: center;">
-        
-    </div>
-</div>
+    <div class="panel-body" style="text-align: left;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-2" style="height:70px;" >
+                    <h4>Name:</h4>
+                    <h4>Code: </h4>
+                    <h4>Description: </h4>
+                    <h4>Availibility: </h4>
+                    <h4>Price: </h4>
+                    <h4>5 Star Rating: </h4>
+                </div>
+
+                <div class="col-xs-4 " style="height:70px;">
+                    <h4>{{productDetails1.productName}}</h4>
+                    <h4>{{productDetails1.productCode}}</h4>
+                    <h4>{{productDetails1.description}}</h4>
+                    <h4>{{productDetails1.releaseDate}}</h4>
+                    <h4>${{productDetails1.price}}</h4>
+                    <p>
+                        <div [style.width.px]="productDetails1.starRating*14"
+                            style="overflow: hidden;text-align: center">
+                            <div [style.width.px]="5*14">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-xs-6 " style="height:500px;">
+                    <img [src]="productDetails1.imageUrl" [style.width.px]="300" [style.height.px]="300">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer " style="background-color: lightgrey">
+            <a [routerLink]="'/productlist'"> <button class="btn btn-default"> <h4
+                        class="glyphicon glyphicon glyphicon-chevron-left">Back</h4>
+                </button> </a> </div>
