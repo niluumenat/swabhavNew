@@ -1,0 +1,66 @@
+<html>
+
+<head>
+<style>
+form {
+	margin: 0 auto;
+	width: 250px;
+	padding: 30%;
+	background-color: lightblue;
+}
+
+div {
+	color: red;
+}
+</style>
+</head>
+
+<body>
+	<form name="LoginForm" onsubmit="return validate();"
+		action="http://localhost:8080/welcome-servlet-app/AuthenticateServlet"
+		method="POST">
+		Name: <input type=" text" name="username"
+			onchange="return validate();">
+		<div id="warning"></div>
+		<br> Password:<input type="password" name="userpassword"
+			onchange="return validate();">
+		<div id="warnings"></div>
+		<br> <input type="submit" value="Submit">
+
+	</form>
+</body>
+
+</html>
+<script>
+	function validate() {
+
+		var name = document.forms["LoginForm"]["username"];
+		var password = document.forms["LoginForm"]["userpassword"];
+		var warning1 = document.getElementById("warning");
+		var warning2 = document.getElementById("warnings");
+		var returnvalue;
+
+		if (name.value == "") {
+
+			warning1.innerHTML = "<h4>*Name required</h4>";
+			name.focus();
+			return false;
+		} else {
+			warning1.innerHTML = "";
+			returnvalue = true;
+		}
+
+		if (password.value == "") {
+
+			warning2.innerHTML = "<h4>*Password required</h4>";
+			password.focus();
+			return false;
+		} else {
+			warning2.innerHTML = "";
+			returnvalue = true;
+		}
+
+		return true;
+
+	}
+</script>
