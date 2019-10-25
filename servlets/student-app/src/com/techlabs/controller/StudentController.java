@@ -1,56 +1,49 @@
-package com.techlabs.servlet;
+package com.techlabs.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
-import javax.servlet.ServletContext;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import com.techlabs.model.Student;
 
 /**
- * Servlet implementation class ApplicationServlet
+ * Servlet implementation class StudentController
  */
-@WebServlet("/application")
-public class ApplicationServlet extends HttpServlet {
+@WebServlet("/students")
+public class StudentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ApplicationServlet() {
+    public StudentController() {
         super();
-       
+        System.out.println("Controller created");
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletContext application = getServletContext(); 
-		PrintWriter out = response.getWriter();
-		String docType = "<!doctype html>";
-		if (application.getAttribute("counter") == null) {
-			int number = 0;
-			application.setAttribute("counter", number);
-		} else {
-			int old = (int) application.getAttribute("counter");
-			out.print(docType+"<html><body>Old  " + old + "<br>");
-			old = old + 1;
-			application.setAttribute("counter", old);
-			out.print("New " + application.getAttribute("counter") + "<br>");
-		}
-
+		StudentService s = new StudentService();
+		List<Student> students= s.get();
+		request.setAttribute("students", students);
+		
+		RequestDispatcher view = request.getRequestDispatcher("student.jsp");
+		view.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

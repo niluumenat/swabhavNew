@@ -6,11 +6,12 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class NumbersApiService {
+
   handleError;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    console.log("Service Created");
+  }
   getFacts(no) {
     return this.http.get("http://numbersapi.com/" + no, { responseType: 'text' });
   }
 }
-
-

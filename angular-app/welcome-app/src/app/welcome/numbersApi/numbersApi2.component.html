@@ -1,0 +1,4 @@
+<input type="number" [(ngModel)]="no">
+<button (click)=showFacts(no)>Get Facts</button>
+
+<h2 *ngFor="let fact of facts;let i=index">{{fact}}</h2>

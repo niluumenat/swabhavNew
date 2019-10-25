@@ -1,56 +1,40 @@
 package com.techlabs.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class ApplicationServlet
+ * Servlet implementation class SummaryServlet
  */
-@WebServlet("/application")
-public class ApplicationServlet extends HttpServlet {
+@WebServlet("/SummaryServlet")
+public class SummaryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ApplicationServlet() {
+    public SummaryServlet() {
         super();
-       
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletContext application = getServletContext(); 
-		PrintWriter out = response.getWriter();
-		String docType = "<!doctype html>";
-		if (application.getAttribute("counter") == null) {
-			int number = 0;
-			application.setAttribute("counter", number);
-		} else {
-			int old = (int) application.getAttribute("counter");
-			out.print(docType+"<html><body>Old  " + old + "<br>");
-			old = old + 1;
-			application.setAttribute("counter", old);
-			out.print("New " + application.getAttribute("counter") + "<br>");
-		}
-
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

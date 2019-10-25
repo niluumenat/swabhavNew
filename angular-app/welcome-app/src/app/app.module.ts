@@ -12,6 +12,7 @@ import { BlueballGameComponent } from './welcome/Blueball Game/blueball.componen
 import { NumbersApiComponent } from './welcome/numbersApi/numbersApi.component';
 import { ToggleBtnComponent } from './welcome/Parent Child/ToggleComponent/toggle.component';
 import { RatingComponent } from './welcome/Rating Component/rating.component';
+import { NumbersApi2Component } from './welcome/numbersApi/numbersApi2.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +24,9 @@ import { RatingComponent } from './welcome/Rating Component/rating.component';
     BlueballGameComponent,
     NumbersApiComponent,
     ToggleBtnComponent,
-    RatingComponent
-    
+    RatingComponent,
+    NumbersApi2Component
+
   ],
   imports: [
     FormsModule,
