@@ -31,7 +31,7 @@ public class StudentController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		StudentService s = new StudentService();
+		StudentService s = StudentService.getInstance();
 		List<Student> students= s.get();
 		request.setAttribute("students", students);
 		

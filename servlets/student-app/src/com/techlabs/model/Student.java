@@ -8,7 +8,7 @@ public class Student {
 	private int studentId=0;
 	
 	public Student(String name, String cgpa) {
-		studentId = id++;
+		studentId = ++id;
 		this.name = name;
 		this.cgpa = cgpa;
 	}
@@ -21,9 +21,13 @@ public class Student {
 	public String getCgpa() {
 		return cgpa;
 	}
-	
-	
-	
-	
-
+	public static void setId(int id) {
+		Student.id = id;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setCgpa(String cgpa) {
+		this.cgpa = cgpa;
+	}
 }
