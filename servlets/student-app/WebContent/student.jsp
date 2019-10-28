@@ -8,16 +8,19 @@
 <title>Student Data</title>
 </head>
 <body>
-Click here to add student<br>
-<a href="add.jsp">Add</a>
-<br>
+	Click here to add student
+	<br>
+	<a href="add.jsp">Add</a>
+	<br>
 	<%
-	out.print("<table><tr><th>Id</th><th>Name</th><th>Cgpa</th></tr>");
+		out.print(
+				"<table border=1px style=width:900px, align=center><tr><th>Id</th><th>Name</th><th>Cgpa</th></tr>");
 		List<Student> students = (List) request.getAttribute("students");
 		for (Student s : students) {
-			out.println("<tr><td>"+s.getId()+"</td><td> " + s.getName()+"</td><td> " + s.getCgpa()+"</td><td>"+" <a href='edit?id="+s.getId() +"'>Edit</a></th></tr>");
+			out.println("<tr><td>" + s.getId() + "</td><td> " + s.getName() + "</td><td> " + s.getCgpa()
+					+ "</td><td>" + " <a href='edit?id=" + s.getId() + "'>Edit</a></td>"+"<td><a href='delete?id="+s.getId()+"'>Delete</a></th></tr>");
 		}
-	out.print("</table");
+		out.print("</table");
 	%>
 
 </body>

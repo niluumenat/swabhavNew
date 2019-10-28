@@ -1,6 +1,7 @@
 package com.techlabs.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.techlabs.model.Student;
@@ -65,5 +66,18 @@ public class StudentService {
 		System.out.println(students);
 		
 	}
+	
+	public void delete(int id){
+		for(Iterator<Student> iterator = students.iterator(); iterator.hasNext(); ) {
+		    if(iterator.next().getId() == id)
+		        iterator.remove();
+		}
+		
+		System.out.println(students);
+		
+	}
+	
+	
+	
 
 }
