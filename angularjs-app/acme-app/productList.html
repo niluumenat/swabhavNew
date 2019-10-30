@@ -1,0 +1,62 @@
+<style>
+    .rating {
+        color: #a9a9a9;
+    }
+
+    ul.rating {
+        display: inline-block;
+    }
+
+    .rating li {
+        list-style-type: none;
+        display: inline-block;
+        padding: 1px;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .rating .filled {
+        color: black;
+    }
+</style>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Product List</h3>
+    </div>
+    <div class="panel-body" style="text-align: center;">
+        <br>
+        <span>Filter by: <input ng-Model="searchText" placeholder="search text goes here"></span>
+        <br>
+        <h2 style="text-align:left;">Filter Text: {{searchText}}</h2>
+        <table class="table .table-bordered .table-striped .table-condensed ">
+            <thead>
+                <tr>
+                    <th><button class="btn btn-primary" id="hideShow" ng-click="showHide()">{{hideShow_image}}</button>
+                    </th>
+                    <th>Product</th>
+                    <th>Code</th>
+                    <th>Available</th>
+                    <th>Price</th>
+                    <th>5 Star Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="product in products  | filter : searchText">
+                    <td class=""><img ng-src="{{product.imageUrl}}" ng-show="isVisible" style="width: 100px;"></td>
+                    <td><a href="#!productDetails/{{product.productId}}">{{product.productName}}</a></td>
+                    <td>{{product.productCode}}</td>
+                    <td>{{product.releaseDate}}</td>
+                    <td>{{"$"+product.price}}</td>
+                    <td>
+                        <span ng-repeat="rating in ratings">
+                            <div star-rating rating-value="getStars(product.starRating) " max="rating.max"></div>
+
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+</div>

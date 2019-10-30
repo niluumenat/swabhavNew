@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../bootstrap-app/bootstrap-3.3.7/dist/css/bootstrap.css">
+</head>
+
+<script src="../angular.js"></script>
+<script src="../mini-spa/angular-route.js"></script>
+<script src="../acme-app/app.js"></script>
+
+<body ng-app='acme.spa'>
+    <nav class="navbar navbar-default">
+        <a class="navbar-brand" href="#!home">Acme Product Management </a>
+        <a class="navbar-brand" href="#!home">Home </a>
+        <a class="navbar-brand" href="#!ProductList">Product List</a>
+    </nav>
+
+    <section ng-view>
+
+    </section>
+
+</body>
+
+</html>

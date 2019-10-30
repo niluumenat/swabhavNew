@@ -1,0 +1,62 @@
+<style>
+    .rating {
+        color: #a9a9a9;
+        margin: 0;
+        padding: 0;
+    }
+
+    ul.rating {
+        display: inline-block;
+    }
+
+    .rating li {
+        list-style-type: none;
+        display: inline-block;
+        padding: 1px;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .rating .filled {
+        color: red;
+    }
+</style>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Product Detail: {{product.productName}}</h3>
+    </div>
+    <div class="panel-body" style="text-align: left;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-2" style="height:70px;">
+                    <h4>Name:</h4>
+                    <h4>Code: </h4>
+                    <h4>Description: </h4>
+                    <h4>Availibility: </h4>
+                    <h4>Price: </h4>
+                    <h4>5 Star Rating: </h4>
+                </div>
+
+                <div class="col-xs-4 " style="height:70px;">
+                    <h4>{{product.productName}}</h4>
+                    <h4>{{product.productCode}}</h4>
+                    <h4>{{product.description}}</h4>
+                    <h4>{{product.releaseDate}}</h4>
+                    <h4>${{product.price}}</h4>
+                    <h4>
+                        <span ng-repeat="rating in ratings">
+                            <div star-rating rating-value="product.starRating" max="rating.max"></div>
+                        </span>
+                    </h4>
+                </div>
+                <div class="col-xs-6 " style="height:500px;">
+                    <img src="{{product.imageUrl}}" style="width:300px; height:300px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer " style="background-color: lightgrey">
+            <a href="#!ProductList"> <button class="btn btn-default">
+                    <h4>Back</h4>
+                </button> </a> </div>

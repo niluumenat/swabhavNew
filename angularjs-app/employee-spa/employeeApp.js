@@ -61,7 +61,6 @@ mainModule.controller('EditController', ['$scope', '$routeParams', '$window', 'E
 
     $scope.edit = function () {
         var employees = angular.fromJson($window.localStorage.getItem('employeeDetails'));
-        
         employees.forEach(function (e) {
             if (e.Id == $scope.tempId) {
                 e.Name = $scope.name;
