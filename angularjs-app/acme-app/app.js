@@ -85,11 +85,7 @@ mainModule.controller('ProductDetailsController', ['ProductDataService', '$scope
             $scope.ratings = [{
                 max: 5
             }];
-            $scope.getStars = function (rating) {
-                var val = parseFloat(rating);
-                var size = val / 5 * 100;
-                return size + '%';
-            }
+
             $scope.product = ProductDataService.getProduct($scope.products);
             console.log($scope.product)
         })
@@ -111,9 +107,8 @@ mainModule.directive('starRating', function () {
             ratingValue: '=',
             max: '='
         },
-        link: function (scope, elem, attrs) {
+        link: function (scope) {
             scope.stars = [];
-            
             for (var i = 0; i < scope.max; i++) {
                 scope.stars.push({
                     filled: i < scope.ratingValue

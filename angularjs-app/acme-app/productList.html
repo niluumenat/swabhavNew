@@ -50,8 +50,7 @@
                     <td>{{"$"+product.price}}</td>
                     <td>
                         <span ng-repeat="rating in ratings">
-                            <div star-rating rating-value="getStars(product.starRating) " max="rating.max"></div>
-
+                            <div star-rating rating-value="product.starRating" max="rating.max"></div>
                         </span>
                     </td>
                 </tr>
