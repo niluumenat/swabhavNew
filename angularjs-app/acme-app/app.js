@@ -50,14 +50,6 @@ mainModule.controller('ProductListController', ['$scope', 'ProductDataService', 
         .then(function (x) {
             $scope.products = x.data;
             console.log($scope.products);
-            $scope.ratings = [{
-                max: 5
-            }];
-            $scope.getStars = function (rating) {
-                var val = parseFloat(rating);
-                var size = val / 5 * 100;
-                return size + '%';
-            }
 
         })
         .catch(function (y) {
@@ -82,38 +74,39 @@ mainModule.controller('ProductDetailsController', ['ProductDataService', '$scope
     ProductDataService.getProducts()
         .then(function (x) {
             $scope.products = x.data;
-            $scope.ratings = [{
-                max: 5
-            }];
-
             $scope.product = ProductDataService.getProduct($scope.products);
-            console.log($scope.product)
         })
         .catch(function (y) {
-            console.log(y.errors)
             $scope.fact = y.errors;
         })
 }])
 
-mainModule.directive('starRating', function () {
+mainModule.directive("starRating", function () {
     return {
-        restrict: 'A',
-        template: '<ul class="rating">' +
-            '<li ng-repeat="star in stars" ng-class="star">' +
-            '\u2605' +
-            '</li>' +
-            '</ul>',
+        template:
+        +"<div class='average-rating-container'>" +
+            "  <ul class='rating'>" +
+            "    <li ng-repeat='star in stars' class='star'>" +
+            "    </li>" +
+            "  </ul>" +
+            "  <ul class='rating foreground' style='width:{{filledInStarsContainerWidth}}%'>" +
+            "    <li ng-repeat='star in stars' class='filled'>" +
+            "      <i class='glyphicon glyphicon-star'></i>" +
+            "    </li>" +
+            "  </ul>" +
+            "</div>",
         scope: {
-            ratingValue: '=',
-            max: '='
+            averageRatingValue: "=ngModel",
+            max: "="
         },
         link: function (scope) {
             scope.stars = [];
             for (var i = 0; i < scope.max; i++) {
-                scope.stars.push({
-                    filled: i < scope.ratingValue
-                });
+                scope.stars.push({});
             }
+            var starContainerMaxWidth = 100;
+            console.log(scope.averageRatingValue)
+            scope.filledInStarsContainerWidth = scope.averageRatingValue / scope.max * starContainerMaxWidth;
         }
-    }
+    };
 });

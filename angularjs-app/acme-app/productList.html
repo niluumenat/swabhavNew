@@ -1,23 +1,29 @@
 <style>
     .rating {
-        color: #a9a9a9;
-    }
-
-    ul.rating {
-        display: inline-block;
+        margin: 0;
+        padding: 0;
     }
 
     .rating li {
-        list-style-type: none;
+        font-size: 21px;
         display: inline-block;
-        padding: 1px;
-        text-align: center;
-        font-weight: bold;
-        cursor: pointer;
     }
 
-    .rating .filled {
-        color: black;
+    .rating li.filled {
+        color: red;
+    }
+
+    .average-rating-container {
+        position: relative;
+        height: 31px;
+        width: 103px;
+    }
+
+    .average-rating-container .foreground {
+        position: absolute;
+        top: 0;
+        overflow: hidden;
+        white-space: nowrap;
     }
 </style>
 <div class="panel panel-primary">
@@ -49,9 +55,7 @@
                     <td>{{product.releaseDate}}</td>
                     <td>{{"$"+product.price}}</td>
                     <td>
-                        <span ng-repeat="rating in ratings">
-                            <div star-rating rating-value="product.starRating" max="rating.max"></div>
-                        </span>
+                        <star-rating ng-model="product.starRating" max="5"></star-rating>
                     </td>
                 </tr>
             </tbody>
