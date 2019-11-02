@@ -10,34 +10,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.techlabs.model.Student;
-import com.techlabs.services.StudentService;
+import com.techlabs.model.Contact;
+import com.techlabs.service.ContactService;
 
 /**
- * Servlet implementation class StudentController
+ * Servlet implementation class ContactController
  */
-@WebServlet("/students")
-public class StudentController extends HttpServlet {
+@WebServlet("/Contacts")
+public class ContactController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StudentController() {
+    public ContactController() {
         super();
-        System.out.println("Controller created");
+        System.out.println("Contact Controller Created");
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		StudentService s = StudentService.getInstance();
+		ContactService s = ContactService.getInstance();
+		List<Contact> contacts= s.get();
+		request.setAttribute("contacts", contacts);
 		
-		List<Student> students= s.get();
-		request.setAttribute("students", students);
-		
-		RequestDispatcher view = request.getRequestDispatcher("student.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("contacts.jsp");
 		view.forward(request, response);
 	}
 

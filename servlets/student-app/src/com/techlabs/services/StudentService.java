@@ -1,4 +1,4 @@
-package com.techlabs.controller;
+package com.techlabs.services;
 
 import java.util.ArrayList;
 import java.util.Iterator;
