@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.techlabs.model.Contact;
 import com.techlabs.service.ContactService;
@@ -31,7 +32,9 @@ public class AddController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		RequestDispatcher rd=request.getRequestDispatcher("addContact.jsp"); 
+		rd.forward(request, response);
+		
 	}
 
 	/**
@@ -45,28 +48,28 @@ public class AddController extends HttpServlet {
 		
 		System.out.println(firstname + " "+lastname+ " "+ phoneno+ " "+ emailid );
 		
+			if (!firstname.equals("") && !lastname.equals("") && !emailid.equals("") && !phoneno.equals("")) {
+				Contact c= new Contact(firstname, lastname,phoneno, emailid);
+				ContactService service = ContactService.getInstance();
+				service.addContact(c);
+				
+				response.sendRedirect("Contacts");
+
+			} else {
+				String validationMessage="Please fill all the contact details";
+				request.setAttribute("validate",validationMessage);
+				
+				request.setAttribute("setFirstName", firstname);
+				request.setAttribute("setLastName", lastname);
+				request.setAttribute("setPhoneNo", phoneno);
+				request.setAttribute("setEmailId", emailid);
+				
+				RequestDispatcher rd=request.getRequestDispatcher("addContact.jsp"); 
+				rd.forward(request, response);
+			}
 		
-		if (!firstname.equals("") && !lastname.equals("") && !emailid.equals("")) {
-			Contact c= new Contact(firstname, lastname,phoneno, emailid);
-			ContactService service = ContactService.getInstance();
-			service.addStudents(c);
-			
-			response.sendRedirect("Contacts");
-
-		} else {
-			String validationMessage="Please fill all the details";
-			request.setAttribute("validate",validationMessage);
-			
-			request.setAttribute("setFirstName", firstname);
-			request.setAttribute("setLastName", lastname);
-			request.setAttribute("setPhoneNo", phoneno);
-			request.setAttribute("setEmailId", emailid);
-			
-			RequestDispatcher rd=request.getRequestDispatcher("addContact.jsp"); 
-			rd.forward(request, response);
-			
-		}
-
+		
+		
 	}
 
 }

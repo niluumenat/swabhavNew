@@ -15,9 +15,18 @@ public class RepoTest {
 					c.getFirstname() + " \t" + c.getLastName() + "\t" + c.getPhoneNo() + "\t" + c.getEmailId());
 		}
 		
-		repo.add(new Contact("Akash", "Sharma", 34563322, "ak@123"));
+		repo.add(new Contact("Akash", "Sharma", "34563322", "ak@123"));
 		
 		System.out.println(repo.get().size());
+		
+		repo.delete("Koms");
+		System.out.println(repo.get().size());
+		
+		List<Contact> contacts1 = repo.getByName("Akash");
+		for (Contact c : contacts1) {
+			System.out.println(
+					c.getFirstname() + " \t" + c.getLastName() + "\t" + c.getPhoneNo() + "\t" + c.getEmailId());
+		}
 	}
 
 }

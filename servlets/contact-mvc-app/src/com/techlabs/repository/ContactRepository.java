@@ -25,8 +25,7 @@ public class ContactRepository {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Connecting to a selected database...");
-			conn = (Connection) DriverManager
-					.getConnection("jdbc:mysql://localhost/swabhav?user=root&password=root");
+			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/swabhav?user=root&password=root");
 			System.out.println("Connected database successfully...");
 
 		} catch (ClassNotFoundException | SQLException e) {
@@ -47,7 +46,8 @@ public class ContactRepository {
 			System.out.println(rs);
 
 			while (rs.next()) {
-				Contact c1 = new Contact(rs.getString(2), rs.getString(3), rs.getString(4),
+				System.out.println(rs.getString(1) + rs.getString(2) + rs.getString(3));
+				Contact c1 = new Contact(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
 						rs.getString(5));
 				contact.add(c1);
 			}
@@ -76,9 +76,90 @@ public class ContactRepository {
 			prestmt.setString(2, contact1.getLastName());
 			prestmt.setString(3, contact1.getPhoneNo());
 			prestmt.setString(4, contact1.getEmailId());
-			
+
 			prestmt.executeUpdate();
 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public void delete(String id) {
+		initializeConnection();
+		try {
+			prestmt = conn.prepareStatement("DELETE FROM CONTACT WHERE ID=? ");
+			prestmt.setString(1, id);
+
+			prestmt.executeUpdate();
+			System.out.println("Record deleted successfully..");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public List<Contact> getByName(String id) {
+		initializeConnection();
+		ResultSet rs = null;
+		contact = new ArrayList<Contact>();
+		try {
+			prestmt = conn.prepareStatement("SELECT * FROM CONTACT WHERE ID=?");
+			prestmt.setString(1, id);
+			rs = prestmt.executeQuery();
+
+			while (rs.next()) {
+				Contact c1 = new Contact(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5));
+				contact.add(c1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return contact;
+	}
+
+	public void edit(String id, Contact contact) {
+		initializeConnection();
+		try {
+			prestmt = conn
+					.prepareStatement("UPDATE CONTACT SET FIRSTNAME=?, LASTNAME=?, PHONENO=?,EMAILID=?  WHERE ID=?");
+			prestmt.setString(1, contact.getFirstname());
+			prestmt.setString(2, contact.getLastName());
+			prestmt.setString(3, contact.getPhoneNo());
+			prestmt.setString(4, contact.getEmailId());
+			prestmt.setString(5, id);
+
+			prestmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -63,8 +63,7 @@ public class StudentService {
 			}
 		}
 		
-		System.out.println(students);
-		
+		System.out.println(students);	
 	}
 	
 	public void delete(int id){

@@ -1,7 +1,7 @@
 package com.techlabs.model;
 
 public class Contact {
-	
+	private String id;
 	private String firstname;
 	private String lastName;
 	private String phoneNo;
@@ -12,6 +12,20 @@ public class Contact {
 		this.phoneNo = phoneNo;
 		this.emailId = emailId;
 	}
+	
+	public Contact(String id, String firstname, String lastName, String phoneNo, String emailId) {
+		super();
+		this.id = id;
+		this.firstname = firstname;
+		this.lastName = lastName;
+		this.phoneNo = phoneNo;
+		this.emailId = emailId;
+	}
+	
+	public String getId() {
+		return id;
+	}
+
 	public String getFirstname() {
 		return firstname;
 	}
@@ -36,9 +50,5 @@ public class Contact {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-	
-	
-	
-	
 
 }

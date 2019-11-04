@@ -4,12 +4,12 @@ public class Contact {
 	
 	private String firstname;
 	private String lastName;
-	private int phoneNo;
+	private String phoneNo;
 	private String emailId;
-	public Contact(String firstname, String lastName, int phoneNo, String emailId) {
+	public Contact(String firstname, String lastName, String string, String emailId) {
 		this.firstname = firstname;
 		this.lastName = lastName;
-		this.phoneNo = phoneNo;
+		this.phoneNo = string;
 		this.emailId = emailId;
 	}
 	public String getFirstname() {
@@ -24,10 +24,10 @@ public class Contact {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public int getPhoneNo() {
+	public String getPhoneNo() {
 		return phoneNo;
 	}
-	public void setPhoneNo(int phoneNo) {
+	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 	public String getEmailId() {

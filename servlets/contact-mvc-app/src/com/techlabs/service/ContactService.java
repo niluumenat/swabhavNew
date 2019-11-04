@@ -1,6 +1,5 @@
 package com.techlabs.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import com.techlabs.model.Contact;
 import com.techlabs.repository.ContactRepository;
@@ -22,14 +21,26 @@ public class ContactService {
 	}
 	
 	public List<Contact> get() {
+		System.out.println(repo.get());
 		return repo.get();
 	}
 	
-	public void addStudents(Contact contact) {
+	public void addContact(Contact contact) {
 		repo.add(contact);
-
 	}
-
+	
+	public void deleteContact(String id){
+		repo.delete(id);
+	}
+	
+	public List<Contact> getByName(String id){
+		System.out.println(repo.getByName(id));
+		return repo.getByName(id);
+	}
+	
+	public void editContact(String id, Contact contact){
+		repo.edit(id, contact);
+	}
 
 
 }
