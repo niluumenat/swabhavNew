@@ -7,20 +7,31 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-String errorMsg =(String)request.getAttribute("errorMsg");
+	<style>
+form {
+	margin: 0 auto;
+	width: 250px;
+	padding: 30%;
+	background-color: lightblue;
+}
 
-%>
-	<form name="LoginForm"  onsubmit="return validate();"
-		action="login"
+div {
+	color: red;
+}
+</style>
+	<%
+		String errorMsg = (String) request.getAttribute("errorMsg");
+	%>
+	<form name="LoginForm" onsubmit="return validate();" action="login"
 		method="POST">
-		
-		<p> <label id="errorMsg" style="color: red"><%=errorMsg %></label></p>
-		Name: <input type="text" name="username"
-			onchange="return validate();">
-			
-		<div id="warning"> </div>
-		
+
+		<p>
+			<label id="errorMsg" style="color: red"><%=errorMsg%></label>
+		</p>
+		Name: <input type="text" name="username" onchange="return validate();">
+
+		<div id="warning"></div>
+
 		<br> Password:<input type="password" name="userpassword"
 			onchange="return validate();">
 		<div id="warnings"></div>

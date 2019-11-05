@@ -17,7 +17,6 @@ public class ContactService {
 	
 	private ContactService() {
 		System.out.println("Service created");
-		
 	}
 	
 	public List<Contact> get() {
