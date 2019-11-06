@@ -1,3 +1,5 @@
+<%@page import="org.apache.catalina.Context"%>
+<%@page import="com.techlabs.listeners.SessionCounter"%>
 <%@page import="com.techlabs.model.BankingMaster"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -9,15 +11,28 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<center>
+		<h1>Welcome to Dena Bank</h1>
+	</center>
+	<center><jsp:useBean id="user"
+			class="com.techlabs.listeners.SessionCounter" scope="request" /><jsp:getProperty
+			name="sessionCounter" property="currentSessionCount" />.
+	</center>
+
 	<%
+		String userName = (String) session.getAttribute("userName");
+		if (userName != null) {
+			out.print("<button> <a href='logout'>LogOut</a></button>");
+		}
+
 		List<BankingMaster> master = (List<BankingMaster>) request.getAttribute("master");
 
 		for (BankingMaster m : master) {
 
-			out.println("<span text-align='left'><h2>Account holder's Name: " + m.getName() + "  Account Balance: "
-					+ m.getBalance() + "</h2></span> ");
-			out.println("<br><h2><a href='transaction?userName=" + m.getName()
-					+ "'>Transaction</a> <span> </span><a href='passbook?userName=" + m.getName() + "'>Passbook</a><h2>");
+			out.println("<h2 align='left'>Account holder's Name: " + m.getName()
+					+ "</h2><h2 align='right'>  Account Balance: " + m.getBalance() + "</h2>");
+			out.println(
+					"<br><h2><a href='transaction'>Transaction</a> <span> </span><a href='passbook'>Passbook</a><h2>");
 		}
 	%>
 

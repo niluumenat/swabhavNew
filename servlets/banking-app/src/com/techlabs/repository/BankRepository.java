@@ -19,6 +19,7 @@ public class BankRepository {
 	private PreparedStatement prestmt = null;
 	private ResultSet rs = null;
 	private List<BankingMaster> master = null;
+	private List<BankingTransaction> trans = null;
 
 	public BankRepository() {
 
@@ -117,6 +118,37 @@ public class BankRepository {
 			}
 		}
 		return master;
+	}
+	
+	public List<BankingTransaction> getByNameTrans(String name){
+		initializeConnection();
+		ResultSet rs = null;
+		trans = new ArrayList<BankingTransaction>();
+		try {
+			prestmt = conn.prepareStatement("SELECT * FROM transaction WHERE name=? order by date desc");
+			prestmt.setString(1, name);
+			rs = prestmt.executeQuery();
+
+			while (rs.next()) {
+				BankingTransaction t1 = new BankingTransaction(rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4));
+				trans.add(t1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally { 
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return trans;
+		
 	}
 
 	public void update( BankingTransaction transaction) {

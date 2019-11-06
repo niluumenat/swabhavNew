@@ -15,6 +15,12 @@ form {
 <title>Transaction</title>
 </head>
 <body>
+<%
+String userName = (String) session.getAttribute("userName");
+if (userName != null) {
+	out.print("<button> <a href='logout'>LogOut</a></button>");
+}
+%>
 
 <form name="TransactionForm" action="transaction" method="POST">
 

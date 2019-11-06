@@ -1,3 +1,4 @@
+<%@page import="com.techlabs.listeners.SessionCounter"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,22 +13,25 @@ form {
 }
 
 div {
-	background-color: green;
+	background-color: lightgreen;
 }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body text-align="center">
-<%
-	String errorMsg = (String) request.getAttribute("errorMsg");
-%>
+
+	<%
+		String errorMsg = (String) request.getAttribute("errorMsg");
+	%>
+	<span><jsp:useBean id="user" class="com.techlabs.listeners.SessionCounter" scope="request" />
+	<jsp:getProperty name="sessionCounter" property="currentSessionCount" /></span>
 	<div>
 		<p>If you already have an account.. Click to following link to
 			Login...</p>
 		<a href="login">Login</a>
 	</div>
-	
+
 	<form name="LoginForm" action="register" method="POST">
 
 		Name: <input type="text" name="username"><br> Password:<input

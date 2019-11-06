@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.techlabs.model.BankingMaster;
 import com.techlabs.service.BankService;
@@ -50,7 +51,9 @@ public class LoginController extends HttpServlet {
 		boolean result = service.get(userName, userPassword);
 
 		if (result) {
-			response.sendRedirect("welcome?userName="+userName);
+			HttpSession session = request.getSession();
+			session.setAttribute("userName",userName);
+			response.sendRedirect("welcome");
 		} else {
 			request.setAttribute("errorMsg",
 					"Password Incorrect or You don't have account<br>...click here to register..<a href='register'>Register</a> ");

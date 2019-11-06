@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.techlabs.model.BankingMaster;
 import com.techlabs.model.BankingTransaction;
@@ -35,10 +36,11 @@ public class TransactionController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.name = request.getParameter("userName");
+		HttpServletRequest httprequest = (HttpServletRequest) request;
+		HttpSession session = httprequest.getSession();
+		name = (String) session.getAttribute("userName");
 		RequestDispatcher view = request.getRequestDispatcher("transaction.jsp");
 		view.forward(request, response);
-
 	}
 
 	/**
@@ -58,7 +60,7 @@ public class TransactionController extends HttpServlet {
 		
 		service.update(transaction);
 		
-		response.sendRedirect("welcome?userName="+userName);
+		response.sendRedirect("welcome");
 		
 		
 	}

@@ -35,4 +35,8 @@ public class BankService {
 		repo.update(transaction);
 	}
 	
+	public List<BankingTransaction> getByNameTrans(String userName){
+		return repo.getByNameTrans(userName);
+	}
+	
 }

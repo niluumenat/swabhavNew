@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.techlabs.model.BankingMaster;
 import com.techlabs.service.BankService;
@@ -32,10 +33,11 @@ public class WelcomeController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name= request.getParameter("userName");
-		System.out.println(name);
+		HttpServletRequest httprequest = (HttpServletRequest) request;
+		HttpSession session = httprequest.getSession();
+		String userName = (String) session.getAttribute("userName");
 		BankService s = BankService.getInstance();
-		List<BankingMaster> master= s.getByName(name);
+		List<BankingMaster> master= s.getByName(userName);
 		request.setAttribute("master", master);
 		System.out.println(master);
 		
