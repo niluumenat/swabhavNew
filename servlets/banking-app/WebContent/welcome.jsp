@@ -14,29 +14,32 @@
 	<center>
 		<h1>Welcome to Dena Bank</h1>
 	</center>
-	<center><jsp:useBean id="user"
-			class="com.techlabs.listeners.SessionCounter" scope="request" /><jsp:getProperty
-			name="sessionCounter" property="currentSessionCount" />.
-	</center>
+	Active Sessions : <%= SessionCounter.getActiveSessions() %>
+	<jsp:useBean class="com.techlabs.listeners.SessionCounter"
+          id="sessionCounter" scope="application" />
+	<UL>
+		<LI>Total number of sessions: <jsp:getProperty
+				name="sessionCounter" property="totalSessionCount" />.
+		<LI>Number of current sessions loggedIn : <jsp:getProperty
+				name="sessionCounter" property="currentSessionCount" />.</UI>
+				<br>
+ <%
+ 	String userName = (String) session.getAttribute("userName");
+ 	if (userName != null) {
+ 		out.print("<button> <a href='logout'>LogOut</a></button>");
+ 	}
 
-	<%
-		String userName = (String) session.getAttribute("userName");
-		if (userName != null) {
-			out.print("<button> <a href='logout'>LogOut</a></button>");
-		}
+ 	List<BankingMaster> master = (List<BankingMaster>) request.getAttribute("master");
 
-		List<BankingMaster> master = (List<BankingMaster>) request.getAttribute("master");
+ 	for (BankingMaster m : master) {
 
-		for (BankingMaster m : master) {
-
-			out.println("<h2 align='left'>Account holder's Name: " + m.getName()
-					+ "</h2><h2 align='right'>  Account Balance: " + m.getBalance() + "</h2>");
-			out.println(
-					"<br><h2><a href='transaction'>Transaction</a> <span> </span><a href='passbook'>Passbook</a><h2>");
-		}
-	%>
-
-
-
+ 		out.println("<h2 align='left'>Account holder's Name: " + m.getName()
+ 				+ "</h2><h2 align='right'>  Account Balance: " + m.getBalance() + "</h2>");
+ 		out.println(
+ 				"<br><h2><a href='transaction'>Transaction</a> <span> </span><a href='passbook'>Passbook</a><h2>");
+ 	}
+ %>
 </body>
+
+
 </html>

@@ -6,6 +6,7 @@
 <head>
 <style type="text/css">
 form {
+text-size: 10%;
 	margin: 0 auto;
 	width: 400px;
 	padding: 30%;
@@ -19,31 +20,39 @@ div {
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body text-align="center">
-
-	<%
+<body text-align="center" >
+Active Sessions : <%= SessionCounter.getActiveSessions() %>
+	<jsp:useBean class="com.techlabs.listeners.SessionCounter"
+          id="sessionCounter" scope="application" />
+<UL>
+<LI>Total number of sessions:
+   <jsp:getProperty name="sessionCounter"
+               property="totalSessionCount" />.
+<LI>Number of current sessions loggedIn:
+  <jsp:getProperty name="sessionCounter"
+              property="currentSessionCount" />.
+ </UI>
+<%
 		String errorMsg = (String) request.getAttribute("errorMsg");
 	%>
-	<span><jsp:useBean id="user" class="com.techlabs.listeners.SessionCounter" scope="request" />
-	<jsp:getProperty name="sessionCounter" property="currentSessionCount" /></span>
-	<div>
-		<p>If you already have an account.. Click to following link to
-			Login...</p>
-		<a href="login">Login</a>
-	</div>
 
-	<form name="LoginForm" action="register" method="POST">
+		<div>
+			<p>If you already have an account.. Click to following link to
+				Login...</p>
+			<a href="login">Login</a>
+		</div>
 
-		Name: <input type="text" name="username"><br> Password:<input
-			type="password" name="userpassword"><br> Re-enter
-		Password: <input type="password" name="userpassword2"><br>
-		Opening-balance: <input type="text" name="balance"><br>
-		<p>
-			<label id="errorMsg" style="color: red"><%=errorMsg%></label>
-		</p>
-		<br> <input type="submit" value="Register">
+		<form name="LoginForm" action="register" method="POST">
 
-	</form>
+			Name: <input type="text" name="username"><br> Password:<input
+				type="password" name="userpassword"><br> Re-enter
+			Password: <input type="password" name="userpassword2"><br>
+			Opening-balance: <input type="text" name="balance"><br>
+			<p>
+				<label id="errorMsg" style="color: red"><%=errorMsg%></label>
+			</p>
+			<br> <input type="submit" value="Register">
 
+		</form>
 </body>
 </html>

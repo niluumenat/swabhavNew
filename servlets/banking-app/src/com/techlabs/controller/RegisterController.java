@@ -36,7 +36,6 @@ public class RegisterController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		RequestDispatcher view = request.getRequestDispatcher("register.jsp");
 		view.forward(request, response);
 	}
@@ -54,7 +53,6 @@ public class RegisterController extends HttpServlet {
 			Date date = new Date();
 			SimpleDateFormat ft = new SimpleDateFormat (" yyyy-MM-dd ");
 			
-			System.out.println(ft.format(date));
 			BankingMaster master = new BankingMaster(userName, userPassword, balance);
 			BankingTransaction transaction = new BankingTransaction(userName, balance, "Deposite",ft.format(date));
 			

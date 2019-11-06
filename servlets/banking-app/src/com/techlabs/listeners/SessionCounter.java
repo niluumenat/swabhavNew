@@ -12,39 +12,52 @@ import javax.servlet.http.HttpSessionListener;
  */
 @WebListener
 public class SessionCounter implements HttpSessionListener {
-	private int currentSessionCount =0;
+	private int totalSessionCount = 0;
+	private int currentSessionCount = 0;
+	private static int activeSessions = 0;
 	private ServletContext context = null;
 
-    public SessionCounter() {
-    }
-
-	/**
-     * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
-     */
-    public void sessionCreated(HttpSessionEvent event)  { 
-    	currentSessionCount ++;
-    	if (context == null) {
-    	    storeInServletContext(event);
-    	   }
-    }
-
-	private void storeInServletContext(HttpSessionEvent event) {
-		HttpSession session = event.getSession();
-	    context = session.getServletContext();
-	    context.setAttribute("sessionCounter", this);
+	public SessionCounter() {
 	}
-	
-	public int getCurrentSessionCount() {
-		  return(currentSessionCount );
-		}
 
 	/**
-     * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
-     */
-    public void sessionDestroyed(HttpSessionEvent event)  { 
-    		currentSessionCount --;
-    }
-    
-    
-	
+	 * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
+	 */
+	@Override
+	public void sessionCreated(HttpSessionEvent event) {
+		System.out.println("sessionCreated - add one session into counter");
+		totalSessionCount++;
+		currentSessionCount++;
+		activeSessions++;
+		if (context == null) {
+			System.out.println("Hello");
+			HttpSession session = event.getSession();
+			context = session.getServletContext();
+			context.setAttribute("sessionCounter", this);
+		}
+	}
+
+	public int getCurrentSessionCount() {
+		return (currentSessionCount);
+	}
+
+	public int getTotalSessionCount() {
+		return (totalSessionCount);
+	}
+
+	public static int getActiveSessions() {
+		return activeSessions;
+	}
+
+	/**
+	 * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
+	 */
+	@Override
+	public void sessionDestroyed(HttpSessionEvent event) {
+		System.out.println("sessionDestroyed - deduct one session from counter");
+		currentSessionCount--;
+		if (activeSessions > 0)
+			activeSessions--;
+	}
+
 }

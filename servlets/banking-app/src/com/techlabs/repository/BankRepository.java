@@ -41,7 +41,6 @@ public class BankRepository {
 
 	public void add(BankingMaster master, BankingTransaction transaction) {
 		initializeConnection();
-		System.out.println("Hello from add repository..");
 
 		try {
 			conn.setAutoCommit(false);
@@ -68,7 +67,6 @@ public class BankRepository {
 
 	public boolean get(String userName, String password) {
 		initializeConnection();
-		System.out.println("Hello from get repository method..");
 		master = new ArrayList<BankingMaster>();
 		try {
 			prestmt = conn.prepareStatement("SELECT EXISTS(SELECT * from master WHERE name=? and password=?)");
@@ -153,7 +151,6 @@ public class BankRepository {
 
 	public void update( BankingTransaction transaction) {
 		initializeConnection();
-		System.out.println("Hello from update repository..");
 
 		try {
 			conn.setAutoCommit(false);

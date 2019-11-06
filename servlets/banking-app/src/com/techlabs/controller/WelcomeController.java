@@ -39,7 +39,6 @@ public class WelcomeController extends HttpServlet {
 		BankService s = BankService.getInstance();
 		List<BankingMaster> master= s.getByName(userName);
 		request.setAttribute("master", master);
-		System.out.println(master);
 		
 		RequestDispatcher view = request.getRequestDispatcher("welcome.jsp");
 		view.forward(request, response);

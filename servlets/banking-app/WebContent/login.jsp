@@ -17,6 +17,7 @@ form {
 </head>
 <body>
 	<%
+	
 		String errorMsg = (String) request.getAttribute("errorMsg");
 	%>
 	<form name="LoginForm" action="login" method="POST">
