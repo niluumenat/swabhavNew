@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,7 +50,8 @@ public class LoginController extends HttpServlet {
 
 		BankService service = BankService.getInstance();
 		boolean result = service.get(userName, userPassword);
-
+		
+        
 		if (result) {
 			HttpSession session = request.getSession();
 			session.setAttribute("userName",userName);

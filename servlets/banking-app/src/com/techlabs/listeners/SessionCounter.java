@@ -13,9 +13,9 @@ import javax.servlet.http.HttpSessionListener;
 @WebListener
 public class SessionCounter implements HttpSessionListener {
 	private int totalSessionCount = 0;
-	private int currentSessionCount = 0;
-	private static int activeSessions = 0;
 	private ServletContext context = null;
+	ServletContext ctx = null;
+	static int totalUserCount = 0, currentUserCount = 0;
 
 	public SessionCounter() {
 	}
@@ -27,8 +27,14 @@ public class SessionCounter implements HttpSessionListener {
 	public void sessionCreated(HttpSessionEvent event) {
 		System.out.println("sessionCreated - add one session into counter");
 		totalSessionCount++;
-		currentSessionCount++;
-		activeSessions++;
+		totalUserCount++;
+    	currentUserCount++;
+    	
+    	ctx = event.getSession().getServletContext();
+    	
+    	ctx.setAttribute("totalUsers", totalUserCount);
+    	ctx.setAttribute("currentUsers", currentUserCount);
+		
 		if (context == null) {
 			System.out.println("Hello");
 			HttpSession session = event.getSession();
@@ -37,17 +43,11 @@ public class SessionCounter implements HttpSessionListener {
 		}
 	}
 
-	public int getCurrentSessionCount() {
-		return (currentSessionCount);
-	}
 
 	public int getTotalSessionCount() {
 		return (totalSessionCount);
 	}
 
-	public static int getActiveSessions() {
-		return activeSessions;
-	}
 
 	/**
 	 * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
@@ -55,9 +55,8 @@ public class SessionCounter implements HttpSessionListener {
 	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
 		System.out.println("sessionDestroyed - deduct one session from counter");
-		currentSessionCount--;
-		if (activeSessions > 0)
-			activeSessions--;
+		currentUserCount--;
+    	ctx.setAttribute("currentUsers", currentUserCount);
 	}
 
 }
