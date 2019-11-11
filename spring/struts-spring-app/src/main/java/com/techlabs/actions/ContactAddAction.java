@@ -1,10 +1,12 @@
 package com.techlabs.actions;
 
 import com.opensymphony.xwork2.ActionSupport;
+
 import com.opensymphony.xwork2.ModelDriven;
 import com.techlabs.model.Contact;
 import com.techlabs.service.ContactService;
-import com.techlabs.viemodels.ContactDisplayViewModel;
+import com.techlabs.viewmodel.ContactDisplayViewModel;
+import com.techlabs.viewmodel.ContactAddViewModel;
 
 public class ContactAddAction extends ActionSupport implements ModelDriven<ContactDisplayViewModel> {
 	ContactDisplayViewModel model = new ContactDisplayViewModel();

@@ -1,58 +1,45 @@
-package com.techlabs.viemodels;
+package com.techlabs.model;
 
 import java.util.UUID;
 
-public class ContactDisplayViewModel {
+public class Contact {
 	private UUID id;
 	private String name;
 	private String emailId;
 	private String phoneNo;
-	
-	
-	
-	public ContactDisplayViewModel(){
-		System.out.println("Inside constructor of contactDisplayViewModel...");
-	}
-	
-	public ContactDisplayViewModel(UUID id, String name, String emailId, String phoneNo) {
-		this.id = id;
+	public Contact(String name, String emailId, String phoneNo) {
+		this.id = UUID.randomUUID(); 
 		this.name = name;
 		this.emailId = emailId;
 		this.phoneNo = phoneNo;
 	}
-
-
+	
+	public Contact() {
+		super();
+	}
+	
 	public UUID getId() {
 		return id;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
 	}
 
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getEmailId() {
 		return emailId;
 	}
-
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-
 	public String getPhoneNo() {
 		return phoneNo;
 	}
-
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
-
 	
+
 }

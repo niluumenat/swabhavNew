@@ -1,13 +1,14 @@
 package com.techlabs.actions;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.techlabs.model.Contact;
 import com.techlabs.service.ContactService;
-import com.techlabs.viemodels.ContactDisplayViewModel;
+import com.techlabs.viewmodel.ContactDisplayViewModel;
 
 public class ContactDisplayAction extends ActionSupport implements ModelDriven<ContactDisplayViewModel> {
 	ContactService service = ContactService.getInstance();

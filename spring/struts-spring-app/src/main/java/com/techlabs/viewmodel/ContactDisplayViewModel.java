@@ -1,4 +1,4 @@
-package com.techlabs.viemodels;
+package com.techlabs.viewmodel;
 
 import java.util.UUID;
 
