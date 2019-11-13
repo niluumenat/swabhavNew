@@ -1,5 +1,7 @@
 package com.techlabs.actions;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import com.opensymphony.xwork2.ModelDriven;
@@ -10,7 +12,8 @@ import com.techlabs.viewmodel.ContactAddViewModel;
 
 public class ContactAddAction extends ActionSupport implements ModelDriven<ContactDisplayViewModel> {
 	ContactDisplayViewModel model = new ContactDisplayViewModel();
-	ContactService service = ContactService.getInstance();
+	@Autowired
+	ContactService service;
 
 	@Override
 	public String execute() throws Exception {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.techlabs.model.Contact;
@@ -11,14 +13,16 @@ import com.techlabs.service.ContactService;
 import com.techlabs.viewmodel.ContactDisplayViewModel;
 
 public class ContactDisplayAction extends ActionSupport implements ModelDriven<ContactDisplayViewModel> {
-	ContactService service = ContactService.getInstance();
-	ContactDisplayViewModel model;
-	List<Contact> contacts;
+	@Autowired
+	ContactService service;
+	
+	private ContactDisplayViewModel model;
+	private List<Contact> contacts;
 
 	@Override
 	public String execute() throws Exception {
 		System.out.println("Inside success....");
-		contacts= service.getContacts();
+		contacts = service.getContacts();
 		return "success";
 	}
 
@@ -26,7 +30,7 @@ public class ContactDisplayAction extends ActionSupport implements ModelDriven<C
 	public ContactDisplayViewModel getModel() {
 		System.out.println("Inside getModel....");
 		model = new ContactDisplayViewModel();
-		return model;	
+		return model;
 	}
 
 	public List<Contact> getContacts() {
