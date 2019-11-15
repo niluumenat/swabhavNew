@@ -44,6 +44,7 @@ public class Test {
 			Set<Employee> employees= dept1.getEmployees();
 			employees.add(emp1);
 			employees.add(emp2);
+			
 			dept1.setEmployees(employees);
 			
 			session.save(dept1);

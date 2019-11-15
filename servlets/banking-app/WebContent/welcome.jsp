@@ -1,5 +1,4 @@
 <%@page import="org.apache.catalina.Context"%>
-<%@page import="com.techlabs.listeners.SessionCounter"%>
 <%@page import="com.techlabs.model.BankingMaster"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -14,15 +13,7 @@
 	<center>
 		<h1>Welcome to Dena Bank</h1>
 	</center>
-	Active Sessions : <%= SessionCounter.getActiveSessions() %>
-	<jsp:useBean class="com.techlabs.listeners.SessionCounter"
-          id="sessionCounter" scope="application" />
-	<UL>
-		<LI>Total number of sessions: <jsp:getProperty
-				name="sessionCounter" property="totalSessionCount" />.
-		<LI>Number of current sessions loggedIn : <jsp:getProperty
-				name="sessionCounter" property="currentSessionCount" />.</UI>
-				<br>
+	
  <%
  	String userName = (String) session.getAttribute("userName");
  	if (userName != null) {

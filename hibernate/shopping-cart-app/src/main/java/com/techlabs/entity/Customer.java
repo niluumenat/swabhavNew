@@ -11,20 +11,19 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Department {
+public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String name;
-	private String location;
-	
-	@OneToMany(mappedBy = "dept", cascade = CascadeType.ALL)
-	private Set<Employee> employees = new HashSet<Employee>();
 
-	public Department() {
-		
+	public Customer() {
+
 	}
+
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	private Set<Order> orders = new HashSet<Order>();
 
 	public Long getId() {
 		return id;
@@ -38,23 +37,12 @@ public class Department {
 		this.name = name;
 	}
 
-	public String getLocation() {
-		return location;
+	public Set<Order> getOrders() {
+		return orders;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
 	}
-
-	public Set<Employee> getEmployees() {
-		return employees;
-	}
-
-	public void setEmployees(Set<Employee> employees) {
-		this.employees = employees;
-	}
-	
-	
-	
 
 }

@@ -8,7 +8,6 @@ public class BankingTransaction {
 	private String type;
 	private String date;
 	public BankingTransaction(String name, String amount, String type, String date) {
-		super();
 		this.name = name;
 		this.amount = amount;
 		this.type = type;

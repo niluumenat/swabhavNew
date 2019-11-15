@@ -1,5 +1,6 @@
 package com.techlabs.model;
 
+
 public class Student {
 	private String name;
 	private String age;
